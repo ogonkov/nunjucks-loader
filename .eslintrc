@@ -1,0 +1,21 @@
+{
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 9,
+    "sourceType": "module"
+  },
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "overrides": [
+    {
+      "files": [
+        "test/**/*.js"
+      ],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
+}
