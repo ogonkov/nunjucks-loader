@@ -1,7 +1,7 @@
-export function precompileWrapper(templates) {
+export function wrapper(templates) {
     let out = '';
 
-    out += `var precompiledTemplates = {};`;
+    out += `var precompiledTemplates = precompiledTemplates || {};`;
     for (let i = 0; i < templates.length; i++) {
         const {name, template} = templates[0];
 
