@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Simple compilation should compile single files 1`] = `
+"<!DOCTYPE html>
+<html lang=\\"en\\">
+<head>
+    <meta charset=\\"UTF-8\\">
+    <title>App</title>
+</head>
+<body>
+
+    <a href=\\"https://example.com\\">Link</a>
+
+</body>
+</html>
+"
+`;
+
+exports[`Simple compilation should compile templates with inheritance 1`] = `
+"<main>
+    <h1><a href=\\"https://example.com/1\\">Parent</a></h1>
+
+    
+    <p>Child template</p>
+    <a href=\\"https://example.com/2\\">Link</a>
+
+</main>
+"
+`;
