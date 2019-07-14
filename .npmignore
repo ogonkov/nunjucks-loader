@@ -4,3 +4,4 @@
 /babel.config.js
 /jest.config.js
 /.eslintrc
+/.travis.yml
