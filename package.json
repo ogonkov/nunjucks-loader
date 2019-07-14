@@ -2,7 +2,7 @@
   "name": "simple-nunjucks-loader",
   "version": "1.0.0",
   "description": "Webpack loader for Nunjucks",
-  "main": "es/loader.js",
+  "main": "lib/loader.js",
   "scripts": {
     "build": "babel src --out-dir=lib",
     "pretest": "eslint src",
