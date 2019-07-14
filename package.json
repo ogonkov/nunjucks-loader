@@ -16,7 +16,8 @@
   "keywords": [
     "webpack",
     "loader",
-    "nunjucks"
+    "nunjucks",
+    "template"
   ],
   "author": "Aleksey",
   "license": "MIT",
