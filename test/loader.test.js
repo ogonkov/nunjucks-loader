@@ -18,4 +18,13 @@ describe('Simple compilation', function() {
             child_link: 'https://example.com/2'
         })).toMatchSnapshot();
     });
+
+    test('should compile templates with multiple includes', async function() {
+        const output = await compiler('fixtures/multiple-same-includes.njk');
+
+        expect(output({
+            parent_link: 'https://example.com/parent',
+            text: 'Button'
+        })).toMatchSnapshot()
+    });
 });

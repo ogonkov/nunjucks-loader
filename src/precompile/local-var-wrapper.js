@@ -1,7 +1,16 @@
-export function wrapper(templates) {
+/**
+ * @typedef {Object} NunjucksPrecompiled
+ * @property {string} name
+ * @property {string} template
+ */
+
+/**
+ * @param {NunjucksPrecompiled[]} templates
+ * @returns {string}
+ */
+export function localVarWrapper(templates) {
     let out = '';
 
-    out += `var precompiledTemplates = precompiledTemplates || {};`;
     for (let i = 0; i < templates.length; i++) {
         const {name, template} = templates[0];
 

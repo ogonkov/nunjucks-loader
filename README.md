@@ -12,8 +12,9 @@ Loader **didn't expose `window.nunjucksPrecompiled`** that could break some
 installations, that use it directly.
 
 This loader will [precompile](https://mozilla.github.io/nunjucks/api.html#precompiling)
-templates function, that accepts context. It also includes Nunjunks (slim)
-runtime for browser. Add loader to your `webpack` config as follows:
+Nunjucks templates. It also includes Nunjunks (slim) runtime for browser.
+
+Add loader to your `webpack` config as follows:
 
 **webpack.config.js**
 ```js
@@ -64,22 +65,20 @@ module.exports = {
 ```
 
 Refer to [`html-webpack-plugin` page](https://github.com/jantimon/html-webpack-plugin/#options)
-for more options.
+for all available options.
 
 ## How it works
 Nunjunks bundle all precompiled templates to `window.nunjucksPrecompiled`, then
-loads them via custom loader from here.
+loads them via custom loader from this global object.
 
-Loader precompiles all templates in closure, and pass it to custom loader, that
-gets templates from here.
+Loader precompiles all templates in module closure, and pass it down to custom
+[Nunjucks loader](https://mozilla.github.io/nunjucks/api.html#loader), that
+retrieve templates from closure.
 
 Also Nunjucks didn't have dependency tree for precompiled templates, it cause
-precompilation on-demand. Loader doing some regexp-fu to avoid that behaviour
-and trying to guess what templates should be precompiled.
-
-After that it precompile all found templates, adds this files as loader
-dependencies to enable `webpack` to watch them, and bundle Nunjucks (slim)
-browser runtime.
+precompilation on-demand and will break bundle. To workaround this issue,
+`simple-nunjucks-loader` doing some regexp-fu and precompile all required
+templates.
 
 ## Options
 Loader supports limited number of [Nunjuncks options](https://mozilla.github.io/nunjucks/api.html#configure).
