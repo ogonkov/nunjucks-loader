@@ -5,3 +5,4 @@
 /jest.config.js
 /.eslintrc
 /.travis.yml
+.DS_Store
