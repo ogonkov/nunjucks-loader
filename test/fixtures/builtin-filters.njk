@@ -1,0 +1,5 @@
+{% extends 'base.njk' %}
+
+{% block content %}
+    {{ text | replace("foo", "bar") | capitalize }}
+{% endblock %}

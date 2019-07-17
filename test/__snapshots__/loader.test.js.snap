@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Simple compilation should compile builtin tags 1`] = `
+"<main>
+    <h1><a href=\\"\\">Parent</a></h1>
+
+    
+    
+      I am tired
+    
+
+</main>
+"
+`;
+
+exports[`Simple compilation should compile macro 1`] = `
+"<main>
+    <h1><a href=\\"\\">Parent</a></h1>
+
+    
+    
+<div class=\\"field\\">
+  <input type=\\"text\\" name=\\"user\\"
+         value=\\"\\" />
+</div>
+
+    
+<div class=\\"field\\">
+  <input type=\\"password\\" name=\\"pass\\"
+         value=\\"\\" />
+</div>
+
+
+</main>
+"
+`;
+
+exports[`Simple compilation should compile single files 1`] = `
+"<!DOCTYPE html>
+<html lang=\\"en\\">
+<head>
+    <meta charset=\\"UTF-8\\">
+    <title>App</title>
+</head>
+<body>
+
+    <a href=\\"https://example.com\\">Link</a>
+
+</body>
+</html>
+"
+`;
+
+exports[`Simple compilation should compile templates with filters 1`] = `
+"<main>
+    <h1><a href=\\"\\">Parent</a></h1>
+
+    
+    Nunjucks barlter
+
+</main>
+"
+`;
+
+exports[`Simple compilation should compile templates with inheritance 1`] = `
+"<main>
+    <h1><a href=\\"https://example.com/1\\">Parent</a></h1>
+
+    
+    <p>Child template</p>
+    <a href=\\"https://example.com/2\\">Link</a>
+
+</main>
+"
+`;
+
+exports[`Simple compilation should compile templates with multiple includes 1`] = `
+"<main>
+    <h1><a href=\\"https://example.com/parent\\">Parent</a></h1>
+
+    
+    <p>
+        <button>Button</button>
+
+    </p>
+
+    <button>Button</button>
+
+
+</main>
+"
+`;
+
+exports[`Simple compilation should inherit from parent with super 1`] = `
+"<main>
+    <h1><a href=\\"\\">Parent</a></h1>
+
+    
+    Super babe
+
+    meets child Joe
+
+</main>
+"
+`;
