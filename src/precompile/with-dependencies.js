@@ -77,6 +77,10 @@ function getDependencies(resourcePath, precompiled) {
         const [, originalName] = match;
         const fullPath = resolveTemplatePath(originalName, resourcePath);
 
+        if (resourcePath === fullPath) {
+            throw new Error(`Circular import detected`);
+        }
+
         if (hasDependency(fullPath) === false) {
             dependencies.push({
                 originalName,

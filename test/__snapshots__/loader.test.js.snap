@@ -1,5 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Simple compilation should compile builtin tags 1`] = `
+"<main>
+    <h1><a href=\\"\\">Parent</a></h1>
+
+    
+    
+      I am tired
+    
+
+</main>
+"
+`;
+
+exports[`Simple compilation should compile macro 1`] = `
+"<main>
+    <h1><a href=\\"\\">Parent</a></h1>
+
+    
+    
+<div class=\\"field\\">
+  <input type=\\"text\\" name=\\"user\\"
+         value=\\"\\" />
+</div>
+
+    
+<div class=\\"field\\">
+  <input type=\\"password\\" name=\\"pass\\"
+         value=\\"\\" />
+</div>
+
+
+</main>
+"
+`;
+
 exports[`Simple compilation should compile single files 1`] = `
 "<!DOCTYPE html>
 <html lang=\\"en\\">
@@ -13,6 +48,17 @@ exports[`Simple compilation should compile single files 1`] = `
 
 </body>
 </html>
+"
+`;
+
+exports[`Simple compilation should compile templates with filters 1`] = `
+"<main>
+    <h1><a href=\\"\\">Parent</a></h1>
+
+    
+    Nunjucks barlter
+
+</main>
 "
 `;
 
@@ -40,6 +86,19 @@ exports[`Simple compilation should compile templates with multiple includes 1`] 
 
     <button>Button</button>
 
+
+</main>
+"
+`;
+
+exports[`Simple compilation should inherit from parent with super 1`] = `
+"<main>
+    <h1><a href=\\"\\">Parent</a></h1>
+
+    
+    Super babe
+
+    meets child Joe
 
 </main>
 "

@@ -1,0 +1,11 @@
+{% extends 'base.njk' %}
+
+{% block content %}
+    {% if hungry %}
+      I am hungry
+    {% elif tired %}
+      I am tired
+    {% else %}
+      I am good!
+    {% endif %}
+{% endblock %}

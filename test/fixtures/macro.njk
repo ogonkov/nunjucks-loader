@@ -1,0 +1,7 @@
+{% extends 'base.njk' %}
+{% import './simple-macro.njk' as form %}
+
+{% block content %}
+    {{ form.field('user') }}
+    {{ form.field('pass', type="password") }}
+{% endblock %}
