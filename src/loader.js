@@ -3,10 +3,6 @@ import {getOptions, stringifyRequest} from 'loader-utils';
 
 import {withDependencies} from "./precompile/with-dependencies";
 
-function render(resourcePath, source, options) {
-    return withDependencies(resourcePath, source, options);
-}
-
 export default function nunjucksLoader(source) {
     const {
         autoescape,
@@ -24,7 +20,7 @@ export default function nunjucksLoader(source) {
         lstripBlocks,
         tags
     };
-    render(this.resourcePath, source, options).then((template) => {
+    withDependencies(this.resourcePath, source, options).then((template) => {
         const {dependencies, precompiled} = template;
 
         return {
