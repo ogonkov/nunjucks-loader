@@ -9,7 +9,8 @@
     "test": "jest",
     "posttest": "rm -rf ./test/bundles/",
     "preversion": "npm test",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
