@@ -1,4 +1,4 @@
-# nunjucks-loader
+# Nunjucks templates loader for Webpack
 This Webpack loader compiles [Nunjucks](https://github.com/mozilla/nunjucks) templates.
 [`html-webpack-plugin`](https://github.com/jantimon/html-webpack-plugin) compatible. 
 
