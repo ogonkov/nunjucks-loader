@@ -38,7 +38,17 @@
       "additionalProperties": false
     },
     "templatesPath": {
-      "type": "string"
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
     }
   },
   "additionalProperties": false
