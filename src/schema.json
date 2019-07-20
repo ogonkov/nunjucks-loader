@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "properties": {
+    "autoescape": {
+      "type": "boolean"
+    },
+    "throwOnUndefined": {
+      "type": "boolean"
+    },
+    "trimBlocks": {
+      "type": "boolean"
+    },
+    "lstripBlocks": {
+      "type": "boolean"
+    },
+    "tags": {
+      "type": "object",
+      "properties": {
+        "blockStart": {
+          "type": "string"
+        },
+        "blockEnd": {
+          "type": "string"
+        },
+        "variableStart": {
+          "type": "string"
+        },
+        "variableEnd": {
+          "type": "string"
+        },
+        "commentStart": {
+          "type": "string"
+        },
+        "commentEnd": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -30,7 +30,7 @@
   "homepage": "https://github.com/ogonkov/nunjucks-loader#readme",
   "dependencies": {
     "loader-utils": "^1.2.3",
-    "schema-utils": "^1.0.0"
+    "schema-utils": "^2.0.1"
   },
   "peerDependencies": {
     "nunjucks": "^3.0.0"
