@@ -5,7 +5,7 @@ module.exports = function(api) {
         presets: [
             ['@babel/preset-env', {
                 targets: {
-                    node: '8'
+                    node: '8.9.0'
                 }
             }]
         ]

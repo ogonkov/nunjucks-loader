@@ -1,6 +1,8 @@
 import path from 'path';
 import {getOptions, stringifyRequest} from 'loader-utils';
+import validate from 'schema-utils';
 
+import schema from './schema.json';
 import {withDependencies} from "./precompile/with-dependencies";
 
 export default function nunjucksLoader(source) {
@@ -20,6 +22,12 @@ export default function nunjucksLoader(source) {
         lstripBlocks,
         tags
     };
+
+    validate(schema, options, {
+        name: 'Simple Nunjucks Loader',
+        baseDataPath: 'options'
+    });
+
     withDependencies(this.resourcePath, source, options).then((template) => {
         const {dependencies, precompiled} = template;
 
