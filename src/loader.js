@@ -11,7 +11,8 @@ export default function nunjucksLoader(source) {
         throwOnUndefined,
         trimBlocks,
         lstripBlocks,
-        tags
+        tags,
+        templatesPath
     } = getOptions(this) || {};
 
     const callback = this.async();
@@ -20,7 +21,8 @@ export default function nunjucksLoader(source) {
         throwOnUndefined,
         trimBlocks,
         lstripBlocks,
-        tags
+        tags,
+        templatesPath
     };
 
     validate(schema, options, {
@@ -39,7 +41,7 @@ export default function nunjucksLoader(source) {
                 const path = JSON.stringify(fullPath);
 
                 return `
-                    ${imports}precompiledTemplates[${path}] = require(${path}).precompiled;
+                    ${imports}...require(${path}).dependencies,
                `;
             }, '')
         };
@@ -53,9 +55,10 @@ export default function nunjucksLoader(source) {
 
         const resourcePathString = JSON.stringify(this.resourcePath);
         callback(null, `
-            var precompiledTemplates = {};
             ${runtimeImport}
-            ${dependencies}
+            var precompiledTemplates = {
+                ${dependencies}
+            };
             ${precompiled}
             module.exports = function nunjucksTemplate(ctx) {
               var nunjucks = runtime(
@@ -67,6 +70,7 @@ export default function nunjucksLoader(source) {
             };
 
             module.exports.precompiled = precompiledTemplates[${resourcePathString}];
+            module.exports.dependencies = precompiledTemplates;
         `);
     }, function(error) {
         callback(error);
