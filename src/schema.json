@@ -36,6 +36,9 @@
         }
       },
       "additionalProperties": false
+    },
+    "templatesPath": {
+      "type": "string"
     }
   },
   "additionalProperties": false

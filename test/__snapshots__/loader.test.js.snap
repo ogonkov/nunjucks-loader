@@ -91,6 +91,32 @@ exports[`Simple compilation should compile templates with multiple includes 1`] 
 "
 `;
 
+exports[`Simple compilation should compile templates with non-relative paths 1`] = `
+"<!DOCTYPE html>
+<html lang=\\"en\\">
+<head>
+    <meta charset=\\"UTF-8\\">
+    <title></title>
+</head>
+<body>
+
+    
+
+<main>
+    
+
+<p>Main content</p>
+
+
+</main>
+
+
+
+</body>
+</html>
+"
+`;
+
 exports[`Simple compilation should inherit from parent with super 1`] = `
 "<main>
     <h1><a href=\\"\\">Parent</a></h1>

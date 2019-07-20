@@ -1,6 +1,10 @@
+import fs from 'fs';
 import path from 'path';
+import {promisify} from 'util';
 import nunjucks from "nunjucks";
 import * as precompile from './local-var-precompile';
+
+const exists = promisify(fs.access);
 
 /**
  * @typedef {Object} NunjucksOptions
@@ -9,17 +13,30 @@ import * as precompile from './local-var-precompile';
  * @property {boolean}                 [trimBlocks=false]
  * @property {boolean}                 [lstripBlocks=false]
  * @property {Object.<string, string>} [tags]
+ * @property {string}                  [templatesPath]
  */
 
 /**
- * @param {string} importPath
- * @param {string} templatePath
- * @returns {string}
+ * @param {string}   importPath
+ * @param {string[]} templatesPath
+ * @returns {{name: string, paths: string[]}}
  */
-function resolveTemplatePath(importPath, templatePath) {
-    const rootFolder = path.dirname(templatePath);
+function resolvePossiblePaths(importPath, templatesPath) {
+    const paths = [];
 
-    return path.join(rootFolder, importPath)
+    for (let i = 0; i < templatesPath.length; i++) {
+        const basePath = path.resolve(templatesPath[i]);
+        const filePath = path.resolve(templatesPath[i], importPath);
+
+        if (filePath.startsWith(basePath)) {
+            paths.push(filePath);
+        }
+    }
+
+    return {
+        name: importPath,
+        paths
+    };
 }
 
 /**
@@ -54,17 +71,23 @@ function getTemplateReFor(importPath) {
  *
  * @param {string} resourcePath Path to precompiled template to calculate
  *                              dependencies relative to it
+ * @param {string} templatesPath
  * @param {string} precompiled
- * @returns {PrecompiledDependency}
+ * @returns {Promise<PrecompiledDependency>}
  */
-function getDependencies(resourcePath, precompiled) {
+function getDependencies(resourcePath, templatesPath, precompiled) {
     const dependencies = [];
+    const possiblePaths = [];
     let precompiledWithDependencies = precompiled;
 
     function hasDependency(fullPath) {
         return dependencies.some(function(dependency) {
             return dependency.fullPath === fullPath;
         });
+    }
+
+    function containsResourcePath(path) {
+        return path === resourcePath;
     }
 
     const getTemplateRe = /env\s*\.getTemplate\s*\(\s*['"]([^'"]+)['"]/g;
@@ -75,31 +98,63 @@ function getDependencies(resourcePath, precompiled) {
         }
 
         const [, originalName] = match;
-        const fullPath = resolveTemplatePath(originalName, resourcePath);
+        const possiblePath = resolvePossiblePaths(
+            originalName,
+            [
+                path.dirname(resourcePath),
+                ...templatesPath
+            ]
+        );
 
-        if (resourcePath === fullPath) {
+        if (possiblePath.paths.some(containsResourcePath)) {
             throw new Error(`Circular import detected`);
         }
 
-        if (hasDependency(fullPath) === false) {
-            dependencies.push({
-                originalName,
-                fullPath
-            });
-        }
-
-        precompiledWithDependencies = precompiledWithDependencies.replace(
-            getTemplateReFor(originalName),
-            `$1${fullPath}$2`
-        );
+        possiblePaths.push(possiblePath);
 
         match = getTemplateRe.exec(precompiledWithDependencies)
     }
 
-    return {
-        dependencies,
-        precompiled: precompiledWithDependencies
-    };
+    const possiblePathResolve = possiblePaths.map(function({paths, name}) {
+        return {
+            paths: paths.map(function(path) {
+                return exists(path).then(() => path, () => false);
+            }),
+            name
+        };
+    }).map(function({paths, name}) {
+        return Promise.all(paths).then((paths) => {
+            return paths.filter(Boolean);
+        }).then(function(paths) {
+            return paths[0];
+        }).then(function(fullPath) {
+            return {
+                fullPath,
+                originalName: name
+            };
+        });
+    });
+
+    return Promise.all(possiblePathResolve).then(function(paths) {
+        paths.forEach(function({fullPath, originalName}) {
+            if (hasDependency(path) === false) {
+                dependencies.push({
+                    fullPath,
+                    originalName
+                });
+            }
+
+            precompiledWithDependencies = precompiledWithDependencies.replace(
+                getTemplateReFor(originalName),
+                `$1${fullPath}$2`
+            );
+        });
+
+        return {
+            dependencies,
+            precompiled: precompiledWithDependencies
+        };
+    });
 }
 
 /**
@@ -109,10 +164,15 @@ function getDependencies(resourcePath, precompiled) {
  * @returns {Promise<string>} Source of precompiled template with wrapper
  */
 export function withDependencies(resourcePath, source, options) {
-    const env = nunjucks.configure(options);
+    const {templatesPath = '.', ...opts} = options;
+    const env = nunjucks.configure(templatesPath, opts);
 
     return precompile.precompileToLocalVar(resourcePath, source, env)
         .then(function(precompiled) {
-            return getDependencies(resourcePath, precompiled);
+            const pathsToSearch = (
+                Array.isArray(templatesPath) ? templatesPath : [templatesPath]
+            ).map(path.normalize);
+
+            return getDependencies(resourcePath, pathsToSearch, precompiled);
         });
 }
