@@ -89,7 +89,7 @@ All other options get passed to Nunjunks `Environment` during files loading.
 
 |Name|Type|Default|Description|
 |:--:|:--:|:-----:|:----------|
-|**[`searchPaths`](#searchPaths)**|`{String\|Array.<string>}`|`.`|One or more paths to resolve templates paths|
+|**[`searchpaths`](#searchPaths)**|`{String\|Array.<string>}`|`.`|One or more paths to resolve templates paths|
 
 ### searchPaths
 
