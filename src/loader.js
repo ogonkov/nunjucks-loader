@@ -12,7 +12,7 @@ export default function nunjucksLoader(source) {
         trimBlocks,
         lstripBlocks,
         tags,
-        templatesPath
+        searchPaths
     } = getOptions(this) || {};
 
     const callback = this.async();
@@ -22,7 +22,7 @@ export default function nunjucksLoader(source) {
         trimBlocks,
         lstripBlocks,
         tags,
-        templatesPath
+        searchPaths
     };
 
     validate(schema, options, {

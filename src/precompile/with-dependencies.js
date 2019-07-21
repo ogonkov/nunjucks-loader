@@ -164,13 +164,13 @@ function getDependencies(resourcePath, templatesPath, precompiled) {
  * @returns {Promise<string>} Source of precompiled template with wrapper
  */
 export function withDependencies(resourcePath, source, options) {
-    const {templatesPath = '.', ...opts} = options;
-    const env = nunjucks.configure(templatesPath, opts);
+    const {searchPaths = '.', ...opts} = options;
+    const env = nunjucks.configure(searchPaths, opts);
 
     return precompile.precompileToLocalVar(resourcePath, source, env)
         .then(function(precompiled) {
             const pathsToSearch = (
-                Array.isArray(templatesPath) ? templatesPath : [templatesPath]
+                Array.isArray(searchPaths) ? searchPaths : [searchPaths]
             ).map(path.normalize);
 
             return getDependencies(resourcePath, pathsToSearch, precompiled);

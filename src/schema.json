@@ -37,7 +37,7 @@
       },
       "additionalProperties": false
     },
-    "templatesPath": {
+    "searchPaths": {
       "oneOf": [
         {
           "type": "string"
