@@ -101,8 +101,8 @@ function getDependencies(resourcePath, templatesPath, precompiled) {
         const possiblePath = resolvePossiblePaths(
             originalName,
             [
-                path.dirname(resourcePath),
-                ...templatesPath
+                ...templatesPath,
+                path.dirname(resourcePath)
             ]
         );
 

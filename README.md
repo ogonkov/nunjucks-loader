@@ -95,6 +95,6 @@ All other options get passed to Nunjunks `Environment` during files loading.
 
 Loader is searching for full template path in next order:
 
-* relative to current file;
-* relative to project root;
-* relative to given string(s) from `searchPath` option.
+* relative to given string(s) from `searchPath` option (or project root, if no
+  paths given),
+* relative to current file.
