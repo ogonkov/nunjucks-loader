@@ -89,4 +89,12 @@ All other options get passed to Nunjunks `Environment` during files loading.
 
 |Name|Type|Default|Description|
 |:--:|:--:|:-----:|:----------|
-|**`searchPaths`**|`{String|Array.<string>}`|`.`|One or more paths to resolve templates paths|
+|**[`searchPaths`](#searchPaths)**|`{String\|Array.<string>}`|`.`|One or more paths to resolve templates paths|
+
+### searchPaths
+
+Loader is searching for full template path in next order:
+
+* relative to current file;
+* relative to project root;
+* relative to given string(s) from `searchPath` option.
