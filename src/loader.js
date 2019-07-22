@@ -35,14 +35,15 @@ export default function nunjucksLoader(source) {
 
         return {
             precompiled,
-            dependencies: dependencies.reduce(([imports, assignment], {fullPath}, i) => {
+            dependencies: dependencies.reduce(([imports, assignment], fullPath, i) => {
                 this.addDependency(fullPath);
 
                 const path = JSON.stringify(fullPath);
+                const importVar = `templateDependencies${i}`;
 
                 return [
-                    `${imports}var templateDependencies${i} = require(${path}).dependencies;`,
-                    `${assignment}templateDependencies${i},`
+                    `${imports}var ${importVar} = require(${path}).dependencies;`,
+                    `${assignment}${importVar},`
                 ];
             }, ['', ''])
         };
