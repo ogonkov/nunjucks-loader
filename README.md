@@ -114,7 +114,7 @@ All other options get passed to Nunjunks `Environment` during files loading.
 
 |Name|Type|Default|Description|
 |:--:|:--:|:-----:|:----------|
-|**[`searchPaths`](#searchpaths)**|`{String\|Array.<string>}`|`.`|One or more paths to resolve templates paths|
+|**[`searchPaths`](#searchpaths)**|`{String}` or `{Array.<string>}`|`.`|One or more paths to resolve templates paths|
 
 ### searchPaths
 
