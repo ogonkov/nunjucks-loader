@@ -7,9 +7,15 @@ This Webpack loader compiles [Nunjucks](https://github.com/mozilla/nunjucks) tem
 npm install --save-dev simple-nunjucks-loader
 ```
 
+## Note on `window.nunjucksPrecompiled`
+
+Loader **didn't expose `window.nunjucksPrecompiled`**. It will definitely
+could break your code, if you assume that it would be here. Use imports of
+required template instead of relying to global object or adopt
+[`expose-loader`](https://github.com/webpack-contrib/expose-loader/)
+to your build pipeline.
+
 ## Usage
-Loader **didn't expose `window.nunjucksPrecompiled`** that could break some
-installations, that use it directly.
 
 This loader will [precompile](https://mozilla.github.io/nunjucks/api.html#precompiling)
 Nunjucks templates. It also includes Nunjunks (slim) runtime for browser.
@@ -25,7 +31,8 @@ module.exports = {
                 test: /\.njk$/,
                 use: [
                     {
-                        loader: 'simple-nunjucks-loader'
+                        loader: 'simple-nunjucks-loader',
+                        options: {}
                     }
                 ]
             }
@@ -33,6 +40,8 @@ module.exports = {
     }
 };
 ```
+
+### With `html-webpack-plugin`
 
 For using with `html-webpack-plugin` just add it to `plugins` array, all options
 from it would be available as `htmlWebpackPlugin.options` in Nunjucks template.
@@ -49,7 +58,8 @@ module.exports = {
                 test: /\.njk$/,
                 use: [
                     {
-                        loader: 'simple-nunjucks-loader'
+                        loader: 'simple-nunjucks-loader',
+                        options: {}
                     }
                 ]
             }
@@ -67,18 +77,34 @@ module.exports = {
 Refer to [`html-webpack-plugin` page](https://github.com/jantimon/html-webpack-plugin/#options)
 for all available options.
 
+### Via `import`/`require`
+
+To use it from your modules just import it as any other dependency and pass
+context for render:
+
+```js
+import template from './template.njk';
+
+const page = template({
+    foo: 'bar'
+});
+```
+
 ## How it works
-Nunjunks bundle all precompiled templates to `window.nunjucksPrecompiled`, then
-loads them via custom loader from this global object.
+By default Nunjunks bundle all precompiled templates to
+`window.nunjucksPrecompiled`, then loads them via custom loader from this
+global object. If precompiled template reference some other template file,
+it is loaded from disk (in NodeJS environment), or fetched via `XMLHttpRequest`
+from internet.
 
-Loader precompiles all templates in module closure, and pass it down to custom
-[Nunjucks loader](https://mozilla.github.io/nunjucks/api.html#loader), that
-retrieve templates from closure.
+Both are not webpack-way for projects bundling.
 
-Also Nunjucks didn't have dependency tree for precompiled templates, it cause
-precompilation on-demand and will break bundle. To workaround this issue,
-`simple-nunjucks-loader` doing some regexp-fu and precompile all required
-templates.
+This loader workaround this behaviour by precompiling templates *and* dependant
+templates as separate bundle chunks. It also use custom wrapper for precompiled
+code to avoid creating `window.nunjucksPrecompiled`.
+
+It also adds each found template as dependency for template that need it,
+so bundle get rebuild only when in watch mode.
 
 ## Options
 Loader supports limited number of [Nunjuncks options](https://mozilla.github.io/nunjucks/api.html#configure).
