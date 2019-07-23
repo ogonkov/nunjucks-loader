@@ -86,3 +86,17 @@ It's doesn't support `watch` (it's not relate to `webpack` files watch),
 `noCache`, `web` settings and `express`.
 
 All other options get passed to Nunjunks `Environment` during files loading.
+
+|Name|Type|Default|Description|
+|:--:|:--:|:-----:|:----------|
+|**[`searchPaths`](#searchpaths)**|`{String\|Array.<string>}`|`.`|One or more paths to resolve templates paths|
+
+### searchPaths
+
+Loader is searching for full template path in next order:
+
+* relative to given string(s) from `searchPath` option (or project root, if no
+  paths given),
+* relative to current file.
+
+Path to file couldn't be outside of folders above.

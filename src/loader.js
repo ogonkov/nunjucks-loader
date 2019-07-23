@@ -5,13 +5,24 @@ import validate from 'schema-utils';
 import schema from './schema.json';
 import {withDependencies} from "./precompile/with-dependencies";
 
+function getImports(imports, assignments) {
+    return `
+        ${imports}
+        var precompiledTemplates = Object.assign(
+            {},
+            ${assignments}
+        );
+    `;
+}
+
 export default function nunjucksLoader(source) {
     const {
         autoescape,
         throwOnUndefined,
         trimBlocks,
         lstripBlocks,
-        tags
+        tags,
+        searchPaths
     } = getOptions(this) || {};
 
     const callback = this.async();
@@ -20,7 +31,8 @@ export default function nunjucksLoader(source) {
         throwOnUndefined,
         trimBlocks,
         lstripBlocks,
-        tags
+        tags,
+        searchPaths
     };
 
     validate(schema, options, {
@@ -28,22 +40,24 @@ export default function nunjucksLoader(source) {
         baseDataPath: 'options'
     });
 
-    withDependencies(this.resourcePath, source, options).then((template) => {
-        const {dependencies, precompiled} = template;
+    const foldDependenciesToImports = ([imports, assignment], fullPath, i) => {
+        this.addDependency(fullPath);
 
-        return {
-            precompiled,
-            dependencies: dependencies.reduce((imports, {fullPath}) => {
-                this.addDependency(fullPath);
+        const path = JSON.stringify(fullPath);
+        const importVar = `templateDependencies${i}`;
 
-                const path = JSON.stringify(fullPath);
+        return [
+            `${imports}var ${importVar} = require(${path}).dependencies;`,
+            `${assignment}${importVar},`
+        ];
+    };
 
-                return `
-                    ${imports}precompiledTemplates[${path}] = require(${path}).precompiled;
-               `;
-            }, '')
-        };
-    }).then((template) => {
+    withDependencies(this.resourcePath, source, options).then(({dependencies, precompiled}) => ({
+        precompiled,
+        dependencies: getImports(
+            ...dependencies.reduce(foldDependenciesToImports, ['', ''])
+        )
+    })).then((template) => {
         const {dependencies, precompiled} = template;
 
         const runtimeImport = `var runtime = require(${stringifyRequest(
@@ -53,7 +67,6 @@ export default function nunjucksLoader(source) {
 
         const resourcePathString = JSON.stringify(this.resourcePath);
         callback(null, `
-            var precompiledTemplates = {};
             ${runtimeImport}
             ${dependencies}
             ${precompiled}
@@ -67,6 +80,7 @@ export default function nunjucksLoader(source) {
             };
 
             module.exports.precompiled = precompiledTemplates[${resourcePathString}];
+            module.exports.dependencies = precompiledTemplates;
         `);
     }, function(error) {
         callback(error);

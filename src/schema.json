@@ -36,6 +36,19 @@
         }
       },
       "additionalProperties": false
+    },
+    "searchPaths": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
     }
   },
   "additionalProperties": false
