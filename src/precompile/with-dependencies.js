@@ -19,7 +19,7 @@ const isExists = promisify(fs.access);
 /**
  * @param {string}   importPath
  * @param {string[]} searchPaths
- * @returns {{name: string, paths: string[]}}
+ * @returns {TemplatePossiblePaths}
  */
 function resolveSearchPaths(importPath, searchPaths) {
     const paths = [];
@@ -53,6 +53,18 @@ function getTemplateReFor(importPath) {
     );
 }
 
+/**
+ * @typedef {Object} TemplatePossiblePaths
+ * @property {string}   name
+ * @property {string[]} paths
+ */
+
+/**
+ * @param {string}   resourcePath
+ * @param {string}   precompiled
+ * @param {string[]} searchPaths
+ * @returns {TemplatePossiblePaths[]}
+ */
 function getTemplatePaths(resourcePath, precompiled, searchPaths) {
     const possiblePaths = [];
 
@@ -89,6 +101,11 @@ function getTemplatePaths(resourcePath, precompiled, searchPaths) {
     return possiblePaths;
 }
 
+/**
+ * @param {Promise} examinePath
+ * @param {string} path
+ * @returns {Promise<string>}
+ */
 function foldFirstExistedPath(examinePath, path) {
     return examinePath.then(function(existedFile) {
         if (typeof existedFile === 'string') {
@@ -102,6 +119,10 @@ function foldFirstExistedPath(examinePath, path) {
     });
 }
 
+/**
+ * @param {TemplatePossiblePaths} templatePaths
+ * @returns {Promise<PrecompiledDependencyLink>}
+ */
 function toResolvedDependency({paths, name}) {
     function examineFoundPath(fullPath) {
         if (typeof fullPath !== 'string') {
