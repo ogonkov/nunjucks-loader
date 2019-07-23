@@ -98,3 +98,5 @@ Loader is searching for full template path in next order:
 * relative to given string(s) from `searchPath` option (or project root, if no
   paths given),
 * relative to current file.
+
+Path to file couldn't be outside of folders above.
