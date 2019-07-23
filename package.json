@@ -4,7 +4,7 @@
   "description": "Webpack loader for Nunjucks",
   "main": "lib/loader.js",
   "scripts": {
-    "build": "babel src --out-dir=lib",
+    "build": "rm -rf lib && babel src --out-dir=lib --copy-files",
     "pretest": "eslint src",
     "test": "jest",
     "posttest": "rm -rf ./test/bundles/",
