@@ -107,7 +107,7 @@ so bundle get rebuild only when in watch mode.
 
 ## Options
 Loader supports limited number of [Nunjuncks options](https://mozilla.github.io/nunjucks/api.html#configure).
-It's doesn't support `watch` (it's not relate to `webpack` files watch),
+It's doesn't support `watch` (we use `webpack` own dependencies watch),
 `noCache`, `web` settings and `express`.
 
 All other options get passed to Nunjunks `Environment` during files loading.
