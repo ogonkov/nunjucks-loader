@@ -20,7 +20,8 @@
     "webpack",
     "loader",
     "nunjucks",
-    "template"
+    "template",
+    "html-webpack-plugin"
   ],
   "author": "Aleksey",
   "license": "MIT",
