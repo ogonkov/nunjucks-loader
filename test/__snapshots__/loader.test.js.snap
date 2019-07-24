@@ -1,5 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Advanced compilation should compile templates with non-relative paths 1`] = `
+"<!DOCTYPE html>
+<html lang=\\"en\\">
+<head>
+    <meta charset=\\"UTF-8\\">
+    <title></title>
+</head>
+<body>
+
+    
+
+<main>
+    
+
+<p>Main content</p>
+
+
+</main>
+
+
+
+</body>
+</html>
+"
+`;
+
 exports[`Simple compilation should compile builtin tags 1`] = `
 "<main>
     <h1><a href=\\"\\">Parent</a></h1>
@@ -88,32 +114,6 @@ exports[`Simple compilation should compile templates with multiple includes 1`] 
 
 
 </main>
-"
-`;
-
-exports[`Simple compilation should compile templates with non-relative paths 1`] = `
-"<!DOCTYPE html>
-<html lang=\\"en\\">
-<head>
-    <meta charset=\\"UTF-8\\">
-    <title></title>
-</head>
-<body>
-
-    
-
-<main>
-    
-
-<p>Main content</p>
-
-
-</main>
-
-
-
-</body>
-</html>
 "
 `;
 
