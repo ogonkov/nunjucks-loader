@@ -57,7 +57,9 @@ describe('Simple compilation', function() {
 
         expect(output()).toMatchSnapshot();
     });
+});
 
+describe('Advanced compilation', function() {
     test('should compile templates with non-relative paths', async function() {
         const output = await compiler('fixtures/django_project/app_example/templates/main/main.njk', {
             searchPaths: 'test/fixtures/django_project/app_example/templates'
