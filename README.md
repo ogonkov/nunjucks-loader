@@ -115,6 +115,11 @@ All other options get passed to Nunjunks `Environment` during files loading.
 |Name|Type|Default|Description|
 |:--:|:--:|:-----:|:----------|
 |**[`searchPaths`](#searchpaths)**|`{String}` or `{Array.<string>}`|`.`|One or more paths to resolve templates paths|
+|**`autoescape`**|`{Boolean}`|`true`||
+|**`throwOnUndefined`**|`{Boolean}`|`false`||
+|**`trimBlocks`**|`{Boolean}`|`false`||
+|**`lstripBlocks`**|`{Boolean}`|`false`||
+|**`tags`**|`{Object.<string, string>}`|`{}`|Override tags syntax|
 
 ### searchPaths
 
