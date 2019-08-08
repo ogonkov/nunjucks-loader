@@ -26,6 +26,14 @@ exports[`Advanced compilation should compile templates with non-relative paths 1
 "
 `;
 
+exports[`Advanced compilation should compile with given globals 1`] = `
+"<div>
+
+globals returned value
+</div>
+"
+`;
+
 exports[`Simple compilation should compile builtin tags 1`] = `
 "<main>
     <h1><a href=\\"\\">Parent</a></h1>
