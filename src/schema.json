@@ -49,6 +49,9 @@
           }
         }
       ]
+    },
+    "globals": {
+      "type": "object"
     }
   },
   "additionalProperties": false

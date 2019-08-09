@@ -15,6 +15,10 @@ function getImports(imports, assignments) {
     `;
 }
 
+function toVar(symb) {
+    return symb.replace(/[.-]/g, '_');
+}
+
 export default function nunjucksLoader(source) {
     const {
         autoescape,
@@ -22,7 +26,8 @@ export default function nunjucksLoader(source) {
         trimBlocks,
         lstripBlocks,
         tags,
-        searchPaths
+        searchPaths,
+        globals = {}
     } = getOptions(this) || {};
 
     const callback = this.async();
@@ -32,7 +37,8 @@ export default function nunjucksLoader(source) {
         trimBlocks,
         lstripBlocks,
         tags,
-        searchPaths
+        searchPaths,
+        globals
     };
 
     validate(schema, options, {
@@ -52,6 +58,17 @@ export default function nunjucksLoader(source) {
         ];
     };
 
+    const globalFns = Object.keys(globals);
+    const globalFnsImports = `
+        ${globalFns.map(function(globalImport) {
+            return `
+             var _global_${toVar(globalImport)} = require('${
+                globals[globalImport]
+              }');
+           `;
+        })}
+    `;
+
     withDependencies(this.resourcePath, source, options).then(({dependencies, precompiled}) => ({
         precompiled,
         dependencies: getImports(
@@ -69,10 +86,14 @@ export default function nunjucksLoader(source) {
         callback(null, `
             ${runtimeImport}
             ${dependencies}
+            ${globalFnsImports}
             ${precompiled}
             module.exports = function nunjucksTemplate(ctx) {
               var nunjucks = runtime(
                 ${JSON.stringify(options)},
+                [${globalFns.map((globalName) => {
+                    return `['${globalName}', _global_${toVar(globalName)}]`;
+                 })}],
                 precompiledTemplates
               );
             

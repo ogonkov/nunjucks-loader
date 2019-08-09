@@ -115,6 +115,7 @@ All other options get passed to Nunjunks `Environment` during files loading.
 |Name|Type|Default|Description|
 |:--:|:--:|:-----:|:----------|
 |**[`searchPaths`](#searchpaths)**|`{String}` or `{Array.<string>}`|`.`|One or more paths to resolve templates paths|
+|**[`globals`](#globals)**|`Object.<string, string>`|`{}`|Map global function to corresponding module|
 |<!-- Add custom options above -->**`autoescape`**|`{Boolean}`|`true`|See [Nunjuncks options](https://mozilla.github.io/nunjucks/api.html#configure) for description of options below|
 |**`throwOnUndefined`**|`{Boolean}`|`false`||
 |**`trimBlocks`**|`{Boolean}`|`false`||
@@ -130,3 +131,16 @@ Loader is searching for full template path in next order:
 * relative to current file.
 
 Path to file couldn't be outside of folders above.
+
+### globals
+
+Set global function and import, that should return function to use.
+
+```js
+{
+  globals: {
+    _: 'lodash',
+    globalEnv: path.join(__dirname, 'app/global-env.js')
+  }
+}
+```
