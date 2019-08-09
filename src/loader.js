@@ -15,6 +15,10 @@ function getImports(imports, assignments) {
     `;
 }
 
+function toVar(symb) {
+    return symb.replace(/[.-]/g, '_');
+}
+
 export default function nunjucksLoader(source) {
     const {
         autoescape,
@@ -54,10 +58,13 @@ export default function nunjucksLoader(source) {
         ];
     };
 
-    const globalsImports = `
-        ${Object.keys(globals).map(function(globalImport) {
+    const globalFns = Object.keys(globals);
+    const globalFnsImports = `
+        ${globalFns.map(function(globalImport) {
             return `
-             var _global_${globalImport} = require('${globals[globalImport]}');
+             var _global_${toVar(globalImport)} = require('${
+                globals[globalImport]
+              }');
            `;
         })}
     `;
@@ -79,13 +86,13 @@ export default function nunjucksLoader(source) {
         callback(null, `
             ${runtimeImport}
             ${dependencies}
-            ${globalsImports}
+            ${globalFnsImports}
             ${precompiled}
             module.exports = function nunjucksTemplate(ctx) {
               var nunjucks = runtime(
                 ${JSON.stringify(options)},
-                [${Object.keys(globals).map((globalName) => {
-                    return `['${globalName}', _global_${globalName}]`;
+                [${globalFns.map((globalName) => {
+                    return `['${globalName}', _global_${toVar(globalName)}]`;
                  })}],
                 precompiledTemplates
               );
