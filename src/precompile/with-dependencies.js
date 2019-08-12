@@ -83,10 +83,7 @@ function getTemplatePaths(resourcePath, precompiled, searchPaths) {
         const [, originalName] = match;
         const possiblePath = resolveSearchPaths(
             originalName,
-            [
-                ...searchPaths,
-                path.dirname(resourcePath)
-            ]
+            searchPaths
         );
 
         if (possiblePath.paths.some(containsResourcePath)) {
