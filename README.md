@@ -103,7 +103,7 @@ templates as separate bundle chunks. It also use custom wrapper for precompiled
 code to avoid creating `window.nunjucksPrecompiled`.
 
 It also adds each found template as dependency for template that need it,
-so bundle get rebuild only when in watch mode.
+so bundle get rebuild in watch mode only when required.
 
 ## Options
 Loader supports limited number of [Nunjuncks options](https://mozilla.github.io/nunjucks/api.html#configure).
