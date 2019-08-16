@@ -59,7 +59,7 @@ export function withDependencies(resourcePath, source, options) {
     const env = nunjucks.configure(searchPaths, opts);
 
     return Promise.all([
-        precompileToLocalVar(resourcePath, source, env),
+        precompileToLocalVar(source, resourcePath, env),
         getDependenciesImports(source, searchPaths)
     ]).then(function([precompiled, dependenciesImports]) {
         return {
