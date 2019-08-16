@@ -1,4 +1,4 @@
-import path from "path";
+import path from 'path';
 
 export function getImportPath(resourcePath, searchPaths) {
     const [importPath] = searchPaths.map((x) => resourcePath

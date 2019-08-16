@@ -17,7 +17,7 @@ export function getFirstExistedPath(paths) {
         });
     }, Promise.resolve()).then(function(path) {
         if (typeof path !== 'string') {
-            throw new Error(`Template not found`);
+            throw new Error('Template not found');
         }
 
         return path;

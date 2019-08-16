@@ -1,5 +1,5 @@
-import nunjucks from "nunjucks";
-import {localVarWrapper as precompileWrapper} from "./local-var-wrapper";
+import nunjucks from 'nunjucks';
+import {localVarWrapper as precompileWrapper} from './local-var-wrapper';
 
 /**
  * @param {string}      source

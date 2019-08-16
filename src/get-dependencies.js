@@ -1,4 +1,4 @@
-import nunjucks from "nunjucks";
+import nunjucks from 'nunjucks';
 
 export function getDependencies(source) {
     const nodes = nunjucks.parser.parse(source);

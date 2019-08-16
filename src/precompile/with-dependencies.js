@@ -1,9 +1,9 @@
-import nunjucks from "nunjucks";
+import nunjucks from 'nunjucks';
 
-import {precompileToLocalVar} from "./local-var-precompile";
-import {getDependencies} from "../get-dependencies";
-import {getPossiblePaths} from "../get-possible-paths";
-import {getFirstExistedPath} from "../get-first-existed-path";
+import {precompileToLocalVar} from './local-var-precompile';
+import {getDependencies} from '../get-dependencies';
+import {getPossiblePaths} from '../get-possible-paths';
+import {getFirstExistedPath} from '../get-first-existed-path';
 
 /**
  * @typedef {Object} NunjucksOptions

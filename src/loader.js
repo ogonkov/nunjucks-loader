@@ -3,8 +3,8 @@ import {getOptions, stringifyRequest} from 'loader-utils';
 import validate from 'schema-utils';
 
 import schema from './schema.json';
-import {withDependencies} from "./precompile/with-dependencies";
-import {getImportPath} from "./get-import-path";
+import {withDependencies} from './precompile/with-dependencies';
+import {getImportPath} from './get-import-path';
 
 function getImports(imports, assignments) {
     return `
