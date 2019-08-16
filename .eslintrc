@@ -8,6 +8,15 @@
     "node": true,
     "es6": true
   },
+  "rules": {
+    "quotes": [
+      "error",
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ]
+  },
   "overrides": [
     {
       "files": [

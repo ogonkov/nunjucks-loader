@@ -3,7 +3,8 @@ import {getOptions, stringifyRequest} from 'loader-utils';
 import validate from 'schema-utils';
 
 import schema from './schema.json';
-import {withDependencies} from "./precompile/with-dependencies";
+import {withDependencies} from './precompile/with-dependencies';
+import {getImportPath} from './get-import-path';
 
 function getImports(imports, assignments) {
     return `
@@ -26,7 +27,7 @@ export default function nunjucksLoader(source) {
         trimBlocks,
         lstripBlocks,
         tags,
-        searchPaths,
+        searchPaths = '.',
         globals = {}
     } = getOptions(this) || {};
 
@@ -46,9 +47,7 @@ export default function nunjucksLoader(source) {
         baseDataPath: 'options'
     });
 
-    const foldDependenciesToImports = ([imports, assignment], fullPath, i) => {
-        this.addDependency(fullPath);
-
+    function foldDependenciesToImports([imports, assignment], [, fullPath], i) {
         const path = JSON.stringify(fullPath);
         const importVar = `templateDependencies${i}`;
 
@@ -56,7 +55,7 @@ export default function nunjucksLoader(source) {
             `${imports}var ${importVar} = require(${path}).dependencies;`,
             `${assignment}${importVar},`
         ];
-    };
+    }
 
     const globalFns = Object.keys(globals);
     const globalFnsImports = `
@@ -69,20 +68,26 @@ export default function nunjucksLoader(source) {
         })}
     `;
 
-    withDependencies(this.resourcePath, source, options).then(({dependencies, precompiled}) => ({
+    const normalizedSearchPaths = [].concat(searchPaths).map(path.normalize);
+    const resourcePathImport = getImportPath(
+        this.resourcePath,
+        normalizedSearchPaths
+    );
+    withDependencies(resourcePathImport, source, {
+        ...options,
+        searchPaths: normalizedSearchPaths
+    }).then(({dependencies, precompiled}) => ({
         precompiled,
         dependencies: getImports(
             ...dependencies.reduce(foldDependenciesToImports, ['', ''])
         )
-    })).then((template) => {
-        const {dependencies, precompiled} = template;
-
+    })).then(({dependencies, precompiled}) => {
         const runtimeImport = `var runtime = require(${stringifyRequest(
             this,
             `${path.resolve(path.join(__dirname, 'runtime.js'))}`
         )});`;
 
-        const resourcePathString = JSON.stringify(this.resourcePath);
+        const resourcePathString = JSON.stringify(resourcePathImport);
         callback(null, `
             ${runtimeImport}
             ${dependencies}

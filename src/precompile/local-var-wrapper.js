@@ -12,7 +12,7 @@ export function localVarWrapper(templates) {
     let out = '';
 
     for (let i = 0; i < templates.length; i++) {
-        const {name, template} = templates[0];
+        const {name, template} = templates[i];
 
         out += `
             precompiledTemplates[${JSON.stringify(name)}] = (function() {

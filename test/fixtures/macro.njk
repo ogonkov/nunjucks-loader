@@ -1,5 +1,5 @@
-{% extends 'base.njk' %}
-{% import './simple-macro.njk' as form %}
+{% extends 'test/fixtures/base.njk' %}
+{% import 'test/fixtures/simple-macro.njk' as form %}
 
 {% block content %}
     {{ form.field('user') }}

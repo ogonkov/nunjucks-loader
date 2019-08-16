@@ -103,7 +103,7 @@ templates as separate bundle chunks. It also use custom wrapper for precompiled
 code to avoid creating `window.nunjucksPrecompiled`.
 
 It also adds each found template as dependency for template that need it,
-so bundle get rebuild only when in watch mode.
+so bundle get rebuild in watch mode only when required.
 
 ## Options
 Loader supports limited number of [Nunjuncks options](https://mozilla.github.io/nunjucks/api.html#configure).
@@ -124,11 +124,8 @@ All other options get passed to Nunjunks `Environment` during files loading.
 
 ### searchPaths
 
-Loader is searching for full template path in next order:
-
-* relative to given string(s) from `searchPath` option (or project root, if no
-  paths given),
-* relative to current file.
+Loader is searching for full template relative to given string(s) from
+`searchPath` option (or project root, if no paths given).
 
 Path to file couldn't be outside of folders above.
 

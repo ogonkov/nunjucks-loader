@@ -1,13 +1,13 @@
-import nunjucks from "nunjucks";
-import {localVarWrapper as precompileWrapper} from "./local-var-wrapper";
+import nunjucks from 'nunjucks';
+import {localVarWrapper as precompileWrapper} from './local-var-wrapper';
 
 /**
- * @param {string}      fileName
  * @param {string}      source
+ * @param {string}      fileName
  * @param {Environment} env
  * @returns {Promise<string>}
  */
-export function precompileToLocalVar(fileName, source, env) {
+export function precompileToLocalVar(source, fileName, env) {
     return new Promise(function(resolve, reject) {
         try {
             const precompiled = nunjucks.precompileString(source, {
