@@ -57,17 +57,6 @@ export default function nunjucksLoader(source) {
         ];
     }
 
-    const globalFns = Object.keys(globals);
-    const globalFnsImports = `
-        ${globalFns.map(function(globalImport) {
-            return `
-             var _global_${toVar(globalImport)} = require('${
-                globals[globalImport]
-              }');
-           `;
-        })}
-    `;
-
     const normalizedSearchPaths = [].concat(searchPaths).map(path.normalize);
     const resourcePathImport = getImportPath(
         this.resourcePath,
@@ -76,16 +65,21 @@ export default function nunjucksLoader(source) {
     withDependencies(resourcePathImport, source, {
         ...options,
         searchPaths: normalizedSearchPaths
-    }).then(({dependencies, precompiled}) => ({
-        precompiled,
+    }).then(({dependencies, ...rest}) => ({
+        ...rest,
         dependencies: getImports(
             ...dependencies.reduce(foldDependenciesToImports, ['', ''])
         )
-    })).then(({dependencies, precompiled}) => {
+    })).then(({dependencies, precompiled, globals}) => {
         const runtimeImport = `var runtime = require(${stringifyRequest(
             this,
             `${path.resolve(path.join(__dirname, 'runtime.js'))}`
         )});`;
+        const globalFnsImports = globals.map(function([globalImport, globalPath]) {
+            return `
+               var _global_${toVar(globalImport)} = require('${globalPath}');
+           `;
+        }).join('');
 
         const resourcePathString = JSON.stringify(resourcePathImport);
         callback(null, `
@@ -96,7 +90,7 @@ export default function nunjucksLoader(source) {
             module.exports = function nunjucksTemplate(ctx) {
               var nunjucks = runtime(
                 ${JSON.stringify(options)},
-                [${globalFns.map((globalName) => {
+                [${globals.map(([globalName]) => {
                     return `['${globalName}', _global_${toVar(globalName)}]`;
                  })}],
                 precompiledTemplates

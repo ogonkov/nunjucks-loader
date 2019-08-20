@@ -1,7 +1,7 @@
 import nunjucks from 'nunjucks';
 
 import {precompileToLocalVar} from './local-var-precompile';
-import {getDependencies} from '../get-dependencies';
+import {getDependenciesTemplates} from '../get-dependencies-templates';
 import {getPossiblePaths} from '../get-possible-paths';
 import {getFirstExistedPath} from '../get-first-existed-path';
 
@@ -34,8 +34,8 @@ import {getFirstExistedPath} from '../get-first-existed-path';
  * @property {PrecompiledDependencyLink[]} dependencies
  */
 
-function getDependenciesImports(source, searchPaths) {
-    const templateDeps = getDependencies(source);
+function getDependenciesImports(nodes, searchPaths) {
+    const templateDeps = getDependenciesTemplates(nodes);
     const possiblePaths = getPossiblePaths(templateDeps, searchPaths);
     const resolvedTemplates = possiblePaths.map(function([path, paths]) {
         return getFirstExistedPath(paths).then(function(importPath) {
@@ -48,6 +48,21 @@ function getDependenciesImports(source, searchPaths) {
     return Promise.all(resolvedTemplates);
 }
 
+function getDependenciesGlobals(nodes, globals) {
+    const usedGlobals = nodes
+        .findAll(nunjucks.nodes.FunCall)
+        .map((global) => global.name.value)
+        .filter(Boolean);
+
+    if (usedGlobals.length === 0) {
+        return [];
+    }
+
+    return Object.keys(globals)
+        .filter((fnName) => usedGlobals.includes(fnName))
+        .map((fnName) => [fnName, globals[fnName]]);
+}
+
 /**
  * @param {string} resourcePath
  * @param {string} source
@@ -55,16 +70,18 @@ function getDependenciesImports(source, searchPaths) {
  * @returns {Promise<string>} Source of precompiled template with wrapper
  */
 export function withDependencies(resourcePath, source, options) {
-    const {searchPaths, ...opts} = options;
+    const {searchPaths, globals, ...opts} = options;
     const env = nunjucks.configure(searchPaths, opts);
+    const nodes = nunjucks.parser.parse(source);
 
     return Promise.all([
         precompileToLocalVar(source, resourcePath, env),
-        getDependenciesImports(source, searchPaths)
-    ]).then(function([precompiled, dependenciesImports]) {
+        getDependenciesImports(nodes, searchPaths)
+    ]).then(function([precompiled, dependencies]) {
         return {
             precompiled,
-            dependencies: dependenciesImports
+            dependencies,
+            globals: getDependenciesGlobals(nodes, globals)
         };
     });
 }
