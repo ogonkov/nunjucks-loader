@@ -51,7 +51,20 @@
       ]
     },
     "globals": {
-      "type": "object"
+      "type": "object",
+      "patternProperties": {
+        ".+": {
+          "type": "string"
+        }
+      }
+    },
+    "extensions": {
+      "type": "object",
+      "patternProperties": {
+        ".+": {
+          "type": "string"
+        }
+      }
     }
   },
   "additionalProperties": false

@@ -28,10 +28,10 @@ export default function nunjucksLoader(source) {
         lstripBlocks,
         tags,
         searchPaths = '.',
-        globals = {}
+        globals = {},
+        extensions = {}
     } = getOptions(this) || {};
 
-    const callback = this.async();
     const options = {
         autoescape,
         throwOnUndefined,
@@ -39,13 +39,16 @@ export default function nunjucksLoader(source) {
         lstripBlocks,
         tags,
         searchPaths,
-        globals
+        globals,
+        extensions
     };
 
     validate(schema, options, {
         name: 'Simple Nunjucks Loader',
         baseDataPath: 'options'
     });
+
+    const callback = this.async();
 
     function foldDependenciesToImports([imports, assignment], [, fullPath], i) {
         const path = JSON.stringify(fullPath);
@@ -80,18 +83,27 @@ export default function nunjucksLoader(source) {
                var _global_${toVar(globalImport)} = require('${globalPath}');
            `;
         }).join('');
+        const extensionsImports = Object.entries(extensions).map(function([name, importPath]) {
+            return `
+               var _extension_${name} = require('${importPath}');
+           `;
+        }).join('');
 
         const resourcePathString = JSON.stringify(resourcePathImport);
         callback(null, `
             ${runtimeImport}
             ${dependencies}
             ${globalFnsImports}
+            ${extensionsImports}
             ${precompiled}
             module.exports = function nunjucksTemplate(ctx) {
               var nunjucks = runtime(
                 ${JSON.stringify(options)},
                 [${globals.map(([globalName]) => {
                     return `['${globalName}', _global_${toVar(globalName)}]`;
+                 })}],
+                [${Object.keys(extensions).map((extName) => {
+                    return `['${extName}', _extension_${extName}]`;
                  })}],
                 precompiledTemplates
               );
