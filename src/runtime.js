@@ -2,7 +2,7 @@ const {WebpackPrecompiledLoader} = require('./WebpackPrecompiledLoader');
 
 const {Environment} = require('nunjucks/browser/nunjucks-slim');
 
-module.exports = function runtime(options, globals, precompiled) {
+module.exports = function runtime(options, globals, extensions, precompiled) {
     const env = new Environment(
         new WebpackPrecompiledLoader(precompiled),
         options
@@ -10,6 +10,10 @@ module.exports = function runtime(options, globals, precompiled) {
 
     globals.forEach(([name, fn]) => {
         env.addGlobal(name, fn);
+    });
+
+    extensions.forEach(([name, fn]) => {
+        env.addExtension(name, fn);
     });
 
     return {

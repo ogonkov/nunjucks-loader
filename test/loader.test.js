@@ -78,4 +78,14 @@ describe('Advanced compilation', function() {
 
         expect(output()).toMatchSnapshot();
     });
+
+    test('should compile custom tags', async function() {
+        const output = await compiler('fixtures/custom-extension.njk', {
+            extensions: {
+                RemoteExtension: path.join(__dirname, './fixtures/RemoteExtension.js')
+            }
+        });
+
+        expect(output()).toMatchSnapshot();
+    });
 });

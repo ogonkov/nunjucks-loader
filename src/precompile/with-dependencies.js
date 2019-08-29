@@ -70,9 +70,27 @@ function getDependenciesGlobals(nodes, globals) {
  * @returns {Promise<string>} Source of precompiled template with wrapper
  */
 export function withDependencies(resourcePath, source, options) {
-    const {searchPaths, globals, ...opts} = options;
+    const {searchPaths, globals, extensions, ...opts} = options;
     const env = nunjucks.configure(searchPaths, opts);
-    const nodes = nunjucks.parser.parse(source);
+    const extensionsInstances =
+        Object.entries(extensions).map(([name, importPath]) => {
+            return [name, importPath, require(importPath)]
+        });
+    const nodes = nunjucks.parser.parse(
+        source,
+        extensionsInstances.map(([,, ext]) => ext)
+    );
+
+    const extensionCalls = nodes.findAll(nunjucks.nodes.CallExtension)
+        .map(({extName}) => {
+            return extensionsInstances.find(([,, instance]) => {
+                return instance === extName
+            })
+        }).filter(Boolean);
+
+    extensionCalls.forEach(function([name, importPath]) {
+        env.addExtension(name, require(importPath));
+    });
 
     return Promise.all([
         precompileToLocalVar(source, resourcePath, env),
@@ -81,7 +99,8 @@ export function withDependencies(resourcePath, source, options) {
         return {
             precompiled,
             dependencies,
-            globals: getDependenciesGlobals(nodes, globals)
+            globals: getDependenciesGlobals(nodes, globals),
+            extensions: extensionCalls
         };
     });
 }
