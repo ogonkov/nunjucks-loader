@@ -116,7 +116,7 @@ All other options get passed to Nunjunks `Environment` during files loading.
 |:--:|:--:|:-----:|:----------|
 |**[`searchPaths`](#searchpaths)**|`{String}` or `{Array.<string>}`|`.`|One or more paths to resolve templates paths|
 |**[`globals`](#globals)**|`Object.<string, string>`|`{}`|Map global function to corresponding module|
-|**[`extensions`](#extensions)**|`Object.<string, string>`|Map extension to corresponding module|
+|**[`extensions`](#extensions)**|`Object.<string, string>`|`{}`|Map extension to corresponding module|
 |<!-- Add custom options above -->**`autoescape`**|`{Boolean}`|`true`|See [Nunjuncks options](https://mozilla.github.io/nunjucks/api.html#configure) for description of options below|
 |**`throwOnUndefined`**|`{Boolean}`|`false`||
 |**`trimBlocks`**|`{Boolean}`|`false`||
