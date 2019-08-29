@@ -145,7 +145,7 @@ Set global function and import, that should return function to use.
 
 ### extensions
 
-Set extensions to import, that required for templates to render.
+Set map of extensions that would be imported before each template render.
 
 ```js
 {
@@ -157,3 +157,6 @@ Set extensions to import, that required for templates to render.
 
 Module here (`lib/extensions/custom-extension.js`) should return extension
 instance.
+
+Loader trying to guess which extensions are really used, and keep only required
+imports.
