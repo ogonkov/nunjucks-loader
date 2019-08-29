@@ -72,12 +72,23 @@ function getDependenciesGlobals(nodes, globals) {
 export function withDependencies(resourcePath, source, options) {
     const {searchPaths, globals, extensions, ...opts} = options;
     const env = nunjucks.configure(searchPaths, opts);
+    const extensionsInstances =
+        Object.entries(extensions).map(([name, importPath]) => {
+            return [name, importPath, require(importPath)]
+        });
     const nodes = nunjucks.parser.parse(
         source,
-        Object.values(extensions).map((ext) => require(ext))
+        extensionsInstances.map(([,, ext]) => ext)
     );
 
-    Object.entries(extensions).forEach(function([name, importPath]) {
+    const extensionCalls = nodes.findAll(nunjucks.nodes.CallExtension)
+        .map(({extName}) => {
+            return extensionsInstances.find(([,, instance]) => {
+                return instance === extName
+            })
+        }).filter(Boolean);
+
+    extensionCalls.forEach(function([name, importPath]) {
         env.addExtension(name, require(importPath));
     });
 
@@ -88,7 +99,8 @@ export function withDependencies(resourcePath, source, options) {
         return {
             precompiled,
             dependencies,
-            globals: getDependenciesGlobals(nodes, globals)
+            globals: getDependenciesGlobals(nodes, globals),
+            extensions: extensionCalls
         };
     });
 }

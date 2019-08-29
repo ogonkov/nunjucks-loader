@@ -73,7 +73,7 @@ export default function nunjucksLoader(source) {
         dependencies: getImports(
             ...dependencies.reduce(foldDependenciesToImports, ['', ''])
         )
-    })).then(({dependencies, precompiled, globals}) => {
+    })).then(({dependencies, precompiled, globals, extensions}) => {
         const runtimeImport = `var runtime = require(${stringifyRequest(
             this,
             `${path.resolve(path.join(__dirname, 'runtime.js'))}`
@@ -83,7 +83,7 @@ export default function nunjucksLoader(source) {
                var _global_${toVar(globalImport)} = require('${globalPath}');
            `;
         }).join('');
-        const extensionsImports = Object.entries(extensions).map(function([name, importPath]) {
+        const extensionsImports = extensions.map(function([name, importPath]) {
             return `
                var _extension_${name} = require('${importPath}');
            `;
@@ -102,7 +102,7 @@ export default function nunjucksLoader(source) {
                 [${globals.map(([globalName]) => {
                     return `['${globalName}', _global_${toVar(globalName)}]`;
                  })}],
-                [${Object.keys(extensions).map((extName) => {
+                [${extensions.map(([extName]) => {
                     return `['${extName}', _extension_${extName}]`;
                  })}],
                 precompiledTemplates
