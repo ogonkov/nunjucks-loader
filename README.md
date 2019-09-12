@@ -1,3 +1,8 @@
+[![npm package][npm-image]][npm-url] 
+[![Build Status][travis-image]][travis-url] 
+[![Coverage Status][coveralls-image]][coveralls-url] 
+[![Dependencies Status][david-image]][david-url]
+
 # Nunjucks templates loader for Webpack
 This Webpack loader compiles [Nunjucks](https://github.com/mozilla/nunjucks) templates.
 [`html-webpack-plugin`](https://github.com/jantimon/html-webpack-plugin) compatible. 
@@ -160,3 +165,12 @@ instance.
 
 Loader trying to guess which extensions are really used, and keep only required
 imports.
+
+[npm-image]:https://img.shields.io/npm/v/simple-nunjucks-loader.svg
+[npm-url]:http://npmjs.org/package/simple-nunjucks-loader
+[travis-image]:https://travis-ci.org/glicht/simple-nunjucks-loader.svg?branch=master
+[travis-url]:https://travis-ci.org/glicht/simple-nunjucks-loader
+[david-image]:https://david-dm.org/glicht/simple-nunjucks-loader/status.svg
+[david-url]:https://david-dm.org/glicht/simple-nunjucks-loader
+[coveralls-image]:https://coveralls.io/repos/github/glicht/simple-nunjucks-loader/badge.svg?branch=master
+[coveralls-url]:https://coveralls.io/github/glicht/simple-nunjucks-loader?branch=master
