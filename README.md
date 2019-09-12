@@ -1,6 +1,6 @@
 [![npm package][npm-image]][npm-url] 
+[![node][node]][node-url] 
 [![Build Status][travis-image]][travis-url] 
-[![Coverage Status][coveralls-image]][coveralls-url] 
 [![Dependencies Status][david-image]][david-url]
 
 # Nunjucks templates loader for Webpack
@@ -168,9 +168,9 @@ imports.
 
 [npm-image]:https://img.shields.io/npm/v/simple-nunjucks-loader.svg
 [npm-url]:http://npmjs.org/package/simple-nunjucks-loader
-[travis-image]:https://travis-ci.org/glicht/simple-nunjucks-loader.svg?branch=master
-[travis-url]:https://travis-ci.org/glicht/simple-nunjucks-loader
-[david-image]:https://david-dm.org/glicht/simple-nunjucks-loader/status.svg
-[david-url]:https://david-dm.org/glicht/simple-nunjucks-loader
-[coveralls-image]:https://coveralls.io/repos/github/glicht/simple-nunjucks-loader/badge.svg?branch=master
-[coveralls-url]:https://coveralls.io/github/glicht/simple-nunjucks-loader?branch=master
+[node]: https://img.shields.io/node/v/simple-nunjucks-loader.svg
+[node-url]: https://nodejs.org
+[travis-image]:https://travis-ci.org/ogonkov/nunjucks-loader.svg?branch=master
+[travis-url]:https://travis-ci.org/ogonkov/nunjucks-loader
+[david-image]:https://david-dm.org/ogonkov/nunjucks-loader/status.svg
+[david-url]:https://david-dm.org/ogonkov/nunjucks-loader
