@@ -119,6 +119,7 @@ All other options get passed to Nunjunks `Environment` during files loading.
 
 |Name|Type|Default|Description|
 |:--:|:--:|:-----:|:----------|
+|**[`jinjaCompat`](#jinjacompat)**|`{Boolean}`|`false`|Install Jinja syntax support in bundle|
 |**[`searchPaths`](#searchpaths)**|`{String}` or `{Array.<string>}`|`.`|One or more paths to resolve templates paths|
 |**[`globals`](#globals)**|`Object.<string, string>`|`{}`|Map global function to corresponding module|
 |**[`extensions`](#extensions)**|`Object.<string, string>`|`{}`|Map extension to corresponding module|
@@ -127,6 +128,10 @@ All other options get passed to Nunjunks `Environment` during files loading.
 |**`trimBlocks`**|`{Boolean}`|`false`||
 |**`lstripBlocks`**|`{Boolean}`|`false`||
 |**`tags`**|`{Object.<string, string>}`|```{blockStart: '{%', blockEnd: '%}', variableStart: '{{', variableEnd: '}}', commentStart: '{#', commentEnd: '#}'}```|Override tags syntax|
+
+### jinjaCompat
+
+Installs Jinja syntax. This option install it for whole bundle.
 
 ### searchPaths
 
