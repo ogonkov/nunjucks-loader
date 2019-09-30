@@ -144,3 +144,8 @@ exports[`Simple compilation should inherit from parent with super 1`] = `
 </main>
 "
 `;
+
+exports[`Simple compilation should install Jinja compat 1`] = `
+"True
+"
+`;
