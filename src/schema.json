@@ -13,6 +13,9 @@
     "lstripBlocks": {
       "type": "boolean"
     },
+    "jinjaCompat": {
+      "type": "boolean"
+    },
     "tags": {
       "type": "object",
       "properties": {

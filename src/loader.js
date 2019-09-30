@@ -27,6 +27,7 @@ export default function nunjucksLoader(source) {
         trimBlocks,
         lstripBlocks,
         tags,
+        jinjaCompat = false,
         searchPaths = '.',
         globals = {},
         extensions = {}
@@ -37,6 +38,7 @@ export default function nunjucksLoader(source) {
         throwOnUndefined,
         trimBlocks,
         lstripBlocks,
+        jinjaCompat,
         tags,
         searchPaths,
         globals,

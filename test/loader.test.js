@@ -58,6 +58,14 @@ describe('Simple compilation', function() {
 
         expect(output()).toMatchSnapshot();
     });
+
+    test('should install Jinja compat', async function() {
+        const output = await compiler('fixtures/jinja-syntax.njk', {
+            jinjaCompat: true
+        });
+
+        expect(output({})).toMatchSnapshot();
+    })
 });
 
 describe('Advanced compilation', function() {
