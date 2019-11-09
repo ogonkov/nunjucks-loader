@@ -1,10 +1,9 @@
 import path from 'path';
-import {getOptions, stringifyRequest} from 'loader-utils';
-import validate from 'schema-utils';
+import {stringifyRequest} from 'loader-utils';
 
-import schema from './schema.json';
 import {withDependencies} from './precompile/with-dependencies';
 import {getImportPath} from './get-import-path';
+import {getLoaderOptions} from './get-loader-options';
 
 function getImports(imports, assignments) {
     return `
@@ -21,36 +20,8 @@ function toVar(symb) {
 }
 
 export default function nunjucksLoader(source) {
-    const {
-        autoescape,
-        throwOnUndefined,
-        trimBlocks,
-        lstripBlocks,
-        tags,
-        jinjaCompat = false,
-        searchPaths = '.',
-        globals = {},
-        extensions = {}
-    } = getOptions(this) || {};
-
-    const options = {
-        autoescape,
-        throwOnUndefined,
-        trimBlocks,
-        lstripBlocks,
-        jinjaCompat,
-        tags,
-        searchPaths,
-        globals,
-        extensions
-    };
-
-    validate(schema, options, {
-        name: 'Simple Nunjucks Loader',
-        baseDataPath: 'options'
-    });
-
     const callback = this.async();
+    const options = getLoaderOptions(this, callback);
 
     function foldDependenciesToImports([imports, assignment], [, fullPath], i) {
         const path = JSON.stringify(fullPath);
@@ -62,7 +33,7 @@ export default function nunjucksLoader(source) {
         ];
     }
 
-    const normalizedSearchPaths = [].concat(searchPaths).map(path.normalize);
+    const normalizedSearchPaths = [].concat(options.searchPaths).map(path.normalize);
     const resourcePathImport = getImportPath(
         this.resourcePath,
         normalizedSearchPaths
