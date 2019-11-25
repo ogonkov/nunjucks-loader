@@ -36,7 +36,7 @@ export default function nunjucksLoader(source) {
 
         const resourcePathString = JSON.stringify(resourcePathImport);
         callback(null, `
-            ${getRuntimeImport()}
+            ${getRuntimeImport(this)}
             ${getTemplateDependenciesImport(dependencies)}
             ${globalFnsImports}
             ${extensionsImports}

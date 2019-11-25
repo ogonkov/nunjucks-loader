@@ -1,9 +1,9 @@
 import {stringifyRequest} from 'loader-utils';
 import path from 'path';
 
-export function getRuntimeImport() {
+export function getRuntimeImport(loaderContext) {
     return `var runtime = require(${stringifyRequest(
-        this,
-        `${path.resolve(path.join(__dirname, 'runtime.js'))}`
+        loaderContext,
+        `${path.resolve(path.join(__dirname, '..', 'runtime.js'))}`
     )});`
 }
