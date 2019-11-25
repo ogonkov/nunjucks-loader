@@ -4,6 +4,7 @@ import {stringifyRequest} from 'loader-utils';
 import {withDependencies} from './precompile/with-dependencies';
 import {getImportPath} from './get-import-path';
 import {getLoaderOptions} from './get-loader-options';
+import {getRuntimeImport} from './output/get-runtime-import';
 
 function getImports(imports, assignments) {
     return `
@@ -15,6 +16,16 @@ function getImports(imports, assignments) {
     `;
 }
 
+function foldDependenciesToImports([imports, assignment], [, fullPath], i) {
+    const path = JSON.stringify(fullPath);
+    const importVar = `templateDependencies${i}`;
+
+    return [
+        `${imports}var ${importVar} = require(${path}).dependencies;`,
+        `${assignment}${importVar},`
+    ];
+}
+
 function toVar(symb) {
     return symb.replace(/[.-]/g, '_');
 }
@@ -22,22 +33,12 @@ function toVar(symb) {
 export default function nunjucksLoader(source) {
     const callback = this.async();
     const options = getLoaderOptions(this, callback);
-
-    function foldDependenciesToImports([imports, assignment], [, fullPath], i) {
-        const path = JSON.stringify(fullPath);
-        const importVar = `templateDependencies${i}`;
-
-        return [
-            `${imports}var ${importVar} = require(${path}).dependencies;`,
-            `${assignment}${importVar},`
-        ];
-    }
-
     const normalizedSearchPaths = [].concat(options.searchPaths).map(path.normalize);
     const resourcePathImport = getImportPath(
         this.resourcePath,
         normalizedSearchPaths
     );
+
     withDependencies(resourcePathImport, source, {
         ...options,
         searchPaths: normalizedSearchPaths
@@ -47,10 +48,6 @@ export default function nunjucksLoader(source) {
             ...dependencies.reduce(foldDependenciesToImports, ['', ''])
         )
     })).then(({dependencies, precompiled, globals, extensions}) => {
-        const runtimeImport = `var runtime = require(${stringifyRequest(
-            this,
-            `${path.resolve(path.join(__dirname, 'runtime.js'))}`
-        )});`;
         const globalFnsImports = globals.map(function([globalImport, globalPath]) {
             return `
                var _global_${toVar(globalImport)} = require('${globalPath}');
@@ -64,7 +61,7 @@ export default function nunjucksLoader(source) {
 
         const resourcePathString = JSON.stringify(resourcePathImport);
         callback(null, `
-            ${runtimeImport}
+            ${getRuntimeImport()}
             ${dependencies}
             ${globalFnsImports}
             ${extensionsImports}
