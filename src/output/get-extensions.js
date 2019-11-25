@@ -5,7 +5,16 @@ export function getExtensions(extensions) {
         )).join('');
     }
 
+    function exports() {
+        return `
+            [${extensions.map(([extName]) => {
+                return `['${extName}', _extension_${extName}]`;
+            })}]
+        `;
+    }
+
     return {
-        imports
+        imports,
+        exports
     };
 }

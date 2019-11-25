@@ -7,7 +7,16 @@ export function getGlobals(globals) {
         )).join('')
     }
 
+    function exports() {
+        return `
+            [${globals.map(([globalName]) => {
+                return `['${globalName}', _global_${toVar(globalName)}]`;
+            })}]
+        `;
+    }
+
     return {
-        imports
+        imports,
+        exports
     }
 }

@@ -22,8 +22,14 @@ export default function nunjucksLoader(source) {
         ...options,
         searchPaths: normalizedSearchPaths
     }).then(({dependencies, precompiled, globals, extensions}) => {
-        const {imports: globalsImports} = getGlobals(globals);
-        const {imports: extensionsImports} = getExtensions(extensions);
+        const {
+            imports: globalsImports,
+            exports: globalsExports
+        } = getGlobals(globals);
+        const {
+            imports: extensionsImports,
+            exports: extensionsExports
+        } = getExtensions(extensions);
 
         const resourcePathString = JSON.stringify(resourcePathImport);
         callback(null, `
@@ -32,15 +38,12 @@ export default function nunjucksLoader(source) {
             ${globalsImports()}
             ${extensionsImports()}
             ${precompiled}
+
             module.exports = function nunjucksTemplate(ctx) {
               var nunjucks = runtime(
                 ${JSON.stringify(options)},
-                [${globals.map(([globalName]) => {
-                    return `['${globalName}', _global_${toVar(globalName)}]`;
-                 })}],
-                [${extensions.map(([extName]) => {
-                    return `['${extName}', _extension_${extName}]`;
-                 })}],
+                ${globalsExports()},
+                ${extensionsExports()},
                 precompiledTemplates
               );
             
