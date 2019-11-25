@@ -45,6 +45,23 @@ module.exports = {
 };
 ```
 
+**template-example.njk**
+```
+<p>Hello, {{ username }}!</p>
+```
+
+**app.js**
+```
+import template from './template-example.njk'
+
+document.body.innerHTML = template({
+  username: 'Mike'
+})
+```
+
+Bundling of `app.js` above will render paragraph with text "Hello, Mike!" to
+the page.
+
 ### With `html-webpack-plugin`
 
 For using with `html-webpack-plugin` just add it to `plugins` array, all options
@@ -72,27 +89,22 @@ module.exports = {
     
     plugins: [
         new HTMLWebpackPlugin({
-            template: 'src/page.njk'
+            template: 'src/page.njk',
+            templateParameters: {
+                username: 'Joe'
+            }
         })
     ]
 };
 ```
 
+**src/page.njk**
+```
+<p>Hello, {{ username }}!</p>
+```
+
 Refer to [`html-webpack-plugin` page](https://github.com/jantimon/html-webpack-plugin/#options)
 for all available options.
-
-### Via `import`/`require`
-
-To use it from your modules just import it as any other dependency and pass
-context for render:
-
-```js
-import template from './template.njk';
-
-const page = template({
-    foo: 'bar'
-});
-```
 
 ## How it works
 By default Nunjunks bundle all precompiled templates to
