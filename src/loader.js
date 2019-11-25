@@ -1,30 +1,10 @@
 import path from 'path';
-import {stringifyRequest} from 'loader-utils';
 
 import {withDependencies} from './precompile/with-dependencies';
 import {getImportPath} from './get-import-path';
 import {getLoaderOptions} from './get-loader-options';
 import {getRuntimeImport} from './output/get-runtime-import';
-
-function getImports(imports, assignments) {
-    return `
-        ${imports}
-        var precompiledTemplates = Object.assign(
-            {},
-            ${assignments}
-        );
-    `;
-}
-
-function foldDependenciesToImports([imports, assignment], [, fullPath], i) {
-    const path = JSON.stringify(fullPath);
-    const importVar = `templateDependencies${i}`;
-
-    return [
-        `${imports}var ${importVar} = require(${path}).dependencies;`,
-        `${assignment}${importVar},`
-    ];
-}
+import {getTemplateDependenciesImport} from './output/get-template-dependencies-import';
 
 function toVar(symb) {
     return symb.replace(/[.-]/g, '_');
@@ -42,12 +22,7 @@ export default function nunjucksLoader(source) {
     withDependencies(resourcePathImport, source, {
         ...options,
         searchPaths: normalizedSearchPaths
-    }).then(({dependencies, ...rest}) => ({
-        ...rest,
-        dependencies: getImports(
-            ...dependencies.reduce(foldDependenciesToImports, ['', ''])
-        )
-    })).then(({dependencies, precompiled, globals, extensions}) => {
+    }).then(({dependencies, precompiled, globals, extensions}) => {
         const globalFnsImports = globals.map(function([globalImport, globalPath]) {
             return `
                var _global_${toVar(globalImport)} = require('${globalPath}');
@@ -62,7 +37,7 @@ export default function nunjucksLoader(source) {
         const resourcePathString = JSON.stringify(resourcePathImport);
         callback(null, `
             ${getRuntimeImport()}
-            ${dependencies}
+            ${getTemplateDependenciesImport(dependencies)}
             ${globalFnsImports}
             ${extensionsImports}
             ${precompiled}
