@@ -6,7 +6,6 @@ import {getLoaderOptions} from './get-loader-options';
 import {getRuntimeImport} from './output/get-runtime-import';
 import {getTemplateDependenciesImport} from './output/get-template-dependencies-import';
 import {getGlobals} from './output/get-globals';
-import {toVar} from './to-var';
 import {getExtensions} from './output/get-extensions';
 
 export default function nunjucksLoader(source) {
