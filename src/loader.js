@@ -7,6 +7,7 @@ import {getRuntimeImport} from './output/get-runtime-import';
 import {getTemplateDependenciesImport} from './output/get-template-dependencies-import';
 import {getGlobalsImport} from './output/get-globals-import';
 import {toVar} from './to-var';
+import {getExtensionsImport} from './output/get-extensions-import';
 
 export default function nunjucksLoader(source) {
     const callback = this.async();
@@ -21,18 +22,12 @@ export default function nunjucksLoader(source) {
         ...options,
         searchPaths: normalizedSearchPaths
     }).then(({dependencies, precompiled, globals, extensions}) => {
-        const extensionsImports = extensions.map(function([name, importPath]) {
-            return `
-               var _extension_${name} = require('${importPath}');
-           `;
-        }).join('');
-
         const resourcePathString = JSON.stringify(resourcePathImport);
         callback(null, `
             ${getRuntimeImport(this)}
             ${getTemplateDependenciesImport(dependencies)}
             ${getGlobalsImport(globals)}
-            ${extensionsImports}
+            ${getExtensionsImport(extensions)}
             ${precompiled}
             module.exports = function nunjucksTemplate(ctx) {
               var nunjucks = runtime(
