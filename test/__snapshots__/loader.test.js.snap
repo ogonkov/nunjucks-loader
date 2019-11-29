@@ -7,6 +7,24 @@ exports[`Advanced compilation should compile custom tags 1`] = `
 "
 `;
 
+exports[`Advanced compilation should compile custom tags 2`] = `
+"<div id=\\"el100500\\">
+  This content will be replaced with the content from /stuff
+</div>
+"
+`;
+
+exports[`Advanced compilation should compile globals in parent templates 1`] = `
+"<div>
+
+globals returned value
+</div>
+
+Child template
+
+"
+`;
+
 exports[`Advanced compilation should compile templates with non-relative paths 1`] = `
 "<!DOCTYPE html>
 <html lang=\\"en\\">
@@ -38,6 +56,7 @@ exports[`Advanced compilation should compile with given globals 1`] = `
 
 globals returned value
 </div>
+
 "
 `;
 

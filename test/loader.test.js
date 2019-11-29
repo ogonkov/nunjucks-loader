@@ -87,6 +87,16 @@ describe('Advanced compilation', function() {
         expect(output()).toMatchSnapshot();
     });
 
+    test('should compile globals in parent templates', async function() {
+        const output = await compiler('fixtures/globals_child_template.njk', {
+            globals: {
+                foobar: path.join(__dirname, './fixtures/globals.js')
+            }
+        });
+
+        expect(output()).toMatchSnapshot();
+    });
+
     test('should compile custom tags', async function() {
         const output = await compiler('fixtures/custom-extension.njk', {
             extensions: {
