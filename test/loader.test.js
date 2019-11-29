@@ -106,4 +106,14 @@ describe('Advanced compilation', function() {
 
         expect(output()).toMatchSnapshot();
     });
+
+    test('should compile custom tags from parent template', async function() {
+        const output = await compiler('fixtures/custom-extension-child-template.njk', {
+            extensions: {
+                RemoteExtension: path.join(__dirname, './fixtures/RemoteExtension.js')
+            }
+        });
+
+        expect(output()).toMatchSnapshot();
+    });
 });
