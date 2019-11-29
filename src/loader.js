@@ -29,6 +29,14 @@ export default function nunjucksLoader(source) {
         } = getExtensions(extensions);
 
         const resourcePathString = JSON.stringify(resourcePathImport);
+        // Only required options
+        // https://mozilla.github.io/nunjucks/api.html#constructor
+        const envOptions = JSON.stringify({
+            autoescape: options.autoescape,
+            throwOnUndefined: options.throwOnUndefined,
+            trimBlocks: options.trimBlocks,
+            lstripBlocks: options.lstripBlocks
+        });
         callback(null, `
             ${getRuntimeImport(this)}
             ${getTemplateDependenciesImport(dependencies)}
@@ -38,7 +46,7 @@ export default function nunjucksLoader(source) {
 
             module.exports = function nunjucksTemplate(ctx) {
               var nunjucks = runtime(
-                ${JSON.stringify(options)},
+                ${envOptions},
                 __nunjucks_module_dependencies__.globals,
                 __nunjucks_module_dependencies__.extensions,
                 __nunjucks_module_dependencies__.templates
