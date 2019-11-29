@@ -12,13 +12,21 @@ module.exports = function runtime(options, globals, extensions, precompiled) {
         options
     );
 
-    globals.forEach(([name, fn]) => {
-        env.addGlobal(name, fn);
-    });
+    for (const globalName in globals) {
+        if (!Object.prototype.hasOwnProperty.call(globals, globalName)) {
+            continue;
+        }
 
-    extensions.forEach(([name, fn]) => {
-        env.addExtension(name, fn);
-    });
+        env.addGlobal(globalName, globals[globalName].module);
+    }
+
+    for (const extensionName in extensions) {
+        if (!Object.prototype.hasOwnProperty.call(extensions, extensionName)) {
+            continue;
+        }
+
+        env.addExtension(extensionName, extensions[extensionName].module);
+    }
 
     return {
         render(name, ctx, cb) {

@@ -4,6 +4,30 @@ exports[`Advanced compilation should compile custom tags 1`] = `
 "<div id=\\"el100500\\">
   This content will be replaced with the content from /stuff
 </div>
+
+
+"
+`;
+
+exports[`Advanced compilation should compile custom tags from parent template 1`] = `
+"<div id=\\"el100500\\">
+  This content will be replaced with the content from /stuff
+</div>
+
+
+<p>Child template for custom tag check</p>
+
+"
+`;
+
+exports[`Advanced compilation should compile globals in parent templates 1`] = `
+"<div>
+
+globals returned value
+</div>
+
+Child template
+
 "
 `;
 
@@ -38,6 +62,7 @@ exports[`Advanced compilation should compile with given globals 1`] = `
 
 globals returned value
 </div>
+
 "
 `;
 
