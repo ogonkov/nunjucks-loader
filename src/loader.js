@@ -35,7 +35,9 @@ export default function nunjucksLoader(source) {
             autoescape: options.autoescape,
             throwOnUndefined: options.throwOnUndefined,
             trimBlocks: options.trimBlocks,
-            lstripBlocks: options.lstripBlocks
+            lstripBlocks: options.lstripBlocks,
+            // Loader specific option
+            jinjaCompat: options.jinjaCompat
         });
         callback(null, `
             ${getRuntimeImport(this)}
