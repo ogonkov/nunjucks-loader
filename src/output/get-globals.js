@@ -15,8 +15,19 @@ export function getGlobals(globals) {
         `;
     }
 
+    function moduleExports() {
+        return `
+            ${globals.map(([globalName]) => (`
+                '${globalName}': {
+                    module: _global_${toVar(globalName)}
+                }
+            `)).join(',')}
+        `;
+    }
+
     return {
         imports,
-        exports
+        exports,
+        moduleExports
     }
 }

@@ -23,11 +23,13 @@ export default function nunjucksLoader(source) {
     }).then(({dependencies, precompiled, globals, extensions}) => {
         const {
             imports: globalsImports,
-            exports: globalsExports
+            exports: globalsExports,
+            moduleExports: globalsModuleExports
         } = getGlobals(globals);
         const {
             imports: extensionsImports,
-            exports: extensionsExports
+            exports: extensionsExports,
+            moduleExports: extensionsModuleExports
         } = getExtensions(extensions);
 
         const resourcePathString = JSON.stringify(resourcePathImport);
@@ -51,6 +53,14 @@ export default function nunjucksLoader(source) {
 
             module.exports.precompiled = precompiledTemplates[${resourcePathString}];
             module.exports.dependencies = precompiledTemplates;
+            module.exports.__nunjucks_module_dependencies__ = {
+                globals: {
+                    ${globalsModuleExports()}
+                },
+                extensions: {
+                    ${extensionsModuleExports()}
+                }
+            };
         `);
     }, function(error) {
         callback(error);

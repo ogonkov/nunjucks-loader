@@ -13,8 +13,19 @@ export function getExtensions(extensions) {
         `;
     }
 
+    function moduleExports() {
+        return `
+            ${extensions.map(([extName]) => (`
+                '${extName}': {
+                    module: _extension_${extName}
+                }
+            `))}
+        `;
+    }
+
     return {
         imports,
-        exports
+        exports,
+        moduleExports
     };
 }
