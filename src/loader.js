@@ -22,14 +22,10 @@ export default function nunjucksLoader(source) {
         searchPaths: normalizedSearchPaths
     }).then(({dependencies, precompiled, globals, extensions}) => {
         const {
-            imports: globalsImports,
-            exports: globalsExports,
-            moduleExports: globalsModuleExports
+            imports: globalsImports
         } = getGlobals(globals);
         const {
-            imports: extensionsImports,
-            exports: extensionsExports,
-            moduleExports: extensionsModuleExports
+            imports: extensionsImports
         } = getExtensions(extensions);
 
         const resourcePathString = JSON.stringify(resourcePathImport);
@@ -43,24 +39,16 @@ export default function nunjucksLoader(source) {
             module.exports = function nunjucksTemplate(ctx) {
               var nunjucks = runtime(
                 ${JSON.stringify(options)},
-                ${globalsExports()},
-                ${extensionsExports()},
-                precompiledTemplates
+                __nunjucks_module_dependencies__.globals,
+                __nunjucks_module_dependencies__.extensions,
+                __nunjucks_module_dependencies__.templates
               );
             
               return nunjucks.render(${resourcePathString}, ctx);
             };
 
-            module.exports.precompiled = precompiledTemplates[${resourcePathString}];
-            module.exports.dependencies = precompiledTemplates;
-            module.exports.__nunjucks_module_dependencies__ = {
-                globals: {
-                    ${globalsModuleExports()}
-                },
-                extensions: {
-                    ${extensionsModuleExports()}
-                }
-            };
+            module.exports.precompiled = __nunjucks_module_dependencies__.templates[${resourcePathString}];
+            module.exports.__nunjucks_module_dependencies__ = __nunjucks_module_dependencies__;
         `);
     }, function(error) {
         callback(error);

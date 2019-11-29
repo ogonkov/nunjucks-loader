@@ -1,9 +1,15 @@
 function getImports(imports, assignments) {
     return `
         ${imports}
-        var precompiledTemplates = Object.assign(
-            {},
-            ${assignments}
+        var __nunjucks_module_dependencies__ = {};
+        __nunjucks_module_dependencies__.templates = Object.assign(
+            ${assignments.templates}
+        );
+        __nunjucks_module_dependencies__.globals = Object.assign(
+            ${assignments.globals}
+        );
+        __nunjucks_module_dependencies__.extensions = Object.assign(
+            ${assignments.extensions}
         );
     `;
 }
@@ -13,13 +19,21 @@ function foldDependenciesToImports([imports, assignment], [, fullPath], i) {
     const importVar = `templateDependencies${i}`;
 
     return [
-        `${imports}var ${importVar} = require(${path}).dependencies;`,
-        `${assignment}${importVar},`
+        `${imports}var ${importVar} = require(${path}).__nunjucks_module_dependencies__;`,
+        {
+            templates: [`${assignment.templates}`, `${importVar}.templates`].join(),
+            globals: [`${assignment.globals}`, `${importVar}.globals`].join(),
+            extensions: [`${assignment.extensions}`, `${importVar}.extensions`].join()
+        }
     ];
 }
 
 export function getTemplateDependenciesImport(dependencies) {
     return getImports(
-        ...dependencies.reduce(foldDependenciesToImports, ['', ''])
+        ...dependencies.reduce(foldDependenciesToImports, ['', {
+            templates: '{}',
+            globals: '{}',
+            extensions: '{}'
+        }])
     );
 }

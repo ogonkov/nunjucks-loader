@@ -15,7 +15,7 @@ export function localVarWrapper(templates) {
         const {name, template} = templates[i];
 
         out += `
-            precompiledTemplates[${JSON.stringify(name)}] = (function() {
+            __nunjucks_module_dependencies__.templates[${JSON.stringify(name)}] = (function() {
                 ${template}
             })();
         `;
