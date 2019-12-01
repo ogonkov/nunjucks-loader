@@ -14,7 +14,7 @@ npm install --save-dev simple-nunjucks-loader
 
 ## Note on global variables
 
-Nunjucks precompile templates to global `window.nunjucksPrecompiled`.
+By default Nunjucks wrap templates to global `window.nunjucksPrecompiled`.
 Loader **didn't expose `window.nunjucksPrecompiled`**. If your code relied on
 this object, it will definitely break. Use imports of required template
 or adopt [`expose-loader`](https://github.com/webpack-contrib/expose-loader/)
