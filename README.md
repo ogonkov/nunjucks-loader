@@ -139,7 +139,19 @@ All other options get passed to Nunjunks `Environment` during files loading.
 |**`throwOnUndefined`**|`{Boolean}`|`false`||
 |**`trimBlocks`**|`{Boolean}`|`false`||
 |**`lstripBlocks`**|`{Boolean}`|`false`||
-|**`tags`**|`{Object.<string, string>}`|```{blockStart: '{%', blockEnd: '%}', variableStart: '{{', variableEnd: '}}', commentStart: '{#', commentEnd: '#}'}```|Override tags syntax|
+|**`tags`**|`{Object.<string, string>}`|Default Jinja tags config|Override tags syntax|
+
+`tags` default to:
+```
+{
+    blockStart: '{%',
+    blockEnd: '%}',
+    variableStart: '{{',
+    variableEnd: '}}',
+    commentStart: '{#',
+    commentEnd: '#}'
+}
+```
 
 ### jinjaCompat
 
