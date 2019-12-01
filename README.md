@@ -159,6 +159,7 @@ Set global function and import path, that should return function to use.
 It the same function that
 [`env.addGlobal`](https://mozilla.github.io/nunjucks/api.html#addglobal) using.
 
+**webpack.config.js**
 ```js
 module.exports = {
     module: {
@@ -166,7 +167,7 @@ module.exports = {
             {
                 test: /\.njk$/,
                 use: [{
-                    loader: '',
+                    loader: 'simple-nunjucks-loader',
                     options: {
                         globals: {
                             _: 'lodash',
@@ -179,6 +180,7 @@ module.exports = {
     }
 };
 ```
+
 **app/global-env.js**
 ```js
 module.exports = function(foo, bar) {
@@ -189,17 +191,41 @@ module.exports = function(foo, bar) {
 ### extensions
 
 Set map of extensions that would be imported before each template render.
+Extension should return instance, that would be added via
+[`env.addExtension`](https://mozilla.github.io/nunjucks/api.html#addextension).
 
+**webpack.config.js**
 ```js
-{
-  extensions: {
-    CustomExtension: path.join(__dirname, 'lib/extensions/custom-extension.js')
-  }
-}
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.njk$/,
+                use: [{
+                    loader: 'simple-nunjucks-loader',
+                    options: {
+                        extensions: {
+                            CustomExtension: path.join(__dirname, 'lib/extensions/custom-extension.js')
+                        }
+                    }
+                }]
+            }
+        ]
+    }
+};
 ```
 
-Module here (`lib/extensions/custom-extension.js`) should return extension
-instance.
+**lib/extensions/custom-extension.js**
+```js
+// You should use slim bundle to make it work in browser
+const nunjucks = require('nunjucks/browser/nunjucks-slim');
+
+// See example in docs
+// https://mozilla.github.io/nunjucks/api.html#custom-tags
+class CustomExtension {}
+
+module.exports = new CustomExtension();
+```
 
 Loader trying to guess which extensions are really used, and keep only required
 imports.
