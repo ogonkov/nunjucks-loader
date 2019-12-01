@@ -12,8 +12,9 @@ This Webpack loader compiles [Nunjucks](https://github.com/mozilla/nunjucks) tem
 npm install --save-dev simple-nunjucks-loader
 ```
 
-## Note on `window.nunjucksPrecompiled`
+## Note on global variables
 
+Nunjucks precompile templates to global `window.nunjucksPrecompiled`.
 Loader **didn't expose `window.nunjucksPrecompiled`**. If your code relied on
 this object, it will definitely break. Use imports of required template
 or adopt [`expose-loader`](https://github.com/webpack-contrib/expose-loader/)
