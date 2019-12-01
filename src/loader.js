@@ -46,7 +46,7 @@ export default function nunjucksLoader(source) {
             ${extensionsImports()}
             ${precompiled}
 
-            module.exports = function nunjucksTemplate(ctx) {
+            exports = module.exports = function nunjucksTemplate(ctx) {
               var nunjucks = runtime(
                 ${envOptions},
                 __nunjucks_module_dependencies__.globals,
@@ -57,8 +57,8 @@ export default function nunjucksLoader(source) {
               return nunjucks.render(${resourcePathString}, ctx);
             };
 
-            module.exports.precompiled = __nunjucks_module_dependencies__.templates[${resourcePathString}];
-            module.exports.__nunjucks_module_dependencies__ = __nunjucks_module_dependencies__;
+            exports.__nunjucks_precompiled_template__ = __nunjucks_module_dependencies__.templates[${resourcePathString}];
+            exports.__nunjucks_module_dependencies__ = __nunjucks_module_dependencies__;
         `);
     }, function(error) {
         callback(error);
