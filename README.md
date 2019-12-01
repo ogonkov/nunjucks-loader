@@ -153,6 +153,28 @@ Loader is searching for full template relative to given string(s) from
 
 Path to file couldn't be outside of folders above.
 
+**webpack.config.js**
+```js
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.njk$/,
+                use: [{
+                    loader: 'simple-nunjucks-loader',
+                    options: {
+                        searchPaths: [
+                            'django_app_a/templates',
+                            'django_app_b/templates'
+                        ]
+                    }
+                }]
+            }
+        ]
+    }
+};
+```
+
 ### globals
 
 Set global function and import path, that should return function to use.
