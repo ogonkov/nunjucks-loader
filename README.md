@@ -155,15 +155,35 @@ Path to file couldn't be outside of folders above.
 
 ### globals
 
-Set global function and import, that should return function to use.
+Set global function and import path, that should return function to use.
+It the same function that
+[`env.addGlobal`](https://mozilla.github.io/nunjucks/api.html#addglobal) using.
 
 ```js
-{
-  globals: {
-    _: 'lodash',
-    globalEnv: path.join(__dirname, 'app/global-env.js')
-  }
-}
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.njk$/,
+                use: [{
+                    loader: '',
+                    options: {
+                        globals: {
+                            _: 'lodash',
+                            globalEnv: path.join(__dirname, 'app/global-env.js')
+                        }
+                    }
+                }]
+            }
+        ]
+    }
+};
+```
+**app/global-env.js**
+```js
+module.exports = function(foo, bar) {
+    return `Do anything with ${foo} and ${bar}`;
+};
 ```
 
 ### extensions
