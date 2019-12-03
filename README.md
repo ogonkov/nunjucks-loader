@@ -1,4 +1,5 @@
 [![npm package][npm-image]][npm-url] 
+[![Coverage Status][coverage-image]][coverage-url] 
 [![node][node]][node-url] 
 [![Build Status][travis-image]][travis-url] 
 [![Dependencies Status][david-image]][david-url]
@@ -273,6 +274,8 @@ imports.
 
 [npm-image]:https://img.shields.io/npm/v/simple-nunjucks-loader.svg
 [npm-url]:http://npmjs.org/package/simple-nunjucks-loader
+[coverage-image]:https://coveralls.io/repos/github/ogonkov/nunjucks-loader/badge.svg?branch=master
+[coverage-url]:https://coveralls.io/github/ogonkov/nunjucks-loader?branch=master
 [node]: https://img.shields.io/node/v/simple-nunjucks-loader.svg
 [node-url]: https://nodejs.org
 [travis-image]:https://travis-ci.org/ogonkov/nunjucks-loader.svg?branch=master
