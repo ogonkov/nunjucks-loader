@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rm -rf lib && babel src --out-dir=lib --copy-files",
     "lint": "eslint src",
-    "pretest": "rm -rf coverage && npm run lint",
+    "pretest": "rm -rf test/.coverage && npm run lint",
     "test": "jest",
     "posttest": "rm -rf ./test/bundles/",
     "preversion": "npm test",
