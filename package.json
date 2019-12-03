@@ -5,7 +5,8 @@
   "main": "lib/loader.js",
   "scripts": {
     "build": "rm -rf lib && babel src --out-dir=lib --copy-files",
-    "pretest": "eslint src",
+    "lint": "eslint src",
+    "pretest": "rm -rf coverage && npm run lint",
     "test": "jest",
     "posttest": "rm -rf ./test/bundles/",
     "preversion": "npm test",
@@ -40,6 +41,7 @@
     "@babel/cli": "^7.7.4",
     "@babel/core": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
+    "coveralls": "^3.0.9",
     "eslint": "^6.7.1",
     "jest": "^24.9.0",
     "nunjucks": "^3.2.0",
