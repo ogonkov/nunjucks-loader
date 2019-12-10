@@ -49,9 +49,7 @@ export default function nunjucksLoader(source) {
             exports = module.exports = function nunjucksTemplate(ctx) {
               var nunjucks = runtime(
                 ${envOptions},
-                __nunjucks_module_dependencies__.globals,
-                __nunjucks_module_dependencies__.extensions,
-                __nunjucks_module_dependencies__.templates
+                __nunjucks_module_dependencies__
               );
             
               return nunjucks.render(${resourcePathString}, ctx);

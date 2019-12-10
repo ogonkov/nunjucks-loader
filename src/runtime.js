@@ -2,7 +2,11 @@ const {WebpackPrecompiledLoader} = require('./WebpackPrecompiledLoader');
 
 const nunjucks = require('nunjucks/browser/nunjucks-slim');
 
-module.exports = function runtime(options, globals, extensions, precompiled) {
+module.exports = function runtime(options, {
+    globals,
+    extensions,
+    templates: precompiled
+}) {
     if (options.jinjaCompat === true) {
         nunjucks.installJinjaCompat();
     }
