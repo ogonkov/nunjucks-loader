@@ -11,6 +11,9 @@ function getImports(imports, assignments) {
         __nunjucks_module_dependencies__.extensions = Object.assign(
             ${assignments.extensions}
         );
+        __nunjucks_module_dependencies__.filters = Object.assign(
+            ${assignments.filters}
+        );
     `;
 }
 
@@ -23,7 +26,8 @@ function foldDependenciesToImports([imports, assignment], [, fullPath], i) {
         {
             templates: [`${assignment.templates}`, `${importVar}.templates`].join(),
             globals: [`${assignment.globals}`, `${importVar}.globals`].join(),
-            extensions: [`${assignment.extensions}`, `${importVar}.extensions`].join()
+            extensions: [`${assignment.extensions}`, `${importVar}.extensions`].join(),
+            filters: [`${assignment.filters}`, `${importVar}.filters`].join()
         }
     ];
 }
@@ -33,7 +37,8 @@ export function getTemplateDependenciesImport(dependencies) {
         ...dependencies.reduce(foldDependenciesToImports, ['', {
             templates: '{}',
             globals: '{}',
-            extensions: '{}'
+            extensions: '{}',
+            filters: '{}'
         }])
     );
 }

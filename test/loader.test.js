@@ -116,4 +116,14 @@ describe('Advanced compilation', function() {
 
         expect(output()).toMatchSnapshot();
     });
+
+    test('should compile filters', async function() {
+        const output = await compiler('fixtures/custom-filter.njk', {
+            filters: {
+                foo: path.join(__dirname, './fixtures/foo-filter.js')
+            }
+        });
+
+        expect(output()).toMatchSnapshot();
+    });
 });

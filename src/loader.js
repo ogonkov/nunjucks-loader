@@ -7,6 +7,7 @@ import {getRuntimeImport} from './output/get-runtime-import';
 import {getTemplateDependenciesImport} from './output/get-template-dependencies-import';
 import {getGlobals} from './output/get-globals';
 import {getExtensions} from './output/get-extensions';
+import {getFilters} from './output/get-filters';
 
 export default function nunjucksLoader(source) {
     const callback = this.async();
@@ -20,13 +21,16 @@ export default function nunjucksLoader(source) {
     withDependencies(resourcePathImport, source, {
         ...options,
         searchPaths: normalizedSearchPaths
-    }).then(({dependencies, precompiled, globals, extensions}) => {
+    }).then(({dependencies, precompiled, globals, extensions, filters}) => {
         const {
             imports: globalsImports
         } = getGlobals(globals);
         const {
             imports: extensionsImports
         } = getExtensions(extensions);
+        const {
+            imports: filtersImports
+        } = getFilters(filters);
 
         const resourcePathString = JSON.stringify(resourcePathImport);
         // Only required options
@@ -44,6 +48,7 @@ export default function nunjucksLoader(source) {
             ${getTemplateDependenciesImport(dependencies)}
             ${globalsImports()}
             ${extensionsImports()}
+            ${filtersImports()}
             ${precompiled}
 
             exports = module.exports = function nunjucksTemplate(ctx) {

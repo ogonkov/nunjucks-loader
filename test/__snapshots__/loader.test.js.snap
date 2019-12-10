@@ -20,6 +20,12 @@ exports[`Advanced compilation should compile custom tags from parent template 1`
 "
 `;
 
+exports[`Advanced compilation should compile filters 1`] = `
+"15
+8
+"
+`;
+
 exports[`Advanced compilation should compile globals in parent templates 1`] = `
 "<div>
 
