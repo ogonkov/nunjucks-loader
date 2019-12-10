@@ -90,8 +90,8 @@ export function withDependencies(resourcePath, source, options) {
         }).filter(Boolean);
 
     // For proper precompilation of parent templates
-    extensionsInstances.forEach(function([name, importPath]) {
-        env.addExtension(name, require(importPath));
+    extensionsInstances.forEach(function([name,, extensionInstance]) {
+        env.addExtension(name, extensionInstance);
     });
 
     return Promise.all([
