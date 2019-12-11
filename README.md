@@ -300,6 +300,8 @@ module.exports = function(val, param) {
 };
 ```
 
+**template.njk**
+
 ```nunjucks
 {{ foo_var | foo(3) }}
 ```
