@@ -123,6 +123,11 @@ code to avoid creating `window.nunjucksPrecompiled`.
 It also adds each found template as dependency for template that need it,
 so bundle get rebuild in watch mode only when required.
 
+### Asynchronous support
+
+When loader found async filter in template dependencies, it returns `Promise`,
+instead of render result.
+
 ## Options
 Loader supports limited number of [Nunjuncks options][nunjucks-docs-configure].
 It's doesn't support `watch` (we use `webpack` own dependencies watch),
