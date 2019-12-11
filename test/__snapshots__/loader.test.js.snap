@@ -1,5 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Advanced compilation extensions should compile custom tags 1`] = `
+"<div id=\\"el100500\\">
+  This content will be replaced with the content from /stuff
+</div>
+
+
+"
+`;
+
+exports[`Advanced compilation extensions should compile custom tags from parent template 1`] = `
+"<div id=\\"el100500\\">
+  This content will be replaced with the content from /stuff
+</div>
+
+
+<p>Child template for custom tag check</p>
+
+"
+`;
+
 exports[`Advanced compilation filters should compile async filters 1`] = `
 "<!DOCTYPE html>
 <html lang=\\"en\\">
@@ -40,26 +60,6 @@ exports[`Advanced compilation filters should compile multiple instances of same 
 
 exports[`Advanced compilation filters should compile single filter instance 1`] = `
 "15
-"
-`;
-
-exports[`Advanced compilation should compile custom tags 1`] = `
-"<div id=\\"el100500\\">
-  This content will be replaced with the content from /stuff
-</div>
-
-
-"
-`;
-
-exports[`Advanced compilation should compile custom tags from parent template 1`] = `
-"<div id=\\"el100500\\">
-  This content will be replaced with the content from /stuff
-</div>
-
-
-<p>Child template for custom tag check</p>
-
 "
 `;
 

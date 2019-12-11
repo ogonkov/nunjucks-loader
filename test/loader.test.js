@@ -97,24 +97,24 @@ describe('Advanced compilation', function() {
         expect(output()).toMatchSnapshot();
     });
 
-    test('should compile custom tags', async function() {
-        const output = await compiler('fixtures/custom-extension.njk', {
+    describe('extensions', function() {
+        const loaderOptions = {
             extensions: {
-                RemoteExtension: path.join(__dirname, './fixtures/RemoteExtension.js')
+                RemoteExtension: path.join(__dirname, './fixtures/extensions/RemoteExtension.js')
             }
+        };
+
+        test('should compile custom tags', async function() {
+            const output = await compiler('fixtures/extensions/base.njk', loaderOptions);
+
+            expect(output()).toMatchSnapshot();
         });
 
-        expect(output()).toMatchSnapshot();
-    });
+        test('should compile custom tags from parent template', async function() {
+            const output = await compiler('fixtures/extensions/child.njk', loaderOptions);
 
-    test('should compile custom tags from parent template', async function() {
-        const output = await compiler('fixtures/custom-extension-child-template.njk', {
-            extensions: {
-                RemoteExtension: path.join(__dirname, './fixtures/RemoteExtension.js')
-            }
+            expect(output()).toMatchSnapshot();
         });
-
-        expect(output()).toMatchSnapshot();
     });
 
     describe('filters', function() {
