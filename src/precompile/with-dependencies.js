@@ -81,13 +81,14 @@ export function withDependencies(resourcePath, source, options) {
         extensionsInstances.map(([,, ext]) => ext)
     );
 
-    const extensionCalls = nodes.findAll(nunjucks.nodes.CallExtension)
-        .map(({extName}) => (
+    const extensionCalls = nodes.findAll(nunjucks.nodes.CallExtension).map(
+        ({extName}) => (
             extensionsInstances.find(([name,, instance]) => {
                 // Sometime `extName` is instance of custom tag
                 return name === extName || instance === extName
             })
-        )).filter(Boolean).filter(([extensionName], i, extensions) => {
+        )
+    ).filter(Boolean).filter(([extensionName], i, extensions) => {
         const extension = extensions.find(([name]) => name === extensionName);
         const extensionIndex = extensions.indexOf(extension);
 
