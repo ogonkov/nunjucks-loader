@@ -136,6 +136,7 @@ All other options get passed to Nunjunks `Environment` during files loading.
 |**[`searchPaths`](#searchpaths)**|`{String}` or `{Array.<string>}`|`.`|One or more paths to resolve templates paths|
 |**[`globals`](#globals)**|`Object.<string, string>`|`{}`|Map global function to corresponding module|
 |**[`extensions`](#extensions)**|`Object.<string, string>`|`{}`|Map extension to corresponding module|
+|**[`filters`](#filters)**|`Object.<string, string>`|`{}`|Map filters to corresponding module|
 |<!-- Add custom options above -->**`autoescape`**|`{Boolean}`|`true`|See [Nunjuncks options][nunjucks-docs-configure] for description of options below|
 |**`throwOnUndefined`**|`{Boolean}`|`false`||
 |**`trimBlocks`**|`{Boolean}`|`false`||
@@ -263,6 +264,46 @@ module.exports = new CustomExtension();
 Loader trying to guess which extensions are really used, and keep only required
 imports.
 
+### filters
+
+Map of filters, that would be imported before each template render.
+Filter should return instance, that would be added via
+[`env.addFilter`][nunjucks-docs-addfilter].
+
+**webpack.config.js**
+
+```js
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.njk$/,
+                use: [{
+                    loader: 'simple-nunjucks-loader',
+                    options: {
+                        filters: {
+                            foo: path.join(__dirname, 'foo.js')
+                        }
+                    }
+                }]
+            }
+        ]
+    }
+};
+```
+
+**foo.js**
+
+```js
+module.exports = function(val, param) {
+    return `${val + param}`;
+};
+```
+
+```jinja2
+{{ foo_var | foo(3) }}
+```
+
 [nunjucks-github]:https://github.com/mozilla/nunjucks
 [html-webpack-plugin-github]:https://github.com/jantimon/html-webpack-plugin
 [html-webpack-plugin-options]:https://github.com/jantimon/html-webpack-plugin/#options
@@ -271,6 +312,7 @@ imports.
 [nunjucks-docs-configure]:https://mozilla.github.io/nunjucks/api.html#configure
 [nunjucks-docs-addglobal]:https://mozilla.github.io/nunjucks/api.html#addglobal
 [nunjucks-docs-addextension]:https://mozilla.github.io/nunjucks/api.html#addextension
+[nunjucks-docs-addfilter]:https://mozilla.github.io/nunjucks/api.html#addfilter
 
 [npm-image]:https://img.shields.io/npm/v/simple-nunjucks-loader.svg
 [npm-url]:http://npmjs.org/package/simple-nunjucks-loader
