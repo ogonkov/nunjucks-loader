@@ -1,0 +1,19 @@
+{% extends 'test/fixtures/extensions/base.njk' %}
+
+{% block child %}
+    <div>
+        {% remote "/stuff" %}
+          Content 1
+        {% error %}
+          There was an error fetching /stuff
+        {% endremote %}
+    </div>
+
+    <div>
+        {% remote "/stuff" %}
+          Content 2
+        {% error %}
+          There was an error fetching /stuff
+        {% endremote %}
+    </div>
+{% endblock %}

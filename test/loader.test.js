@@ -115,6 +115,12 @@ describe('Advanced compilation', function() {
 
             expect(output()).toMatchSnapshot();
         });
+
+        test('should compile multiple instances of same tag', async function() {
+            const output = await compiler('fixtures/extensions/multiple.njk', loaderOptions);
+
+            expect(output()).toMatchSnapshot();
+        });
     });
 
     describe('filters', function() {
