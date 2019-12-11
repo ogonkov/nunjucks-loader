@@ -163,7 +163,9 @@ describe('Advanced compilation', function() {
 
             const result = await asyncRender;
 
-            expect(result).toMatchSnapshot()
+            expect(result).toMatchSnapshot();
+
+            jest.useRealTimers();
         });
     });
 });
