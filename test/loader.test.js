@@ -117,13 +117,15 @@ describe('Advanced compilation', function() {
         expect(output()).toMatchSnapshot();
     });
 
-    test('should compile filters', async function() {
-        const output = await compiler('fixtures/custom-filter.njk', {
-            filters: {
-                foo: path.join(__dirname, './fixtures/foo-filter.js')
-            }
-        });
+    describe('filters', function() {
+        test('should compile multiple instances of same filter', async function() {
+            const output = await compiler('fixtures/filters/multiple.njk', {
+                filters: {
+                    foo: path.join(__dirname, './fixtures/filters/foo-filter.js')
+                }
+            });
 
-        expect(output()).toMatchSnapshot();
+            expect(output()).toMatchSnapshot();
+        });
     });
 });
