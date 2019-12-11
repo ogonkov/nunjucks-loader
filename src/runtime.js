@@ -38,7 +38,11 @@ module.exports = function runtime(options, {
             continue;
         }
 
-        env.addFilter(filterName, filters[filterName].module);
+        env.addFilter(
+            filterName,
+            filters[filterName].module,
+            filters[filterName].async === true
+        );
     }
 
     return {

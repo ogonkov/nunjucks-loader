@@ -306,6 +306,20 @@ module.exports = function(val, param) {
 {{ foo_var | foo(3) }}
 ```
 
+To mark filter as async, filter module should export `async` flag:
+
+**async-filter.js**
+
+```js
+module.exports = function(val, param, callback) {
+    setTimeout(function() {
+        callback(null, val + param);
+    }, 1000);
+};
+
+module.exports.async = true;
+```
+
 [nunjucks-github]:https://github.com/mozilla/nunjucks
 [html-webpack-plugin-github]:https://github.com/jantimon/html-webpack-plugin
 [html-webpack-plugin-options]:https://github.com/jantimon/html-webpack-plugin/#options
