@@ -101,7 +101,11 @@ export function withDependencies(resourcePath, source, options) {
     ));
 
     filtersInstances.forEach(function([filterName,, filterInstance]) {
-        env.addFilter(filterName, filterInstance);
+        env.addFilter(
+            filterName,
+            filterInstance,
+            filterInstance.async === true
+        );
     });
 
     const filtersCalls = nodes.findAll(nunjucks.nodes.Filter).map(({name}) => (
