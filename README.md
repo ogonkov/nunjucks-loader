@@ -47,12 +47,12 @@ module.exports = {
 ```
 
 **template-example.njk**
-```
+```nunjucks
 <p>Hello, {{ username }}!</p>
 ```
 
 **app.js**
-```
+```js
 import template from './template-example.njk'
 
 document.body.innerHTML = template({
@@ -100,7 +100,7 @@ module.exports = {
 ```
 
 **src/page.njk**
-```
+```nunjucks
 <p>Hello, {{ username }}!</p>
 ```
 
@@ -300,7 +300,7 @@ module.exports = function(val, param) {
 };
 ```
 
-```jinja2
+```nunjucks
 {{ foo_var | foo(3) }}
 ```
 
