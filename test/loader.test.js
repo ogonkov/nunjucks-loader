@@ -118,14 +118,31 @@ describe('Advanced compilation', function() {
     });
 
     describe('filters', function() {
-        test('should compile multiple instances of same filter', async function() {
-            const output = await compiler('fixtures/filters/multiple.njk', {
-                filters: {
-                    foo: path.join(__dirname, './fixtures/filters/foo-filter.js')
-                }
-            });
+        const loaderOptions = {
+            filters: {
+                foo: path.join(__dirname, './fixtures/filters/foo-filter.js')
+            }
+        };
+
+        test('should compile single filter instance', async function() {
+            const output = await compiler('fixtures/filters/single.njk', loaderOptions);
 
             expect(output()).toMatchSnapshot();
+        });
+
+        test('should compile multiple instances of same filter', async function() {
+            const output = await compiler('fixtures/filters/multiple.njk', loaderOptions);
+
+            expect(output()).toMatchSnapshot();
+        });
+
+        test('should compile filters in inherited templates', async function() {
+            const output = await compiler('fixtures/filters/children.njk', loaderOptions);
+
+            expect(output({
+                title: 'Foobar',
+                foo_var: 42
+            })).toMatchSnapshot()
         });
     });
 });
