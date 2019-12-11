@@ -56,6 +56,18 @@ export default function nunjucksLoader(source) {
                 ${envOptions},
                 __nunjucks_module_dependencies__
               );
+
+              if (nunjucks.isAsync()) {
+                return new Promise(function(resolve, reject) {
+                  nunjucks.render(${resourcePathString}, ctx, function(err, res) {
+                    if (err) {
+                      return reject(err);
+                    }
+                    
+                    resolve(res);
+                  });
+                });
+              }
             
               return nunjucks.render(${resourcePathString}, ctx);
             };

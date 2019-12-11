@@ -1,5 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Advanced compilation filters should compile async filters 1`] = `
+"<!DOCTYPE html>
+<html lang=\\"en\\">
+  <head>
+    <meta charset=\\"utf-8\\">
+    <title>Foobar 100510</title>
+  </head>
+  <body>
+    
+    <p>100506</p>
+
+  </body>
+</html>
+"
+`;
+
 exports[`Advanced compilation filters should compile filters in inherited templates 1`] = `
 "<!DOCTYPE html>
 <html lang=\\"en\\">

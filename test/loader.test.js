@@ -144,5 +144,26 @@ describe('Advanced compilation', function() {
                 foo_var: 42
             })).toMatchSnapshot()
         });
+
+        test('should compile async filters', async function() {
+            const output = await compiler('fixtures/filters/children.njk', {
+                filters: {
+                    foo: path.join(__dirname, './fixtures/filters/foo-filter-async.js')
+                }
+            });
+
+            jest.useFakeTimers();
+
+            const asyncRender = output({
+                title: 'Foobar',
+                foo_var: 100500
+            });
+
+            jest.runAllTimers();
+
+            const result = await asyncRender;
+
+            expect(result).toMatchSnapshot()
+        });
     });
 });

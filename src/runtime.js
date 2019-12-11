@@ -48,6 +48,10 @@ module.exports = function runtime(options, {
     return {
         render(name, ctx, cb) {
             return env.render(name, ctx, cb);
+        },
+
+        isAsync() {
+            return Object.values(filters).some(({async}) => async === true);
         }
     };
 };
