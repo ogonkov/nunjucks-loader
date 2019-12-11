@@ -82,12 +82,17 @@ export function withDependencies(resourcePath, source, options) {
     );
 
     const extensionCalls = nodes.findAll(nunjucks.nodes.CallExtension)
-        .map(({extName}) => {
-            return extensionsInstances.find(([name,, instance]) => {
+        .map(({extName}) => (
+            extensionsInstances.find(([name,, instance]) => {
                 // Sometime `extName` is instance of custom tag
                 return name === extName || instance === extName
             })
-        }).filter(Boolean);
+        )).filter(Boolean).filter(([extensionName], i, extensions) => {
+        const extension = extensions.find(([name]) => name === extensionName);
+        const extensionIndex = extensions.indexOf(extension);
+
+        return i === extensionIndex;
+    });
 
     // For proper precompilation of parent templates
     extensionsInstances.forEach(function([name,, extensionInstance]) {
