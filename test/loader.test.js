@@ -116,4 +116,56 @@ describe('Advanced compilation', function() {
 
         expect(output()).toMatchSnapshot();
     });
+
+    describe('filters', function() {
+        const loaderOptions = {
+            filters: {
+                foo: path.join(__dirname, './fixtures/filters/foo-filter.js')
+            }
+        };
+
+        test('should compile single filter instance', async function() {
+            const output = await compiler('fixtures/filters/single.njk', loaderOptions);
+
+            expect(output()).toMatchSnapshot();
+        });
+
+        test('should compile multiple instances of same filter', async function() {
+            const output = await compiler('fixtures/filters/multiple.njk', loaderOptions);
+
+            expect(output()).toMatchSnapshot();
+        });
+
+        test('should compile filters in inherited templates', async function() {
+            const output = await compiler('fixtures/filters/children.njk', loaderOptions);
+
+            expect(output({
+                title: 'Foobar',
+                foo_var: 42
+            })).toMatchSnapshot()
+        });
+
+        test('should compile async filters', async function() {
+            const output = await compiler('fixtures/filters/children.njk', {
+                filters: {
+                    foo: path.join(__dirname, './fixtures/filters/foo-filter-async.js')
+                }
+            });
+
+            jest.useFakeTimers();
+
+            const asyncRender = output({
+                title: 'Foobar',
+                foo_var: 100500
+            });
+
+            jest.runAllTimers();
+
+            const result = await asyncRender;
+
+            expect(result).toMatchSnapshot();
+
+            jest.useRealTimers();
+        });
+    });
 });

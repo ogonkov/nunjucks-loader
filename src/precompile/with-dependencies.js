@@ -70,7 +70,7 @@ function getDependenciesGlobals(nodes, globals) {
  * @returns {Promise<string>} Source of precompiled template with wrapper
  */
 export function withDependencies(resourcePath, source, options) {
-    const {searchPaths, globals, extensions, ...opts} = options;
+    const {searchPaths, globals, extensions, filters, ...opts} = options;
     const env = nunjucks.configure(searchPaths, opts);
     const extensionsInstances =
         Object.entries(extensions).map(([name, importPath]) => {
@@ -90,8 +90,31 @@ export function withDependencies(resourcePath, source, options) {
         }).filter(Boolean);
 
     // For proper precompilation of parent templates
-    extensionsInstances.forEach(function([name, importPath]) {
-        env.addExtension(name, require(importPath));
+    extensionsInstances.forEach(function([name,, extensionInstance]) {
+        env.addExtension(name, extensionInstance);
+    });
+
+    const filtersInstances = Object.entries(
+        filters
+    ).map(([filterName, importPath]) => (
+        [filterName, importPath, require(importPath)]
+    ));
+
+    filtersInstances.forEach(function([filterName,, filterInstance]) {
+        env.addFilter(
+            filterName,
+            filterInstance,
+            filterInstance.async === true
+        );
+    });
+
+    const filtersCalls = nodes.findAll(nunjucks.nodes.Filter).map(({name}) => (
+        filtersInstances.find(([filterName]) => filterName === name.value)
+    )).filter(Boolean).filter(([filterName], i, filters) => {
+        const filter = filters.find(([name]) => name === filterName);
+        const filterIndex = filters.indexOf(filter);
+
+        return i === filterIndex;
     });
 
     return Promise.all([
@@ -102,7 +125,8 @@ export function withDependencies(resourcePath, source, options) {
             precompiled,
             dependencies,
             globals: getDependenciesGlobals(nodes, globals),
-            extensions: extensionCalls
+            extensions: extensionCalls,
+            filters: filtersCalls
         };
     });
 }

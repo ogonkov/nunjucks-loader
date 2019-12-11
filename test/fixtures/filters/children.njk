@@ -1,0 +1,5 @@
+{% extends 'test/fixtures/filters/base.njk' %}
+
+{% block body %}
+    <p>{{ foo_var | foo(1, 2, bar=6) }}</p>
+{% endblock %}

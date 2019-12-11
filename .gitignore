@@ -1,7 +1,8 @@
 /.idea/
-/node_modules/
+node_modules
 
 /lib/
+/test/.coverage/
 /test/bundles/
 
 .DS_Store

@@ -1,5 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Advanced compilation filters should compile async filters 1`] = `
+"<!DOCTYPE html>
+<html lang=\\"en\\">
+  <head>
+    <meta charset=\\"utf-8\\">
+    <title>Foobar 100510</title>
+  </head>
+  <body>
+    
+    <p>100506</p>
+
+  </body>
+</html>
+"
+`;
+
+exports[`Advanced compilation filters should compile filters in inherited templates 1`] = `
+"<!DOCTYPE html>
+<html lang=\\"en\\">
+  <head>
+    <meta charset=\\"utf-8\\">
+    <title>Foobar 52</title>
+  </head>
+  <body>
+    
+    <p>48</p>
+
+  </body>
+</html>
+"
+`;
+
+exports[`Advanced compilation filters should compile multiple instances of same filter 1`] = `
+"15
+8
+"
+`;
+
+exports[`Advanced compilation filters should compile single filter instance 1`] = `
+"15
+"
+`;
+
 exports[`Advanced compilation should compile custom tags 1`] = `
 "<div id=\\"el100500\\">
   This content will be replaced with the content from /stuff

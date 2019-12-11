@@ -19,7 +19,8 @@ export function getLoaderOptions(loader, callback) {
         jinjaCompat = false,
         searchPaths = '.',
         globals = {},
-        extensions = {}
+        extensions = {},
+        filters = {}
     } = loaderOptions || {};
 
     const options = {
@@ -31,7 +32,8 @@ export function getLoaderOptions(loader, callback) {
         tags,
         searchPaths,
         globals,
-        extensions
+        extensions,
+        filters
     };
 
     try {
