@@ -1,0 +1,17 @@
+{% extends 'test/fixtures/globals/base.njk' %}
+
+{% block child_block %}
+<div>
+    Occurrence #1
+
+    {% set qux = foobar() %}
+    {{ qux() }}
+</div>
+
+<div>
+    Occurrence #2
+
+    {% set qux = foobar() %}
+    {{ qux() }}
+</div>
+{% endblock %}

@@ -77,44 +77,56 @@ describe('Advanced compilation', function() {
         expect(output()).toMatchSnapshot();
     });
 
-    test('should compile with given globals', async function() {
-        const output = await compiler('fixtures/globals.njk', {
+    describe('globals', function() {
+        const loaderOptions = {
             globals: {
-                foobar: path.join(__dirname, './fixtures/globals.js')
+                foobar: path.join(__dirname, './fixtures/globals/globals.js')
             }
+        };
+
+        test('should compile with given globals', async function() {
+            const output = await compiler('fixtures/globals/base.njk', loaderOptions);
+
+            expect(output()).toMatchSnapshot();
         });
 
-        expect(output()).toMatchSnapshot();
-    });
+        test('should compile globals in parent templates', async function() {
+            const output = await compiler('fixtures/globals/child.njk', loaderOptions);
 
-    test('should compile globals in parent templates', async function() {
-        const output = await compiler('fixtures/globals_child_template.njk', {
-            globals: {
-                foobar: path.join(__dirname, './fixtures/globals.js')
-            }
+            expect(output()).toMatchSnapshot();
         });
 
-        expect(output()).toMatchSnapshot();
+        test('should compile multiple instances of same global', async function() {
+            const output = await compiler('fixtures/globals/multiple.njk', loaderOptions);
+
+            expect(output()).toMatchSnapshot();
+        })
     });
 
-    test('should compile custom tags', async function() {
-        const output = await compiler('fixtures/custom-extension.njk', {
+    describe('extensions', function() {
+        const loaderOptions = {
             extensions: {
-                RemoteExtension: path.join(__dirname, './fixtures/RemoteExtension.js')
+                RemoteExtension: path.join(__dirname, './fixtures/extensions/RemoteExtension.js')
             }
+        };
+
+        test('should compile custom tags', async function() {
+            const output = await compiler('fixtures/extensions/base.njk', loaderOptions);
+
+            expect(output()).toMatchSnapshot();
         });
 
-        expect(output()).toMatchSnapshot();
-    });
+        test('should compile custom tags from parent template', async function() {
+            const output = await compiler('fixtures/extensions/child.njk', loaderOptions);
 
-    test('should compile custom tags from parent template', async function() {
-        const output = await compiler('fixtures/custom-extension-child-template.njk', {
-            extensions: {
-                RemoteExtension: path.join(__dirname, './fixtures/RemoteExtension.js')
-            }
+            expect(output()).toMatchSnapshot();
         });
 
-        expect(output()).toMatchSnapshot();
+        test('should compile multiple instances of same tag', async function() {
+            const output = await compiler('fixtures/extensions/multiple.njk', loaderOptions);
+
+            expect(output()).toMatchSnapshot();
+        });
     });
 
     describe('filters', function() {
