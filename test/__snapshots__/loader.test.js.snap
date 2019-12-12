@@ -95,6 +95,29 @@ Child template
 "
 `;
 
+exports[`Advanced compilation globals should compile multiple instances of same global 1`] = `
+"<div>
+
+globals returned value
+</div>
+
+<div>
+    Occurrence #1
+
+    
+    globals returned value
+</div>
+
+<div>
+    Occurrence #2
+
+    
+    globals returned value
+</div>
+
+"
+`;
+
 exports[`Advanced compilation globals should compile with given globals 1`] = `
 "<div>
 

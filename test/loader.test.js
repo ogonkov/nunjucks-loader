@@ -95,6 +95,12 @@ describe('Advanced compilation', function() {
 
             expect(output()).toMatchSnapshot();
         });
+
+        test('should compile multiple instances of same global', async function() {
+            const output = await compiler('fixtures/globals/multiple.njk', loaderOptions);
+
+            expect(output()).toMatchSnapshot();
+        })
     });
 
     describe('extensions', function() {
