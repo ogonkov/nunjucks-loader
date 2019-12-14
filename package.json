@@ -1,6 +1,6 @@
 {
   "name": "simple-nunjucks-loader",
-  "version": "1.0.0-alpha.8",
+  "version": "1.0.0-alpha.9",
   "description": "Webpack loader for Nunjucks",
   "main": "lib/loader.js",
   "scripts": {
