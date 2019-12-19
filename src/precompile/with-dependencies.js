@@ -7,6 +7,7 @@ import {getFirstExistedPath} from '../get-first-existed-path';
 import {getAddonsMeta} from './get-addons-meta';
 import {configureEnvironment} from './configure-environment';
 import {getNodes} from './get-nodes';
+import {indexOf} from './index-of';
 
 /**
  * @typedef {Object} NunjucksOptions
@@ -91,19 +92,13 @@ export function withDependencies(resourcePath, source, options) {
             })
         )
     ).filter(Boolean).filter(([extensionName], i, extensions) => {
-        const extension = extensions.find(([name]) => name === extensionName);
-        const extensionIndex = extensions.indexOf(extension);
-
-        return i === extensionIndex;
+        return i === indexOf(extensions, ([name]) => name === extensionName);
     });
 
     const filtersCalls = nodes.findAll(nunjucks.nodes.Filter).map(({name}) => (
         filtersInstances.find(([filterName]) => filterName === name.value)
     )).filter(Boolean).filter(([filterName], i, filters) => {
-        const filter = filters.find(([name]) => name === filterName);
-        const filterIndex = filters.indexOf(filter);
-
-        return i === filterIndex;
+        return i === indexOf(filters, ([name]) => name === filterName);
     });
 
     return Promise.all([
