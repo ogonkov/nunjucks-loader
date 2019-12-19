@@ -6,6 +6,7 @@ import {getPossiblePaths} from '../get-possible-paths';
 import {getFirstExistedPath} from '../get-first-existed-path';
 import {getAddonsMeta} from './get-addons-meta';
 import {configureEnvironment} from './configure-environment';
+import {getNodes} from './get-nodes';
 
 /**
  * @typedef {Object} NunjucksOptions
@@ -76,9 +77,10 @@ export function withDependencies(resourcePath, source, options) {
     const extensionsInstances = await getAddonsMeta(extensions);
     const filtersInstances = await getAddonsMeta(filters);
 
-    const nodes = nunjucks.parser.parse(
+    const nodes = getNodes(
         source,
-        extensionsInstances.map(([,, ext]) => ext)
+        extensionsInstances.map(([,, ext]) => ext),
+        opts
     );
 
     const extensionCalls = nodes.findAll(nunjucks.nodes.CallExtension).map(
