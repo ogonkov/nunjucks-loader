@@ -4,6 +4,8 @@ import {precompileToLocalVar} from './local-var-precompile';
 import {getDependenciesTemplates} from '../get-dependencies-templates';
 import {getPossiblePaths} from '../get-possible-paths';
 import {getFirstExistedPath} from '../get-first-existed-path';
+import {getAddonsMeta} from './get-addons-meta';
+import {configureEnvironment} from './configure-environment';
 
 /**
  * @typedef {Object} NunjucksOptions
@@ -71,11 +73,9 @@ function getDependenciesGlobals(nodes, globals) {
  */
 export function withDependencies(resourcePath, source, options) {
     const {searchPaths, globals, extensions, filters, ...opts} = options;
-    const env = nunjucks.configure(searchPaths, opts);
-    const extensionsInstances =
-        Object.entries(extensions).map(([name, importPath]) => {
-            return [name, importPath, require(importPath)]
-        });
+    const extensionsInstances = await getAddonsMeta(extensions);
+    const filtersInstances = await getAddonsMeta(filters);
+
     const nodes = nunjucks.parser.parse(
         source,
         extensionsInstances.map(([,, ext]) => ext)
@@ -95,25 +95,6 @@ export function withDependencies(resourcePath, source, options) {
         return i === extensionIndex;
     });
 
-    // For proper precompilation of parent templates
-    extensionsInstances.forEach(function([name,, extensionInstance]) {
-        env.addExtension(name, extensionInstance);
-    });
-
-    const filtersInstances = Object.entries(
-        filters
-    ).map(([filterName, importPath]) => (
-        [filterName, importPath, require(importPath)]
-    ));
-
-    filtersInstances.forEach(function([filterName,, filterInstance]) {
-        env.addFilter(
-            filterName,
-            filterInstance,
-            filterInstance.async === true
-        );
-    });
-
     const filtersCalls = nodes.findAll(nunjucks.nodes.Filter).map(({name}) => (
         filtersInstances.find(([filterName]) => filterName === name.value)
     )).filter(Boolean).filter(([filterName], i, filters) => {
@@ -124,7 +105,12 @@ export function withDependencies(resourcePath, source, options) {
     });
 
     return Promise.all([
-        precompileToLocalVar(source, resourcePath, env),
+        precompileToLocalVar(source, resourcePath, configureEnvironment({
+            searchPaths,
+            options: opts,
+            extensions: extensionsInstances,
+            filters: filtersInstances
+        })),
         getDependenciesImports(nodes, searchPaths)
     ]).then(function([precompiled, dependencies]) {
         return {
