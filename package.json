@@ -29,7 +29,7 @@
   "bugs": {
     "url": "https://github.com/ogonkov/nunjucks-loader/issues"
   },
-  "homepage": "https://github.com/ogonkov/nunjucks-loader#readme",
+  "homepage": "https://ogonkov.github.io/nunjucks-loader/",
   "dependencies": {
     "loader-utils": "^1.2.3",
     "schema-utils": "^2.6.1"
