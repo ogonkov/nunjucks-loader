@@ -7,8 +7,7 @@ import {getFirstExistedPath} from '../get-first-existed-path';
 import {getAddonsMeta} from './get-addons-meta';
 import {configureEnvironment} from './configure-environment';
 import {getNodes} from './get-nodes';
-import {indexOf} from './index-of';
-import {toListItem} from './to-list-item';
+import {getUsagesOf} from './get-usages-of';
 
 /**
  * @typedef {Object} NunjucksOptions
@@ -85,24 +84,18 @@ export function withDependencies(resourcePath, source, options) {
         opts
     );
 
-    const extensionsNodes = nodes.findAll(nunjucks.nodes.CallExtension);
-    const extensionCalls = extensionsNodes.map(toListItem(
+    const extensionCalls = getUsagesOf(nunjucks.nodes.CallExtension, nodes)(
         extensionsInstances, ({extName}) => (([name,, instance]) => {
             // Sometime `extName` is instance of custom tag
             return name === extName || instance === extName
         })
-    )).filter(Boolean).filter(([extensionName], i, extensions) => {
-        return i === indexOf(extensions, ([name]) => name === extensionName);
-    });
+    );
 
-    const filterNodes = nodes.findAll(nunjucks.nodes.Filter);
-    const filtersCalls = filterNodes.map(toListItem(
+    const filtersCalls = getUsagesOf(nunjucks.nodes.Filter, nodes)(
         filtersInstances, ({name}) => (
             ([filterName]) => filterName === name.value
         )
-    )).filter(Boolean).filter(([filterName], i, filters) => {
-        return i === indexOf(filters, ([name]) => name === filterName);
-    });
+    );
 
     return Promise.all([
         precompileToLocalVar(source, resourcePath, configureEnvironment({
