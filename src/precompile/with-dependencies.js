@@ -8,6 +8,7 @@ import {getAddonsMeta} from './get-addons-meta';
 import {configureEnvironment} from './configure-environment';
 import {getNodes} from './get-nodes';
 import {indexOf} from './index-of';
+import {toListItem} from './to-list-item';
 
 /**
  * @typedef {Object} NunjucksOptions
@@ -84,19 +85,21 @@ export function withDependencies(resourcePath, source, options) {
         opts
     );
 
-    const extensionCalls = nodes.findAll(nunjucks.nodes.CallExtension).map(
-        ({extName}) => (
-            extensionsInstances.find(([name,, instance]) => {
-                // Sometime `extName` is instance of custom tag
-                return name === extName || instance === extName
-            })
-        )
-    ).filter(Boolean).filter(([extensionName], i, extensions) => {
+    const extensionsNodes = nodes.findAll(nunjucks.nodes.CallExtension);
+    const extensionCalls = extensionsNodes.map(toListItem(
+        extensionsInstances, ({extName}) => (([name,, instance]) => {
+            // Sometime `extName` is instance of custom tag
+            return name === extName || instance === extName
+        })
+    )).filter(Boolean).filter(([extensionName], i, extensions) => {
         return i === indexOf(extensions, ([name]) => name === extensionName);
     });
 
-    const filtersCalls = nodes.findAll(nunjucks.nodes.Filter).map(({name}) => (
-        filtersInstances.find(([filterName]) => filterName === name.value)
+    const filterNodes = nodes.findAll(nunjucks.nodes.Filter);
+    const filtersCalls = filterNodes.map(toListItem(
+        filtersInstances, ({name}) => (
+            ([filterName]) => filterName === name.value
+        )
     )).filter(Boolean).filter(([filterName], i, filters) => {
         return i === indexOf(filters, ([name]) => name === filterName);
     });
