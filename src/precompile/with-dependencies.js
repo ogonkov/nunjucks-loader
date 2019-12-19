@@ -52,19 +52,12 @@ function getDependenciesImports(nodes, searchPaths) {
     return Promise.all(resolvedTemplates);
 }
 
-function getDependenciesGlobals(nodes, globals) {
-    const usedGlobals = nodes
-        .findAll(nunjucks.nodes.FunCall)
-        .map((global) => global.name.value)
-        .filter(Boolean);
-
-    if (usedGlobals.length === 0) {
-        return [];
-    }
-
-    return Object.keys(globals)
-        .filter((fnName) => usedGlobals.includes(fnName))
-        .map((fnName) => [fnName, globals[fnName]]);
+function getTemplateGlobals(nodes, globals) {
+    return getUsagesOf(nunjucks.nodes.FunCall, nodes)(
+        Object.entries(globals), ({name: globalName}) => ([name]) => (
+            globalName.value === name
+        )
+    );
 }
 
 /**
@@ -109,7 +102,7 @@ export function withDependencies(resourcePath, source, options) {
         return {
             precompiled,
             dependencies,
-            globals: getDependenciesGlobals(nodes, globals),
+            globals: getTemplateGlobals(nodes, globals),
             extensions: extensionCalls,
             filters: filtersCalls
         };
