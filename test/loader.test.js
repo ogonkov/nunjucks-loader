@@ -180,4 +180,10 @@ describe('Advanced compilation', function() {
             jest.useRealTimers();
         });
     });
+
+    test('should load static assets', async function() {
+        const output = await compiler('fixtures/assets/template.njk', {});
+
+        console.log(output());
+    });
 });
