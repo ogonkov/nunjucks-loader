@@ -21,10 +21,19 @@ export default function nunjucksLoader(source) {
     withDependencies(resourcePathImport, source, {
         ...options,
         searchPaths: normalizedSearchPaths
-    }).then(({dependencies, precompiled, globals, extensions, filters}) => {
+    }).then(({
+        assets,
+        dependencies,
+        precompiled,
+        globals,
+        extensions,
+        filters
+    }) => {
         const {
             imports: globalsImports
-        } = getGlobals(globals);
+        } = getGlobals(globals.concat(Object.keys(assets).length ? [
+            ['static', path.join(__dirname, './static.js')]
+        ] : []));
         const {
             imports: extensionsImports
         } = getExtensions(extensions);

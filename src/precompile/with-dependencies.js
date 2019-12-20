@@ -8,6 +8,7 @@ import {getAddonsMeta} from './get-addons-meta';
 import {configureEnvironment} from './configure-environment';
 import {getNodes} from './get-nodes';
 import {getUsagesOf} from './get-usages-of';
+import {getNodesValues} from './get-nodes-values';
 
 /**
  * @typedef {Object} NunjucksOptions
@@ -52,6 +53,11 @@ function getDependenciesImports(nodes, searchPaths) {
     return Promise.all(resolvedTemplates);
 }
 
+/**
+ * @param {nunjucks.nodes.Root}     nodes
+ * @param {Object.<string, string>} globals
+ * @returns {string[]}
+ */
 function getTemplateGlobals(nodes, globals) {
     return getUsagesOf(nunjucks.nodes.FunCall, nodes)(
         Object.entries(globals), ({name: globalName}) => ([name]) => (
@@ -60,13 +66,35 @@ function getTemplateGlobals(nodes, globals) {
     );
 }
 
+function getGlobalFnValue(node) {
+    if (node.name.value !== 'static') {
+        return;
+    }
+
+    const [asset] = node.args.children;
+
+    return asset.value;
+}
+
+function isUnique(item, i, list) {
+    return list.indexOf(item) === i;
+}
+
+function getAssets(nodes) {
+    return getNodesValues(
+        nodes,
+        nunjucks.nodes.FunCall,
+        getGlobalFnValue
+    ).filter(isUnique);
+}
+
 /**
  * @param {string} resourcePath
  * @param {string} source
  * @param {NunjucksOptions} options
  * @returns {Promise<string>} Source of precompiled template with wrapper
  */
-export function withDependencies(resourcePath, source, options) {
+export async function withDependencies(resourcePath, source, options) {
     const {searchPaths, globals, extensions, filters, ...opts} = options;
     const extensionsInstances = await getAddonsMeta(extensions);
     const filtersInstances = await getAddonsMeta(filters);
@@ -100,6 +128,7 @@ export function withDependencies(resourcePath, source, options) {
         getDependenciesImports(nodes, searchPaths)
     ]).then(function([precompiled, dependencies]) {
         return {
+            assets: getAssets(nodes),
             precompiled,
             dependencies,
             globals: getTemplateGlobals(nodes, globals),
