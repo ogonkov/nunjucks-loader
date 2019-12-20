@@ -6,7 +6,7 @@ export function getFilters(filters) {
                 module: _filter_${filterName},
                 async: ${JSON.stringify(filterInstance.async === true)}
             };
-        `));
+        `)).join('');
     }
 
     return {
