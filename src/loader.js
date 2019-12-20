@@ -29,9 +29,10 @@ export default function nunjucksLoader(source) {
         extensions,
         filters
     }) => {
+        const hasAssets = Object.keys(assets).length > 0;
         const {
             imports: globalsImports
-        } = getGlobals(globals.concat(Object.keys(assets).length ? [
+        } = getGlobals(globals.concat(hasAssets ? [
             ['static', path.join(__dirname, './static.js')]
         ] : []));
         const {
