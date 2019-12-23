@@ -96,8 +96,10 @@ function getAssets(nodes) {
  */
 export async function withDependencies(resourcePath, source, options) {
     const {searchPaths, globals, extensions, filters, ...opts} = options;
-    const extensionsInstances = await getAddonsMeta(extensions);
-    const filtersInstances = await getAddonsMeta(filters);
+    const [extensionsInstances, filtersInstances] = await Promise.all([
+        getAddonsMeta(extensions),
+        getAddonsMeta(filters)
+    ]);
 
     const nodes = getNodes(
         source,
