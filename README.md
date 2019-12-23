@@ -141,6 +141,19 @@ module.exports = {
                 use: [{
                     loader: 'file-loader'
                 }]
+            },
+
+            {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true
+                        }
+                    }
+                ]
             }
         ]
     }
@@ -150,11 +163,16 @@ module.exports = {
 **template.njk**
 
 ```nunjucks
-<img src="{{ static('./image.png') }}" alt="" />
+<img
+    src="{{ static('./image.png') }}"
+    alt=""
+    class="{{ static('./styles.css').fooClassName }}"
+/>
 ```
 
 The code above will replace `{{ static('./image.png') }}` with hash, that
-`file-loader` returns.
+`file-loader` returns, with class name `fooClassName` from `styles.css` from
+`styles-loader` + `css-loader` output.
 
 ## How it works
 By default Nunjunks bundle all precompiled templates to
