@@ -4,6 +4,11 @@ import {precompileToLocalVar} from './local-var-precompile';
 import {getDependenciesTemplates} from '../get-dependencies-templates';
 import {getPossiblePaths} from '../get-possible-paths';
 import {getFirstExistedPath} from '../get-first-existed-path';
+import {getAddonsMeta} from './get-addons-meta';
+import {configureEnvironment} from './configure-environment';
+import {getNodes} from './get-nodes';
+import {getUsagesOf} from './get-usages-of';
+import {getNodesValues} from './get-nodes-values';
 
 /**
  * @typedef {Object} NunjucksOptions
@@ -34,6 +39,11 @@ import {getFirstExistedPath} from '../get-first-existed-path';
  * @property {PrecompiledDependencyLink[]} dependencies
  */
 
+/**
+ * @param {nunjucks.nodes.Root} nodes
+ * @param {string[]}            searchPaths
+ * @returns {Promise<[string, string][]>}
+ */
 function getDependenciesImports(nodes, searchPaths) {
     const templateDeps = getDependenciesTemplates(nodes);
     const possiblePaths = getPossiblePaths(templateDeps, searchPaths);
@@ -48,19 +58,49 @@ function getDependenciesImports(nodes, searchPaths) {
     return Promise.all(resolvedTemplates);
 }
 
-function getDependenciesGlobals(nodes, globals) {
-    const usedGlobals = nodes
-        .findAll(nunjucks.nodes.FunCall)
-        .map((global) => global.name.value)
-        .filter(Boolean);
+/**
+ * @param {nunjucks.nodes.Root}     nodes
+ * @param {Object.<string, string>} globals
+ * @returns {string[]}
+ */
+function getTemplateGlobals(nodes, globals) {
+    return getUsagesOf(nunjucks.nodes.FunCall, nodes)(
+        Object.entries(globals), ({name: globalName}) => ([name]) => (
+            globalName.value === name
+        )
+    );
+}
 
-    if (usedGlobals.length === 0) {
-        return [];
+function getGlobalFnValue(node) {
+    if (node.name.value !== 'static') {
+        return;
     }
 
-    return Object.keys(globals)
-        .filter((fnName) => usedGlobals.includes(fnName))
-        .map((fnName) => [fnName, globals[fnName]]);
+    const [asset] = node.args.children;
+
+    return asset.value;
+}
+
+function isUnique(item, i, list) {
+    return list.indexOf(item) === i;
+}
+
+function getAssets(nodes, searchAssets) {
+    const assets = getNodesValues(
+        nodes,
+        nunjucks.nodes.FunCall,
+        getGlobalFnValue
+    ).filter(isUnique);
+    const possiblePaths = getPossiblePaths(assets, [].concat(searchAssets));
+    const resolvedAssets = possiblePaths.map(function([path, paths]) {
+        return getFirstExistedPath(paths).then(function(importPath) {
+            return [path, importPath];
+        }, function() {
+            throw new Error(`Asset "${path}" not found`);
+        })
+    });
+
+    return Promise.all(resolvedAssets);
 }
 
 /**
@@ -69,70 +109,61 @@ function getDependenciesGlobals(nodes, globals) {
  * @param {NunjucksOptions} options
  * @returns {Promise<string>} Source of precompiled template with wrapper
  */
-export function withDependencies(resourcePath, source, options) {
-    const {searchPaths, globals, extensions, filters, ...opts} = options;
-    const env = nunjucks.configure(searchPaths, opts);
-    const extensionsInstances =
-        Object.entries(extensions).map(([name, importPath]) => {
-            return [name, importPath, require(importPath)]
-        });
-    const nodes = nunjucks.parser.parse(
+export async function withDependencies(resourcePath, source, options) {
+    const {
+        searchPaths,
+        assetsPaths,
+        globals,
+        extensions,
+        filters,
+        ...opts
+    } = options;
+    const [extensionsInstances, filtersInstances] = await Promise.all([
+        getAddonsMeta(extensions),
+        getAddonsMeta(filters)
+    ]);
+
+    const nodes = getNodes(
         source,
-        extensionsInstances.map(([,, ext]) => ext)
+        extensionsInstances.map(([,, ext]) => ext),
+        opts
     );
 
-    const extensionCalls = nodes.findAll(nunjucks.nodes.CallExtension).map(
-        ({extName}) => (
-            extensionsInstances.find(([name,, instance]) => {
-                // Sometime `extName` is instance of custom tag
-                return name === extName || instance === extName
-            })
-        )
-    ).filter(Boolean).filter(([extensionName], i, extensions) => {
-        const extension = extensions.find(([name]) => name === extensionName);
-        const extensionIndex = extensions.indexOf(extension);
-
-        return i === extensionIndex;
-    });
-
-    // For proper precompilation of parent templates
-    extensionsInstances.forEach(function([name,, extensionInstance]) {
-        env.addExtension(name, extensionInstance);
-    });
-
-    const filtersInstances = Object.entries(
-        filters
-    ).map(([filterName, importPath]) => (
-        [filterName, importPath, require(importPath)]
-    ));
-
-    filtersInstances.forEach(function([filterName,, filterInstance]) {
-        env.addFilter(
-            filterName,
-            filterInstance,
-            filterInstance.async === true
-        );
-    });
-
-    const filtersCalls = nodes.findAll(nunjucks.nodes.Filter).map(({name}) => (
-        filtersInstances.find(([filterName]) => filterName === name.value)
-    )).filter(Boolean).filter(([filterName], i, filters) => {
-        const filter = filters.find(([name]) => name === filterName);
-        const filterIndex = filters.indexOf(filter);
-
-        return i === filterIndex;
-    });
-
     return Promise.all([
-        precompileToLocalVar(source, resourcePath, env),
+        precompileToLocalVar(source, resourcePath, configureEnvironment({
+            searchPaths,
+            options: opts,
+            extensions: extensionsInstances,
+            filters: filtersInstances
+        })),
         getDependenciesImports(nodes, searchPaths)
     ]).then(function([precompiled, dependencies]) {
         return {
             precompiled,
             dependencies,
-            globals: getDependenciesGlobals(nodes, globals),
-            extensions: extensionCalls,
-            filters: filtersCalls
+            globals: getTemplateGlobals(nodes, globals)
         };
+    }).then(function(deps) {
+        return {
+            ...deps,
+            extensions: getUsagesOf(nunjucks.nodes.CallExtension, nodes)(
+                extensionsInstances, ({extName}) => (([name,, instance]) => {
+                    // Sometime `extName` is instance of custom tag
+                    return name === extName || instance === extName
+                })
+            ),
+            filters: getUsagesOf(nunjucks.nodes.Filter, nodes)(
+                filtersInstances, ({name}) => (
+                    ([filterName]) => filterName === name.value
+                )
+            )
+        };
+    }).then(function(deps) {
+        return getAssets(nodes, assetsPaths).then(function(assets) {
+            return {
+                ...deps,
+                assets
+            };
+        })
     });
 }

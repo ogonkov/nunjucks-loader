@@ -1,5 +1,9 @@
 import nunjucks from 'nunjucks';
 
+/**
+ * @param {nunjucks.nodes.Root} nodes
+ * @returns {string[]}
+ */
 export function getDependenciesTemplates(nodes) {
     const extendsNodes = nodes.findAll(nunjucks.nodes.Extends);
     const includeNodes = nodes.findAll(nunjucks.nodes.Include);

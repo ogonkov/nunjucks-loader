@@ -180,4 +180,14 @@ describe('Advanced compilation', function() {
             jest.useRealTimers();
         });
     });
+
+    test('should load static assets', async function() {
+        const output = await compiler('fixtures/assets/template.njk', {
+            assetsPaths: [
+                'test/fixtures/django_project/app_example/static'
+            ]
+        });
+
+        expect(output()).toMatchSnapshot();
+    });
 });

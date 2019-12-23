@@ -23,6 +23,14 @@ export default (fixture, options = {}) => {
                     loader: path.resolve(__dirname, '../src/loader.js'),
                     options: options
                 }
+            }, {
+                test: /\.(css|txt)$/,
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        outputPath: 'bundles'
+                    }
+                }
             }]
         }
     });
@@ -36,8 +44,6 @@ export default (fixture, options = {}) => {
             if (stats.hasErrors()) {
                 reject(new Error(stats.toJson().errors));
             }
-
-
 
             resolve(require(`./bundles/${bundleName}.js`));
         });

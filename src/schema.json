@@ -53,6 +53,19 @@
         }
       ]
     },
+    "assetsPaths": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
     "globals": {
       "type": "object",
       "patternProperties": {

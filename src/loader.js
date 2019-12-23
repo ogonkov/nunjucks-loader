@@ -8,6 +8,9 @@ import {getTemplateDependenciesImport} from './output/get-template-dependencies-
 import {getGlobals} from './output/get-globals';
 import {getExtensions} from './output/get-extensions';
 import {getFilters} from './output/get-filters';
+import {getAssets} from './output/get-assets';
+import {toAssetsUUID} from './output/to-assets-uuid';
+import {replaceAssets} from './output/replace-assets';
 
 export default function nunjucksLoader(source) {
     const callback = this.async();
@@ -21,10 +24,21 @@ export default function nunjucksLoader(source) {
     withDependencies(resourcePathImport, source, {
         ...options,
         searchPaths: normalizedSearchPaths
-    }).then(({dependencies, precompiled, globals, extensions, filters}) => {
+    }).then(({
+        assets,
+        dependencies,
+        precompiled,
+        globals,
+        extensions,
+        filters
+    }) => {
+        const hasAssets = Object.keys(assets).length > 0;
+        const assetsUUID = toAssetsUUID(assets);
         const {
             imports: globalsImports
-        } = getGlobals(globals);
+        } = getGlobals(globals.concat(hasAssets ? [
+            ['static', path.join(__dirname, './static.js')]
+        ] : []));
         const {
             imports: extensionsImports
         } = getExtensions(extensions);
@@ -49,7 +63,8 @@ export default function nunjucksLoader(source) {
             ${globalsImports()}
             ${extensionsImports()}
             ${filtersImports()}
-            ${precompiled}
+            ${getAssets(assetsUUID).imports()}
+            ${replaceAssets(precompiled, assetsUUID)}
 
             exports = module.exports = function nunjucksTemplate(ctx) {
               var nunjucks = runtime(
