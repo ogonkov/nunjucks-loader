@@ -22,5 +22,5 @@ function getStringHash(str) {
 }
 
 export function getStringBas64Hash(str) {
-    return Buffer.from(getStringHash(str)).toString('base64');
+    return Buffer.from(String(getStringHash(str))).toString('base64');
 }
