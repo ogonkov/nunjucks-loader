@@ -24,7 +24,7 @@
     "template",
     "html-webpack-plugin"
   ],
-  "author": "Aleksey",
+  "author": "ogonkov <lesha.ogonkov@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ogonkov/nunjucks-loader/issues"
