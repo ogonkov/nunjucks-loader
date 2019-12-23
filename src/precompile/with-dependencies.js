@@ -107,19 +107,6 @@ export async function withDependencies(resourcePath, source, options) {
         opts
     );
 
-    const extensionCalls = getUsagesOf(nunjucks.nodes.CallExtension, nodes)(
-        extensionsInstances, ({extName}) => (([name,, instance]) => {
-            // Sometime `extName` is instance of custom tag
-            return name === extName || instance === extName
-        })
-    );
-
-    const filtersCalls = getUsagesOf(nunjucks.nodes.Filter, nodes)(
-        filtersInstances, ({name}) => (
-            ([filterName]) => filterName === name.value
-        )
-    );
-
     return Promise.all([
         precompileToLocalVar(source, resourcePath, configureEnvironment({
             searchPaths,
@@ -133,9 +120,22 @@ export async function withDependencies(resourcePath, source, options) {
             assets: getAssets(nodes),
             precompiled,
             dependencies,
-            globals: getTemplateGlobals(nodes, globals),
-            extensions: extensionCalls,
-            filters: filtersCalls
+            globals: getTemplateGlobals(nodes, globals)
+        };
+    }).then(function(deps) {
+        return {
+            ...deps,
+            extensions: getUsagesOf(nunjucks.nodes.CallExtension, nodes)(
+                extensionsInstances, ({extName}) => (([name,, instance]) => {
+                    // Sometime `extName` is instance of custom tag
+                    return name === extName || instance === extName
+                })
+            ),
+            filters: getUsagesOf(nunjucks.nodes.Filter, nodes)(
+                filtersInstances, ({name}) => (
+                    ([filterName]) => filterName === name.value
+                )
+            )
         };
     });
 }
