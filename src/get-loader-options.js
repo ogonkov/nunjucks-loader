@@ -18,6 +18,7 @@ export function getLoaderOptions(loader, callback) {
         tags,
         jinjaCompat = false,
         searchPaths = '.',
+        assetsPaths = '.',
         globals = {},
         extensions = {},
         filters = {}
@@ -31,6 +32,7 @@ export function getLoaderOptions(loader, callback) {
         jinjaCompat,
         tags,
         searchPaths,
+        assetsPaths,
         globals,
         extensions,
         filters

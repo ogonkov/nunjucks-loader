@@ -39,6 +39,11 @@ import {getNodesValues} from './get-nodes-values';
  * @property {PrecompiledDependencyLink[]} dependencies
  */
 
+/**
+ * @param {nunjucks.nodes.Root} nodes
+ * @param {string[]}            searchPaths
+ * @returns {Promise<[string, string][]>}
+ */
 function getDependenciesImports(nodes, searchPaths) {
     const templateDeps = getDependenciesTemplates(nodes);
     const possiblePaths = getPossiblePaths(templateDeps, searchPaths);
@@ -80,12 +85,22 @@ function isUnique(item, i, list) {
     return list.indexOf(item) === i;
 }
 
-function getAssets(nodes) {
-    return getNodesValues(
+function getAssets(nodes, searchAssets) {
+    const assets = getNodesValues(
         nodes,
         nunjucks.nodes.FunCall,
         getGlobalFnValue
     ).filter(isUnique);
+    const possiblePaths = getPossiblePaths(assets, [].concat(searchAssets));
+    const resolvedAssets = possiblePaths.map(function([path, paths]) {
+        return getFirstExistedPath(paths).then(function(importPath) {
+            return [path, importPath];
+        }, function() {
+            throw new Error(`Asset "${path}" not found`);
+        })
+    });
+
+    return Promise.all(resolvedAssets);
 }
 
 /**
@@ -95,7 +110,14 @@ function getAssets(nodes) {
  * @returns {Promise<string>} Source of precompiled template with wrapper
  */
 export async function withDependencies(resourcePath, source, options) {
-    const {searchPaths, globals, extensions, filters, ...opts} = options;
+    const {
+        searchPaths,
+        assetsPaths,
+        globals,
+        extensions,
+        filters,
+        ...opts
+    } = options;
     const [extensionsInstances, filtersInstances] = await Promise.all([
         getAddonsMeta(extensions),
         getAddonsMeta(filters)
@@ -117,7 +139,6 @@ export async function withDependencies(resourcePath, source, options) {
         getDependenciesImports(nodes, searchPaths)
     ]).then(function([precompiled, dependencies]) {
         return {
-            assets: getAssets(nodes),
             precompiled,
             dependencies,
             globals: getTemplateGlobals(nodes, globals)
@@ -137,5 +158,12 @@ export async function withDependencies(resourcePath, source, options) {
                 )
             )
         };
+    }).then(function(deps) {
+        return getAssets(nodes, assetsPaths).then(function(assets) {
+            return {
+                ...deps,
+                assets
+            };
+        })
     });
 }

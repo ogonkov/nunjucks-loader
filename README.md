@@ -139,6 +139,7 @@ All other options get passed to Nunjunks `Environment` during files loading.
 |:--:|:--:|:-----:|:----------|
 |**[`jinjaCompat`](#jinjacompat)**|`{Boolean}`|`false`|Install Jinja syntax support in bundle|
 |**[`searchPaths`](#searchpaths)**|`{String}` or `{Array.<string>}`|`.`|One or more paths to resolve templates paths|
+|**[`assetsPaths`](#assetspaths)**|`{String}` or `{Array.<string>}`|`.`|Paths to resolve static assets. Works like [`STATICFILES_DIRS`][django-settings-staticfiles-dirs].|
 |**[`globals`](#globals)**|`Object.<string, string>`|`{}`|Map global function to corresponding module|
 |**[`extensions`](#extensions)**|`Object.<string, string>`|`{}`|Map extension to corresponding module|
 |**[`filters`](#filters)**|`Object.<string, string>`|`{}`|Map filters to corresponding module|
@@ -184,6 +185,31 @@ module.exports = {
                         searchPaths: [
                             'django_app_a/templates',
                             'django_app_b/templates'
+                        ]
+                    }
+                }]
+            }
+        ]
+    }
+};
+```
+
+### assetsPaths
+
+List of paths where loader should search for assets.
+
+```js
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.njk$/,
+                use: [{
+                    loader: 'simple-nunjucks-loader',
+                    options: {
+                        assetsPaths: [
+                            'django_app_a/static',
+                            'django_app_b/static'
                         ]
                     }
                 }]
@@ -334,6 +360,7 @@ module.exports.async = true;
 [nunjucks-docs-addglobal]:https://mozilla.github.io/nunjucks/api.html#addglobal
 [nunjucks-docs-addextension]:https://mozilla.github.io/nunjucks/api.html#addextension
 [nunjucks-docs-addfilter]:https://mozilla.github.io/nunjucks/api.html#addfilter
+[django-settings-staticfiles-dirs]: https://docs.djangoproject.com/en/1.11/ref/settings/#std:setting-STATICFILES_DIRS
 
 [npm-image]:https://img.shields.io/npm/v/simple-nunjucks-loader.svg
 [npm-url]:http://npmjs.org/package/simple-nunjucks-loader

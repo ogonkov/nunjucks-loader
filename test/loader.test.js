@@ -182,7 +182,11 @@ describe('Advanced compilation', function() {
     });
 
     test('should load static assets', async function() {
-        const output = await compiler('fixtures/assets/template.njk', {});
+        const output = await compiler('fixtures/assets/template.njk', {
+            assetsPaths: [
+                'test/fixtures/django_project/app_example/static'
+            ]
+        });
 
         console.log(output());
     });

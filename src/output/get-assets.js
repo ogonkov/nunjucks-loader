@@ -3,8 +3,8 @@
  */
 export function getAssets(assets) {
     function imports() {
-        const assetsImports = assets.map(function([uuid, assetPath]) {
-            return `_templateAssets['${uuid}'] = require('${assetPath}');`;
+        const assetsImports = assets.map(function([uuid,, assetImport]) {
+            return `_templateAssets['${uuid}'] = require('${assetImport}');`;
         }).join('');
 
         return `
