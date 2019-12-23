@@ -107,6 +107,55 @@ module.exports = {
 Refer to [`html-webpack-plugin` page][html-webpack-plugin-options] for all
 available options.
 
+### With assets
+
+To load static assets (like images, for example), this loader inserts own
+`static` global function. It works like `static` from Django/Jinja2 integration,
+but resolves paths via Webpack loaders. It just replace calls
+`static('foo.jpeg')` with `static(importedViaWebpackSymbol)`. `static` itself
+just returns loaded module or `default` export of it.
+
+**webpack.config.js**
+
+```js
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.njk$/,
+                use: [
+                    {
+                        loader: 'simple-nunjucks-loader',
+                        options: {
+                            assetsPaths: [
+                                'app_example_a/static',
+                                'app_example_b/static',
+                            ]
+                        }
+                    }
+                ]
+            },
+
+            {
+                test: /\.png$/,
+                use: [{
+                    loader: 'file-loader'
+                }]
+            }
+        ]
+    }
+};
+```
+
+**template.njk**
+
+```nunjucks
+<img src="{{ static('./image.png') }}" alt="" />
+```
+
+The code above will replace `{{ static('./image.png') }}` with hash, that
+`file-loader` returns.
+
 ## How it works
 By default Nunjunks bundle all precompiled templates to
 `window.nunjucksPrecompiled`, then loads them via custom loader from this
