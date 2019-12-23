@@ -188,6 +188,6 @@ describe('Advanced compilation', function() {
             ]
         });
 
-        console.log(output());
+        expect(output()).toMatchSnapshot();
     });
 });
