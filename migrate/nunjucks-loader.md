@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 title: Migrating from `nunjucks-loader` to `simple-nunjucks-loader`
 ---
 
