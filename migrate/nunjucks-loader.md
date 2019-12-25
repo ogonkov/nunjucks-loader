@@ -1,6 +1,7 @@
+---
 layout: page
 title: Migrating from `nunjucks-loader` to `simple-nunjucks-loader`
-permalink: /migrate/nunjucks-loader
+---
 
 # Migrating from `nunjucks-loader` to `simple-nunjucks-loader`
 
