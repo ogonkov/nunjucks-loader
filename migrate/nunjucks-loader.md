@@ -111,3 +111,7 @@ module.exports = {
     }
 };
 ```
+
+## Multiple template source folders
+
+The easy one, just rename `root` to [`searchPaths`](https://www.npmjs.com/package/simple-nunjucks-loader#searchpaths).
