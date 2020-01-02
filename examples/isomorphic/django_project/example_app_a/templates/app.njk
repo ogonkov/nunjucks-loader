@@ -1,0 +1,25 @@
+{% extends 'base/base.njk' %}
+
+{% block header %}
+    <h1>{{ APP_NAME }}</h1>
+{% endblock %}
+
+{% block main %}
+    <nav>
+        <ul data-ui-area="toolbar">
+            <li>
+                <button name="add-task">
+                    Add task
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+    <ul data-ui-area="todos">
+        {% include 'todos-items.njk' %}
+    </ul>
+{% endblock %}
+
+{% block footer %}
+    <p>&copy; Acme Corp.</p>
+{% endblock footer %}
