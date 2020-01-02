@@ -1,5 +1,7 @@
+{% set styles = static('src/item.css') %}
+
 {% macro item(id, text, done=False, edit=False) %}
-<li>
+<li class="{{ styles.item }}">
     {% if not edit %}<label>{% endif %}
         <input
             type="checkbox"

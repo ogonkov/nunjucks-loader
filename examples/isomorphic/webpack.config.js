@@ -1,4 +1,5 @@
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     module: {
@@ -17,6 +18,22 @@ module.exports = {
                         }
                     }
                 ]
+            },
+
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            onlyLocals: true,
+                            modules: true
+                        }
+                    }
+                ]
             }
         ]
     },
@@ -27,6 +44,7 @@ module.exports = {
             templateParameters: {
                 APP_NAME: 'Isomorphic example app'
             }
-        })
+        }),
+        new MiniCssExtractPlugin(),
     ]
 };
