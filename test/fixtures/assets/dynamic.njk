@@ -6,4 +6,8 @@
     {% for item in [1, 2] %}
         <p>{{ static('foo/bar/dynamic-' + foo + '-' + item + '.md') }}</p>
     {% endfor %}
+
+    {% for fileName in ['example-1.md', 'example-2.md'] %}
+        <p>{{ static('foo/bar/dynamic-' + fileName) }}</p>
+    {% endfor %}
 {% endblock body %}

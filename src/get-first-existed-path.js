@@ -21,11 +21,11 @@ function isExists(path) {
 }
 
 function isExpression(str) {
-    return /" \+ [^ ]+ \+ "/.test(str);
+    return /" \+ [^ ]+( \+ "|$)/.test(str);
 }
 
 function getGlobExpression(pathExpression) {
-    return unquote(pathExpression.replace(/" \+ [^ ]+ \+ "/g, '*'));
+    return unquote(pathExpression.replace(/" \+ [^ ]+( \+ "|$)/g, '*'));
 }
 
 export function getFirstExistedPath(paths) {
