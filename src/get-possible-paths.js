@@ -1,4 +1,13 @@
 import path from 'path';
+import {unquote} from './unquote';
+
+function getFilePath(searchPath, possiblePath) {
+    const [firstPart, ...restParts] = possiblePath.split(' + ');
+    const filePath = path.resolve(searchPath, unquote(firstPart));
+
+    return restParts.length > 0 ?
+        `${[`"${filePath}"`, ...restParts].join(' + ')}` : filePath;
+}
 
 /**
  * @param {string[]} paths
@@ -11,9 +20,9 @@ export function getPossiblePaths(paths, searchPaths) {
             possiblePath,
             searchPaths.map((searchPath) => [
                 path.resolve(searchPath),
-                path.resolve(searchPath, possiblePath)
+                getFilePath(searchPath, possiblePath)
             ]).filter(function([basePath, filePath]) {
-                return filePath.startsWith(basePath);
+                return unquote(filePath).startsWith(basePath);
             }).map(function([, filePath]) {
                 return filePath;
             })

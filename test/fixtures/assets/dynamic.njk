@@ -1,0 +1,9 @@
+{% extends 'test/fixtures/assets/base.njk' %}
+
+{% block body %}
+    {% set foo = 'example' %}
+
+    {% for item in [1, 2] %}
+        <p>{{ static('foo/bar/dynamic-' + foo + '-' + item + '.md') }}</p>
+    {% endfor %}
+{% endblock body %}
