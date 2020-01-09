@@ -187,7 +187,7 @@ like:
 {{ static('foo/' + bar + '.ext') }}
 ```
 
-> :info: I advocate against using dynamic assets, because:
+> :warning: I advocate against using dynamic assets, because:
 >
 > 1. I have to support hacky regular expressions :smile:
 > 2. It's hard to find usages of asset, because there is no import of it
