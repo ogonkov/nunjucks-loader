@@ -1,7 +1,32 @@
 import fs from 'fs';
 import {promisify} from 'util';
+import glob from 'glob';
+import {unquote} from './unquote';
 
-const isExists = promisify(fs.access);
+const fsAccess = promisify(fs.access);
+function isExists(path) {
+    if (isExpression(path)) {
+        return new Promise(function(resolve, reject) {
+            glob(getGlobExpression(path), function(err, files) {
+                if (err) {
+                    return reject(err);
+                }
+
+                resolve(files.length > 0);
+            });
+        });
+    }
+
+    return fsAccess(path);
+}
+
+function isExpression(str) {
+    return /" \+ [^ ]+( \+ "|$)/.test(str);
+}
+
+function getGlobExpression(pathExpression) {
+    return unquote(pathExpression.replace(/" \+ [^ ]+( \+ "|$)/g, '*'));
+}
 
 export function getFirstExistedPath(paths) {
     return paths.reduce(function(resolved, path) {

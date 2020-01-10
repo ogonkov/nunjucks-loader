@@ -24,7 +24,7 @@ export default (fixture, options = {}) => {
                     options: options
                 }
             }, {
-                test: /\.(css|txt)$/,
+                test: /\.(css|txt|md)$/,
                 use: {
                     loader: 'file-loader',
                     options: {
