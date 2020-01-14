@@ -11,6 +11,7 @@ import {getFilters} from './output/get-filters';
 import {getAssets} from './output/get-assets';
 import {toAssetsUUID} from './output/to-assets-uuid';
 import {replaceAssets} from './output/replace-assets';
+import {ERROR_MODULE_NOT_FOUND} from './constants';
 
 export default function nunjucksLoader(source) {
     const callback = this.async();
@@ -91,6 +92,14 @@ export default function nunjucksLoader(source) {
             exports.__nunjucks_module_dependencies__ = __nunjucks_module_dependencies__;
         `);
     }, function(error) {
+        if (error.code === ERROR_MODULE_NOT_FOUND &&
+            error.message.includes("'glob'")) {
+            return callback(new Error(
+                'Attempt to use dynamic assets ' +
+                'without optional "glob" dependency installed'
+            ));
+        }
+
         callback(error);
     });
 }

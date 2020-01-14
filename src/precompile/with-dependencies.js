@@ -9,6 +9,7 @@ import {configureEnvironment} from './configure-environment';
 import {getNodes} from './get-nodes';
 import {getUsagesOf} from './get-usages-of';
 import {getNodesValues} from './get-nodes-values';
+import {ERROR_MODULE_NOT_FOUND} from '../constants';
 
 /**
  * @typedef {Object} NunjucksOptions
@@ -128,8 +129,12 @@ function getAssets(nodes, searchAssets) {
     const resolvedAssets = possiblePaths.map(function([path, paths]) {
         return getFirstExistedPath(paths).then(function(importPath) {
             return [path, importPath];
-        }, function() {
-            throw new Error(`Asset "${path}" not found`);
+        }, function(error) {
+            if (error.code !== ERROR_MODULE_NOT_FOUND) {
+                throw new Error(`Asset "${path}" not found`);
+            }
+
+            throw error;
         })
     });
 
