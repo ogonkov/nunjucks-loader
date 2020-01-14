@@ -13,6 +13,13 @@ This Webpack loader compiles [Nunjucks][nunjucks-github] templates.
 npm install --save-dev simple-nunjucks-loader
 ```
 
+If you don't use [dynamic assets](#dynamic-assets) in your code, then you could
+save a bit on optional `glob` dependency:
+
+```bash
+npm install --no-optional --save-dev simple-nunjucks-loader
+```
+
 ## Note on global variables
 
 By default Nunjucks wrap templates to global `window.nunjucksPrecompiled`.
@@ -141,19 +148,6 @@ module.exports = {
                 use: [{
                     loader: 'file-loader'
                 }]
-            },
-
-            {
-                test: /\.css$/,
-                use: [
-                    'style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            modules: true
-                        }
-                    }
-                ]
             }
         ]
     }
@@ -166,13 +160,11 @@ module.exports = {
 <img
     src="{{ static('./image.png') }}"
     alt=""
-    class="{{ static('./styles.css').fooClassName }}"
 />
 ```
 
 The code above will replace `{{ static('./image.png') }}` with hash, that
-`file-loader` returns, with class name `fooClassName` from `styles.css` from
-`styles-loader` + `css-loader` output.
+`file-loader` returns.
 
 #### Dynamic assets
 
