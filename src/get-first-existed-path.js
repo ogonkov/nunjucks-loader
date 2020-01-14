@@ -1,18 +1,20 @@
 import fs from 'fs';
 import {promisify} from 'util';
-import glob from 'glob';
+import {getGlob} from './get-glob';
 import {unquote} from './unquote';
 
 const fsAccess = promisify(fs.access);
 function isExists(path) {
     if (isExpression(path)) {
-        return new Promise(function(resolve, reject) {
-            glob(getGlobExpression(path), function(err, files) {
-                if (err) {
-                    return reject(err);
-                }
+        return getGlob().then(function(glob) {
+            return new Promise(function(resolve, reject) {
+                glob(getGlobExpression(path), function(err, files) {
+                    if (err) {
+                        return reject(err);
+                    }
 
-                resolve(files.length > 0);
+                    resolve(files.length > 0);
+                });
             });
         });
     }
