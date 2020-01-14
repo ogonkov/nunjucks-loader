@@ -31,9 +31,11 @@
   },
   "homepage": "https://ogonkov.github.io/nunjucks-loader/",
   "dependencies": {
-    "glob": "^7.1.6",
     "loader-utils": "^1.2.3",
     "schema-utils": "^2.6.1"
+  },
+  "optionalDependencies": {
+    "glob": "^7.1.6"
   },
   "peerDependencies": {
     "nunjucks": "^3.0.0"
