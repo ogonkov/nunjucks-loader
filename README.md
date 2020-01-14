@@ -13,6 +13,13 @@ This Webpack loader compiles [Nunjucks][nunjucks-github] templates.
 npm install --save-dev simple-nunjucks-loader
 ```
 
+If you don't use [dynamic assets](#dynamic-assets) in your code, then you could
+save a bit on optional `glob` dependency:
+
+```bash
+npm install --no-optional --save-dev simple-nunjucks-loader
+```
+
 ## Note on global variables
 
 By default Nunjucks wrap templates to global `window.nunjucksPrecompiled`.
