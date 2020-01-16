@@ -21,7 +21,7 @@ But unlike other Nunjucks loaders, `simple-nunjucks-loader` didn't provide
 methods to have environment access.
 
 The truth is that you don't really need environment to use this extension as
-a block (`{% markdown %}...{% endmarkdown %}`).
+a block (`{% raw %}{% markdown %}...{% endmarkdown %}{% endraw %}`).
 
 You can just call extension itself, and [register it](https://github.com/ogonkov/nunjucks-loader#extensions)
 within loader like any other extension. See [`markdown.js`](src/nunjuck_extensions/markdown.js)
