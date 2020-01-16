@@ -42,7 +42,7 @@ other extensions aswell.
 
 Solution is to replace `browser/nunjucks.js` with
 `webpack.NormalModuleReplacementPlugin`. See an example in
-[`webpack.config`](webpack.config.js#L36).
+[`webpack.config.js`](webpack.config.js#L36).
 
 ## Run demo
 
