@@ -50,7 +50,7 @@ instead of passing it in `config` callback. See readme for more options.
 // file: src/nunjucks.config.js
 module.exports = function(env){
     
-    env.addFilter('asyncFoo', , true);
+    env.addFilter('asyncFoo', function() {}, true);
     
     // env.addExtension(...) etc
 };

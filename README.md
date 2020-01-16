@@ -12,3 +12,7 @@ npm install --save-dev simple-nunjucks-loader
 
 I you happen to use `nunjucks-loader`, you could be interested in
 [Migration guide](migrate/nunjucks-loader.md).
+
+## Examples
+
+* [`nunjucks-markdown`](examples/markdown) usage notes

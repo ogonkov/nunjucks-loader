@@ -1,0 +1,26 @@
+<html>
+
+<body>
+{% markdown %}
+## Markdown text
+
+* List item
+{% endmarkdown %}
+
+<div>
+<h2>File inline render example</h2>
+
+<p>
+    <code>nunjucks-markdown</code> requires <code>Environment</code> instance
+    to render markdown file. Since we don't have environment access in loader,
+    we can achieve same by using <code>raw-loader</code>, and
+    <code>static()</code> global.
+</p>
+
+{% set changelog = static('src/CHANGELOG.md') %}
+{% markdown %}{{ changelog }}{% endmarkdown %}
+</div>
+
+</body>
+
+</html>
