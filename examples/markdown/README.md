@@ -24,7 +24,8 @@ The truth is that you don't really need environment to use this extension as
 a block (`{% raw %}{% markdown %}...{% endmarkdown %}{% endraw %}`).
 
 You can just call extension itself, and [register it](https://github.com/ogonkov/nunjucks-loader#extensions)
-within loader like any other extension. See [`markdown.js`](src/nunjuck_extensions/markdown.js)
+within loader like any other extension. See
+[`markdown.js`](https://github.com/ogonkov/nunjucks-loader/tree/gh-pages/examples/markdown/src/nunjuck_extensions/markdown.js)
 file for example of integration.
 
 ## Markup escaping
@@ -42,7 +43,7 @@ other extensions aswell.
 
 Solution is to replace `browser/nunjucks.js` with
 `webpack.NormalModuleReplacementPlugin`. See an example in
-[`webpack.config.js`](webpack.config.js#L36).
+[`webpack.config.js`](https://github.com/ogonkov/nunjucks-loader/tree/gh-pages/examples/markdown/webpack.config.js#L36).
 
 ## Run demo
 

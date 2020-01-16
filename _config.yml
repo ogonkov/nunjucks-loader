@@ -1,2 +1,6 @@
 theme: jekyll-theme-cayman
 google_analytics: UA-71730924-3
+
+readme_index:
+  remove_originals: true
+  with_frontmatter: true
