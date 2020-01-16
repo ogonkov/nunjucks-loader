@@ -15,4 +15,4 @@ I you happen to use `nunjucks-loader`, you could be interested in
 
 ## Examples
 
-* [`nunjucks-markdown`](examples/markdown) usage notes
+* [`nunjucks-markdown`](examples/markdown/README.md) usage notes
