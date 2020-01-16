@@ -8,8 +8,8 @@ title: Using `nunjucks-markdown`
 > A nunjuck extension that adds a markdown tag. This plugin allows you to
 > choose your own markdown renderer.
 
-`nunjucks-markdown` is a simple Nunjucks tag to inline Markdown markup in
-templates.
+[`nunjucks-markdown`](https://github.com/zephraph/nunjucks-markdown)
+is a simple Nunjucks tag to inline Markdown markup in templates.
 
 ## Environment instance
 
