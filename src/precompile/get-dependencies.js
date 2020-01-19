@@ -41,7 +41,7 @@ import {getTemplatesImports} from '../get-templates-imports';
  * @param {string} resourcePath
  * @param {string} source
  * @param {NunjucksOptions} options
- * @returns {Object}
+ * @returns {Promise<Object>}
  */
 export async function getDependencies(resourcePath, source, options) {
     const {
