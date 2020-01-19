@@ -168,11 +168,7 @@ export async function withDependencies(resourcePath, source, options) {
         return {
             precompiled,
             dependencies,
-            globals: getUsedGlobals(nodes, globals)
-        };
-    }).then(function(deps) {
-        return {
-            ...deps,
+            globals: getUsedGlobals(nodes, globals),
             extensions: getUsedExtensions(nodes, extensionsInstances),
             filters: getUsedFilters(nodes, filtersInstances)
         };
