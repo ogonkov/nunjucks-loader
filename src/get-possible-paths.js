@@ -1,5 +1,5 @@
 import path from 'path';
-import {unquote} from './unquote';
+import {unquote} from './utils/unquote';
 
 function getFilePath(searchPath, possiblePath) {
     const [firstPart, ...restParts] = possiblePath.split(' + ');

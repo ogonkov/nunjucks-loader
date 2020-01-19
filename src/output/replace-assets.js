@@ -1,4 +1,4 @@
-import {toRegExpSource} from '../to-regexp-source';
+import {toRegExpSource} from '../utils/to-regexp-source';
 import {getArgs, isDynamicPath} from './assets';
 
 

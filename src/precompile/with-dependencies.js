@@ -1,14 +1,14 @@
 import nunjucks from 'nunjucks';
 
 import {precompileToLocalVar} from './local-var-precompile';
-import {getDependenciesTemplates} from '../get-dependencies-templates';
+import {getDependenciesTemplates} from '../ast/get-dependencies-templates';
 import {getPossiblePaths} from '../get-possible-paths';
 import {getFirstExistedPath} from '../get-first-existed-path';
 import {getAddonsMeta} from './get-addons-meta';
 import {configureEnvironment} from './configure-environment';
-import {getNodes} from './get-nodes';
-import {getUsagesOf} from './get-usages-of';
-import {getNodesValues} from './get-nodes-values';
+import {getNodes} from '../ast/get-nodes';
+import {getUsagesOf} from '../ast/get-usages-of';
+import {getNodesValues} from '../ast/get-nodes-values';
 import {ERROR_MODULE_NOT_FOUND} from '../constants';
 
 /**

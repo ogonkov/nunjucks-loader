@@ -1,8 +1,5 @@
 import nunjucks from 'nunjucks';
-
-function getModule(importedSymbol) {
-    return importedSymbol.default || importedSymbol;
-}
+import {getModule} from '../utils/get-module';
 
 /**
  * @param env

@@ -1,7 +1,7 @@
 /**
  * @param {array}    list
  * @param {function} callback
- * @returns {*}
+ * @returns {number}
  */
 export function indexOf(list, callback) {
     const item = list.find(callback);
