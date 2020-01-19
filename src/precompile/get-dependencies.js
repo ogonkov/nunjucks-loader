@@ -43,7 +43,7 @@ import {getTemplatesImports} from '../get-templates-imports';
  * @param {NunjucksOptions} options
  * @returns {Object}
  */
-export async function withDependencies(resourcePath, source, options) {
+export async function getDependencies(resourcePath, source, options) {
     const {
         searchPaths,
         assetsPaths,
