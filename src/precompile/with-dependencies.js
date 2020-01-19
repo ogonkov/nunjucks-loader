@@ -1,5 +1,3 @@
-import nunjucks from 'nunjucks';
-
 import {precompileToLocalVar} from './local-var-precompile';
 import {getDependenciesTemplates} from '../ast/get-dependencies-templates';
 import {getPossiblePaths} from '../get-possible-paths';
@@ -7,12 +5,10 @@ import {getFirstExistedPath} from '../get-first-existed-path';
 import {getAddonsMeta} from './get-addons-meta';
 import {configureEnvironment} from './configure-environment';
 import {getNodes} from '../ast/get-nodes';
-import {getNodesValues} from '../ast/get-nodes-values';
-import {ERROR_MODULE_NOT_FOUND} from '../constants';
 import {getUsedGlobals} from '../ast/get-used-globals';
 import {getUsedExtensions} from '../ast/get-used-extensions';
 import {getUsedFilters} from '../ast/get-used-filters';
-import {isUnique} from '../utils/is-unique';
+import {getAssets} from '../ast/get-assets';
 
 /**
  * @typedef {Object} NunjucksOptions
@@ -63,75 +59,10 @@ function getDependenciesImports(nodes, searchPaths) {
 }
 
 /**
- * Parse `Add` value to expression
- * @example
- *   'foo' + bar + 'qux'
- *
- * @param {nunjucks.nodes.Add} node
- */
-function getAddNodeValue(node) {
-    if (!(node instanceof nunjucks.nodes.Add)) {
-        throw new TypeError('Wrong node type');
-    }
-
-    return [node.left, node.right].map(function(node) {
-        if (node instanceof nunjucks.nodes.Add) {
-            return getAddNodeValue(node);
-        }
-
-        if (node instanceof nunjucks.nodes.Literal) {
-            return `"${node.value}"`;
-        }
-
-        if (node instanceof nunjucks.nodes.Symbol) {
-            return node.value;
-        }
-
-        throw new TypeError('Unsupported node signature');
-    }).join(' + ');
-}
-
-function getGlobalFnValue(node) {
-    if (node.name.value !== 'static') {
-        return;
-    }
-
-    const [asset] = node.args.children;
-
-    if (asset instanceof nunjucks.nodes.Add) {
-        return getAddNodeValue(asset);
-    }
-
-    return asset.value;
-}
-
-function getAssets(nodes, searchAssets) {
-    const assets = getNodesValues(
-        nodes,
-        nunjucks.nodes.FunCall,
-        getGlobalFnValue
-    ).filter(isUnique);
-    const possiblePaths = getPossiblePaths(assets, [].concat(searchAssets));
-    const resolvedAssets = possiblePaths.map(function([path, paths]) {
-        return getFirstExistedPath(paths).then(function(importPath) {
-            return [path, importPath];
-        }, function(error) {
-            if (error.code !== ERROR_MODULE_NOT_FOUND) {
-                throw new Error(`Asset "${path}" not found`);
-            }
-
-            throw error;
-        })
-    });
-
-    return Promise.all(resolvedAssets);
-}
-
-/**
  * @param {string} resourcePath
  * @param {string} source
  * @param {NunjucksOptions} options
- * @returns {Promise<string>} Source of precompiled template with wrapper
+ * @returns {Object}
  */
 export async function withDependencies(resourcePath, source, options) {
     const {
