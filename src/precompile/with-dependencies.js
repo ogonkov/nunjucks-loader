@@ -1,7 +1,4 @@
 import {precompileToLocalVar} from './local-var-precompile';
-import {getDependenciesTemplates} from '../ast/get-dependencies-templates';
-import {getPossiblePaths} from '../get-possible-paths';
-import {getFirstExistedPath} from '../get-first-existed-path';
 import {getAddonsMeta} from './get-addons-meta';
 import {configureEnvironment} from './configure-environment';
 import {getNodes} from '../ast/get-nodes';
@@ -9,6 +6,7 @@ import {getUsedGlobals} from '../ast/get-used-globals';
 import {getUsedExtensions} from '../ast/get-used-extensions';
 import {getUsedFilters} from '../ast/get-used-filters';
 import {getAssets} from '../ast/get-assets';
+import {getTemplatesImports} from '../get-templates-imports';
 
 /**
  * @typedef {Object} NunjucksOptions
@@ -38,25 +36,6 @@ import {getAssets} from '../ast/get-assets';
  * @property {string}                      precompiled
  * @property {PrecompiledDependencyLink[]} dependencies
  */
-
-/**
- * @param {nunjucks.nodes.Root} nodes
- * @param {string[]}            searchPaths
- * @returns {Promise<[string, string][]>}
- */
-function getDependenciesImports(nodes, searchPaths) {
-    const templateDeps = getDependenciesTemplates(nodes);
-    const possiblePaths = getPossiblePaths(templateDeps, searchPaths);
-    const resolvedTemplates = possiblePaths.map(function([path, paths]) {
-        return getFirstExistedPath(paths).then(function(importPath) {
-            return [path, importPath];
-        }, function() {
-            throw new Error(`Template "${path}" not found`);
-        });
-    });
-
-    return Promise.all(resolvedTemplates);
-}
 
 /**
  * @param {string} resourcePath
@@ -91,7 +70,7 @@ export async function withDependencies(resourcePath, source, options) {
             extensions: extensionsInstances,
             filters: filtersInstances
         })),
-        getDependenciesImports(nodes, searchPaths)
+        getTemplatesImports(nodes, searchPaths)
     ]).then(function([precompiled, dependencies]) {
         return {
             precompiled,
