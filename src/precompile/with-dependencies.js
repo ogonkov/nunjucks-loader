@@ -7,11 +7,11 @@ import {getFirstExistedPath} from '../get-first-existed-path';
 import {getAddonsMeta} from './get-addons-meta';
 import {configureEnvironment} from './configure-environment';
 import {getNodes} from '../ast/get-nodes';
-import {getUsagesOf} from '../ast/get-usages-of';
 import {getNodesValues} from '../ast/get-nodes-values';
 import {ERROR_MODULE_NOT_FOUND} from '../constants';
 import {getUsedGlobals} from '../ast/get-used-globals';
 import {getUsedExtensions} from '../ast/get-used-extensions';
+import {getUsedFilters} from '../ast/get-used-filters';
 
 /**
  * @typedef {Object} NunjucksOptions
@@ -174,11 +174,7 @@ export async function withDependencies(resourcePath, source, options) {
         return {
             ...deps,
             extensions: getUsedExtensions(nodes, extensionsInstances),
-            filters: getUsagesOf(nunjucks.nodes.Filter, nodes)(
-                filtersInstances, ({name}) => (
-                    ([filterName]) => filterName === name.value
-                )
-            )
+            filters: getUsedFilters(nodes, filtersInstances)
         };
     }).then(function(deps) {
         return getAssets(nodes, assetsPaths).then(function(assets) {
