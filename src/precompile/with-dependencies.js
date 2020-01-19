@@ -12,6 +12,7 @@ import {ERROR_MODULE_NOT_FOUND} from '../constants';
 import {getUsedGlobals} from '../ast/get-used-globals';
 import {getUsedExtensions} from '../ast/get-used-extensions';
 import {getUsedFilters} from '../ast/get-used-filters';
+import {isUnique} from '../utils/is-unique';
 
 /**
  * @typedef {Object} NunjucksOptions
@@ -102,10 +103,6 @@ function getGlobalFnValue(node) {
     }
 
     return asset.value;
-}
-
-function isUnique(item, i, list) {
-    return list.indexOf(item) === i;
 }
 
 function getAssets(nodes, searchAssets) {
