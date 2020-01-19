@@ -10,6 +10,7 @@ import {getNodes} from '../ast/get-nodes';
 import {getUsagesOf} from '../ast/get-usages-of';
 import {getNodesValues} from '../ast/get-nodes-values';
 import {ERROR_MODULE_NOT_FOUND} from '../constants';
+import {getUsedGlobals} from '../ast/get-used-globals';
 
 /**
  * @typedef {Object} NunjucksOptions
@@ -57,19 +58,6 @@ function getDependenciesImports(nodes, searchPaths) {
     });
 
     return Promise.all(resolvedTemplates);
-}
-
-/**
- * @param {nunjucks.nodes.Root}     nodes
- * @param {Object.<string, string>} globals
- * @returns {string[]}
- */
-function getTemplateGlobals(nodes, globals) {
-    return getUsagesOf(nunjucks.nodes.FunCall, nodes)(
-        Object.entries(globals), ({name: globalName}) => ([name]) => (
-            globalName.value === name
-        )
-    );
 }
 
 /**
@@ -179,7 +167,7 @@ export async function withDependencies(resourcePath, source, options) {
         return {
             precompiled,
             dependencies,
-            globals: getTemplateGlobals(nodes, globals)
+            globals: getUsedGlobals(nodes, globals)
         };
     }).then(function(deps) {
         return {
