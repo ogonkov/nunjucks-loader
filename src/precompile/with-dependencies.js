@@ -11,6 +11,7 @@ import {getUsagesOf} from '../ast/get-usages-of';
 import {getNodesValues} from '../ast/get-nodes-values';
 import {ERROR_MODULE_NOT_FOUND} from '../constants';
 import {getUsedGlobals} from '../ast/get-used-globals';
+import {getUsedExtensions} from '../ast/get-used-extensions';
 
 /**
  * @typedef {Object} NunjucksOptions
@@ -172,12 +173,7 @@ export async function withDependencies(resourcePath, source, options) {
     }).then(function(deps) {
         return {
             ...deps,
-            extensions: getUsagesOf(nunjucks.nodes.CallExtension, nodes)(
-                extensionsInstances, ({extName}) => (([name,, instance]) => {
-                    // Sometime `extName` is instance of custom tag
-                    return name === extName || instance === extName
-                })
-            ),
+            extensions: getUsedExtensions(nodes, extensionsInstances),
             filters: getUsagesOf(nunjucks.nodes.Filter, nodes)(
                 filtersInstances, ({name}) => (
                     ([filterName]) => filterName === name.value
