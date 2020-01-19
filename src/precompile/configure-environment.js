@@ -8,6 +8,7 @@ import {getModule} from '../utils/get-module';
  * @param {Object}   options.options
  * @param {Array}    options.extensions
  * @param {Array}    options.filters
+ * @returns {nunjucks.Environment}
  */
 export function configureEnvironment({
     searchPaths,
