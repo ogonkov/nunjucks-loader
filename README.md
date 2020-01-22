@@ -15,4 +15,5 @@ I you happen to use `nunjucks-loader`, you could be interested in
 
 ## Examples
 
+* [`isomorphic`](examples/isomorphic/README.md) app example
 * [`nunjucks-markdown`](examples/markdown/README.md) usage notes
