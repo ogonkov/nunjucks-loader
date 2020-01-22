@@ -6,7 +6,7 @@ It's not ideal, and just suggestion on how it could look.
 
 ## Be aware of `mini-css-extract-plugin` bug!
 
-I found strange [bug in `mini-css-extract-plugin`](webpack-contrib/mini-css-extract-plugin#489),
+I found strange [bug in `mini-css-extract-plugin`](https://github.com/webpack-contrib/mini-css-extract-plugin/issues/489),
 that throws error, when CSS is imported in template, that is rendered via
 `html-webpack-plugin`.
 
