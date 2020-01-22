@@ -14,7 +14,8 @@ In this example i use a hack/workaround/temporary solution:
 
 1. Split CSS rule to the one for imports from Nunjucks templates and one for
    imports from JS;
-2. Create `styles.js`, to import every style i use in templates.
+2. Create [`styles.js`](https://github.com/ogonkov/nunjucks-loader/tree/gh-pages/examples/isomorphic/src/styles.js),
+   to import every style i use in templates.
 
 I believe that it's not how it should work, so looking forward to bug to fix.
 
