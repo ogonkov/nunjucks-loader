@@ -1,3 +1,7 @@
+---
+title: Using same templates on server and client
+---
+
 # Using same templates on server and client
 
 It's a simple example of using same templates on client and server.
