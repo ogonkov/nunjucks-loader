@@ -17,3 +17,12 @@ In this example i use a hack/workaround/temporary solution:
 2. Create `styles.js`, to import every style i use in templates.
 
 I believe that it's not how it should work, so looking forward to bug to fix.
+
+## Run demo
+
+```bash
+git clone -b gh-pages git@github.com:ogonkov/nunjucks-loader.git
+cd examples/isomorphic
+npm install
+npm run build
+```
