@@ -1,4 +1,4 @@
-{% set state = state or static('src/initial-state.json') %}
+{% set state = state or static('src/app/initial-state.json') %}
 {% import "todos.njk" as "todos" %}
 
 {% for todo in state.todos %}

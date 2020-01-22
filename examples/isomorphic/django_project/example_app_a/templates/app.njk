@@ -5,17 +5,25 @@
 {% endblock %}
 
 {% block main %}
-    <nav>
-        <ul data-ui-area="toolbar">
-            <li>
-                <button name="add-task">
-                    Add task
-                </button>
+    {% from "components/button/button.njk" import button %}
+
+    {% set toolbarStyles = static('./src/components/toolbar/toolbar.css') %}
+    <nav class="{{ toolbarStyles | values('toolbar') | join(' ') }}">
+        <ul
+            data-ui-area="toolbar"
+            class="{{ toolbarStyles | values('items') | join(' ') }}"
+        >
+            <li class="{{ toolbarStyles | values('item') | join(' ') }}">
+                {{ button('Add task', name='add-task') }}
             </li>
         </ul>
     </nav>
 
-    <ul data-ui-area="todos">
+    {% set listStyles = static('src/app/list/list.css') %}
+    <ul
+        data-ui-area="todos"
+        class="{{ listStyles | values('list') | join(' ') }}"
+    >
         {% include 'todos-items.njk' %}
     </ul>
 {% endblock %}

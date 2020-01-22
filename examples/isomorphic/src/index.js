@@ -1,8 +1,9 @@
-import '../styles';
-import initialState from './initial-state.json';
-import newItemTpl from './new-item.njk';
+import './styles';
+
+import initialState from './app/initial-state.json';
+import newItemTpl from './app/list/new-item.njk';
 import itemsTpl from '../django_project/example_app_a/templates/todos-items.njk';
-import {ToDosCollection} from './ToDosCollection';
+import {ToDosCollection} from './app/ToDosCollection';
 
 const todos = new ToDosCollection([...initialState.todos]);
 

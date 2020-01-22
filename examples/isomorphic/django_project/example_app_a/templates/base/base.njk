@@ -3,15 +3,17 @@
 {% block title %}Isomorphic example{% endblock %}
 
 {% block body %}
-    <header>
+    {% set styles = static('./src/app/layout/layout.css') %}
+
+    <header class="{{ styles | values('header') | join(' ') }}">
         {%- block header %}{% endblock %}
     </header>
 
-    <main>
+    <main class="{{ styles | values('main') | join(' ') }}">
         {%- block main %}{% endblock %}
     </main>
 
-    <footer>
+    <footer class="{{ styles | values('footer') | join(' ') }}">
         {%- block footer %}{% endblock %}
     </footer>
 {% endblock %}

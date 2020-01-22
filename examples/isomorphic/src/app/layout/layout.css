@@ -1,0 +1,23 @@
+body {
+    font-family: Tahoma, sans-serif;
+}
+
+.header,
+.main,
+.footer {
+    padding: 0.5em 1em;
+}
+
+.header {
+    background-color: #000;
+    color: #fff;
+}
+
+.main {
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+.footer {
+    border-top: solid 1px #000;
+}

@@ -1,3 +1,5 @@
+const path = require('path');
+
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -14,7 +16,10 @@ module.exports = {
                             searchPaths: [
                                 'src',
                                 'django_project/example_app_a/templates'
-                            ]
+                            ],
+                            filters: {
+                                values: path.resolve('src/nunjucks_filters/values.js')
+                            }
                         }
                     }
                 ]
@@ -22,16 +27,35 @@ module.exports = {
 
             {
                 test: /\.css$/,
-                use: [
+                oneOf: [
+                    // We have to split CSS rule because of the bug in
+                    // `mini-css-extract-plugin`, see
+                    // https://github.com/webpack-contrib/mini-css-extract-plugin/issues/489
                     {
-                        loader: MiniCssExtractPlugin.loader
+                        issuer: /\.njk$/,
+                        use: [
+                            {
+                                loader: 'css-loader',
+                                options: {
+                                    onlyLocals: true,
+                                    modules: true
+                                }
+                            }
+                        ]
                     },
                     {
-                        loader: 'css-loader',
-                        options: {
-                            onlyLocals: true,
-                            modules: true
-                        }
+                        issuer: /\.js$/,
+                        use: [
+                            {
+                                loader: MiniCssExtractPlugin.loader
+                            },
+                            {
+                                loader: 'css-loader',
+                                options: {
+                                    modules: true
+                                }
+                            }
+                        ]
                     }
                 ]
             }
