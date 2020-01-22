@@ -1,0 +1,15 @@
+.toolbar {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 0.2em;
+    margin: 0 0 1em;
+}
+
+.items {
+    margin: 0;
+    padding: 0;
+}
+
+.item {
+    list-style: none;
+    display: block;
+}

@@ -1,0 +1,33 @@
+{% extends 'base/base.njk' %}
+
+{% block header %}
+    <h1>{{ APP_NAME }}</h1>
+{% endblock %}
+
+{% block main %}
+    {% from "components/button/button.njk" import button %}
+
+    {% set toolbarStyles = static('./src/components/toolbar/toolbar.css') %}
+    <nav class="{{ toolbarStyles | values('toolbar') | join(' ') }}">
+        <ul
+            data-ui-area="toolbar"
+            class="{{ toolbarStyles | values('items') | join(' ') }}"
+        >
+            <li class="{{ toolbarStyles | values('item') | join(' ') }}">
+                {{ button('Add task', name='add-task') }}
+            </li>
+        </ul>
+    </nav>
+
+    {% set listStyles = static('src/app/list/list.css') %}
+    <ul
+        data-ui-area="todos"
+        class="{{ listStyles | values('list') | join(' ') }}"
+    >
+        {% include 'todos-items.njk' %}
+    </ul>
+{% endblock %}
+
+{% block footer %}
+    <p>&copy; Acme Corp.</p>
+{% endblock footer %}

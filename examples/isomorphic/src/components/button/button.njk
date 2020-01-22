@@ -1,0 +1,11 @@
+{% macro button(text="", type="button", name="") %}
+{% set styles = static('./src/components/button/button.css') %}
+
+<button
+    class="{{ styles | values('button') | join(' ') }}"
+    type="{{ type }}"
+    name="{{ name }}"
+>
+    {{ text }}
+</button>
+{% endmacro %}

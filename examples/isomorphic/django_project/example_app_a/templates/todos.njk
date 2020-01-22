@@ -1,0 +1,21 @@
+{% set styles = static('src/app/list/item.css') %}
+
+{% macro item(id, text, done=False, edit=False) %}
+<li class="{{ styles | values('item') | join(' ') }}">
+    {% if not edit %}<label>{% endif %}
+        <input
+            type="checkbox"
+            name="todos"
+            value="{{ id }}"
+            {% if edit %}disabled{% endif %}
+            {% if done and not edit %}checked{% endif %}
+        />
+
+        {% if edit %}
+            <input name="todos[{{ id }}][text]" />
+        {% else %}
+            {{ text }}
+        {% endif %}
+    {% if not edit %}</label>{% endif %}
+</li>
+{% endmacro %}

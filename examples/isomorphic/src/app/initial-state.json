@@ -1,0 +1,21 @@
+{
+  "todos": [
+    {
+      "done": false,
+      "text": "Buy milk",
+      "id": 0
+    },
+
+    {
+      "done": true,
+      "text": "Write Webpack loader for Nunjucks",
+      "id": 1
+    },
+
+    {
+      "done": false,
+      "text": "Write loader usage examples",
+      "id": 3
+    }
+  ]
+}

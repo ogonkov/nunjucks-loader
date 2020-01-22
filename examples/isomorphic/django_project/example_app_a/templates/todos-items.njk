@@ -1,0 +1,6 @@
+{% set state = state or static('src/app/initial-state.json') %}
+{% import "todos.njk" as "todos" %}
+
+{% for todo in state.todos %}
+    {{ todos.item(todo.id, todo.text, todo.done) }}
+{% endfor %}
