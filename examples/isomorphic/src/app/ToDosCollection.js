@@ -1,4 +1,4 @@
-import {Collection} from './Collection';
+import {Collection} from '../awesome-abstractions/Collection';
 import {ToDoModel} from './ToDoModel';
 
 export class ToDosCollection extends Collection {

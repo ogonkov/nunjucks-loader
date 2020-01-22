@@ -1,3 +1,4 @@
+import '../styles';
 import initialState from './initial-state.json';
 import newItemTpl from './new-item.njk';
 import itemsTpl from '../django_project/example_app_a/templates/todos-items.njk';

@@ -1,4 +1,4 @@
-import {Model} from './Model';
+import {Model} from '../awesome-abstractions/Model';
 
 export class ToDoModel extends Model {
     defaults() {
