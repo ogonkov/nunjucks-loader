@@ -14,8 +14,6 @@ import {replaceAssets} from './output/replace-assets';
 import {ERROR_MODULE_NOT_FOUND} from './constants';
 
 export default function nunjucksLoader(source) {
-    console.log(this.resourcePath);
-
     const callback = this.async();
     const options = getLoaderOptions(this, callback);
     const normalizedSearchPaths = [].concat(options.searchPaths).map(path.normalize);

@@ -8,7 +8,6 @@ import {localVarWrapper as precompileWrapper} from './local-var-wrapper';
  * @returns {Promise<string>}
  */
 export function precompileToLocalVar(source, fileName, env) {
-    console.log('precompileToLocalVar', fileName);
     return new Promise(function(resolve, reject) {
         try {
             const precompiled = nunjucks.precompileString(source, {
