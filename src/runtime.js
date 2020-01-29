@@ -13,7 +13,9 @@ module.exports = function runtime(options, {
     }
 
     const env = new nunjucks.Environment(
-        new WebpackPrecompiledLoader(precompiled),
+        new WebpackPrecompiledLoader(precompiled, {
+            isWindows: options.isWindows === true
+        }),
         options
     );
 
