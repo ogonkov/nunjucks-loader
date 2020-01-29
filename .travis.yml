@@ -9,4 +9,4 @@ node_js:
   - "lts/*"
 
 script:
-  - npm test -- --coverage --collectCoverageFrom='src/**/*.js' --coverageReporters=text-lcov | coveralls
+  - npm test
