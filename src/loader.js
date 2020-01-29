@@ -20,7 +20,7 @@ export default function nunjucksLoader(source) {
     const resourcePathImport = getImportPath(
         this.resourcePath,
         normalizedSearchPaths
-    );
+    ).replace(/\\/g, '/');
 
     withDependencies(resourcePathImport, source, {
         ...options,
