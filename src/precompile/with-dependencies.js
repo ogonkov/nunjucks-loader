@@ -176,6 +176,7 @@ export async function withDependencies(resourcePath, source, options) {
         })),
         getDependenciesImports(nodes, searchPaths)
     ]).then(function([precompiled, dependencies]) {
+        console.log('>> precompiled:',precompiled);
         return {
             precompiled,
             dependencies,
