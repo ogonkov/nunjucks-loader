@@ -33,6 +33,8 @@ export default function nunjucksLoader(source) {
         extensions,
         filters
     }) => {
+        console.log('>> precompiled',precompiled);
+
         const hasAssets = Object.keys(assets).length > 0;
         const assetsUUID = toAssetsUUID(assets);
         const {
