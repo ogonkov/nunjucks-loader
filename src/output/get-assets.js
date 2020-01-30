@@ -12,7 +12,7 @@ export function getAssets(assets) {
                 `function(${args.join()}) {
                     return require(${assetImport});
                 }` :
-                `require('${assetImport}')`;
+                `require(${JSON.stringify(assetImport)})`;
 
             return `_templateAssets['${uuid}'] = ${importInvocation};`;
         }).join('');
