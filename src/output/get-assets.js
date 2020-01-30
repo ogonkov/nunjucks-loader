@@ -1,7 +1,8 @@
 /**
  * @param {Array.<string[]>} assets
  */
-import {getArgs} from './assets';
+import {getArgs, isDynamic} from './assets';
+import {unquote} from '../unquote';
 
 export function getAssets(assets) {
     function imports() {
@@ -9,8 +10,14 @@ export function getAssets(assets) {
             const args = getArgs(assetPath);
 
             const importInvocation = assetImport.startsWith('"') ?
-                console.log(assetImport) || `function(${args.join()}) {
-                    return require(${assetImport});
+                `function(${args.join()}) {
+                    return require(${assetImport.split(' + ').map((part) => {
+                        if (isDynamic(part)) {
+                            return JSON.stringify(unquote(part));
+                        }
+                        
+                        return part;
+                    }).join(' + ')});
                 }` :
                 `require(${JSON.stringify(assetImport)})`;
 
