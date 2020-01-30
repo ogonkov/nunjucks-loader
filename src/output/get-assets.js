@@ -9,7 +9,7 @@ export function getAssets(assets) {
             const args = getArgs(assetPath);
 
             const importInvocation = assetImport.startsWith('"') ?
-                `function(${args.join()}) {
+                console.log(assetImport) || `function(${args.join()}) {
                     return require(${assetImport});
                 }` :
                 `require(${JSON.stringify(assetImport)})`;
