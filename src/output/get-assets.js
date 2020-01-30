@@ -20,7 +20,7 @@ export function getAssets(assets) {
                     }).join(' + ')});
                 }` :
                 `require(${JSON.stringify(assetImport)})`;
-
+            console.log('>> invocation:',importInvocation);
             return `_templateAssets['${uuid}'] = ${importInvocation};`;
         }).join('');
 
