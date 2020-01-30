@@ -166,7 +166,7 @@ export async function withDependencies(resourcePath, source, options) {
         extensionsInstances.map(([,, ext]) => ext),
         opts
     );
-
+    console.log('>>> globals:',globals);
     return Promise.all([
         precompileToLocalVar(source, resourcePath, configureEnvironment({
             searchPaths,
