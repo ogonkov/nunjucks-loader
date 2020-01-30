@@ -88,7 +88,6 @@ describe('Advanced compilation', function() {
         };
 
         test('should compile with given globals', async function() {
-            console.log(loaderOptions.globals.foobar);
             const output = await compiler('fixtures/globals/base.njk', loaderOptions);
 
             expect(output()).toMatchSnapshot();
