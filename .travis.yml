@@ -8,7 +8,13 @@ node_js:
   - "8.9.0"
   - "lts/*"
 
+matrix:
+  include:
+    - os: linux
+      env: COVERAGE=1
+    - os: windows
+      env: EXCLUDE_ASSETS=1
+
 script:
-  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then npm test -- --coverage --collectCoverageFrom='src/**/*.js' --coverageReporters=lcov ; fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then npm test -- --testPathIgnorePatterns assets.test.js ; fi
+  - npm test -- ${COVERAGE:+--coverage --collectCoverageFrom='src/**/*.js' --coverageReporters=lcov} ${EXCLUDE_ASSETS:+--testPathIgnorePatterns assets.test.js}
   - if [ -f "test/.coverage/lcov.info" ]; then cat test/.coverage/lcov.info | coveralls ; fi
