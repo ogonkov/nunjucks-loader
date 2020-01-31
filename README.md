@@ -179,6 +179,10 @@ like:
 {{ static('foo/' + bar + '.ext') }}
 ```
 
+> :warning: Dynamic assets is not working in Windows at that moment, since
+> i don't have machine to debug what is wrong with it. Feel free to send PRs to
+> fix support for dynamic assets on Windows. 
+
 > :warning: I advocate against using dynamic assets, because:
 >
 > 1. I have to support hacky regular expressions :smile:
