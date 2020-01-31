@@ -1,17 +1,19 @@
 language: node_js
 
-matrix:
+jobs:
   include:
     - os: linux
       env: COVERAGE=1
-      node_js:
-        - "8.9.0"
-        - "lts/*"
+      node_js: "8.9.0"
+    - os: linux
+      env: COVERAGE=1
+      node_js: "lts/*"
     - os: windows
       env: EXCLUDE_ASSETS=1
-      node_js:
-        - "8.9.0"
-        - "lts/*"
+      node_js: "8.9.0"
+    - os: windows
+      env: EXCLUDE_ASSETS=1
+      node_js: "lts/*"
 
 script:
   - npm test -- ${COVERAGE:+--coverage --collectCoverageFrom='src/**/*.js' --coverageReporters=lcov} ${EXCLUDE_ASSETS:+--testPathIgnorePatterns assets.test.js}
