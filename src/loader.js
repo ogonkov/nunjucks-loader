@@ -14,6 +14,7 @@ import {replaceAssets} from './output/replace-assets';
 import {ERROR_MODULE_NOT_FOUND} from './constants';
 
 export default function nunjucksLoader(source) {
+    console.log('>>> platform:',process.platform);
     const isWindows = process.platform === 'win32';
     const callback = this.async();
     const options = getLoaderOptions(this, callback);
