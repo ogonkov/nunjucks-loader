@@ -1,8 +1,22 @@
 language: node_js
 
-node_js:
-  - "8.9.0"
-  - "lts/*"
+jobs:
+  include:
+    - os: linux
+      node_js: "8.9.0"
+      env: COVERAGE=1
+    - os: linux
+      node_js: "lts/*"
+      env: COVERAGE=1
+    - os: windows
+      node_js: "8.9.0"
+      env: EXCLUDE_ASSETS=1
+    - os: windows
+      node_js: "lts/*"
+      env: EXCLUDE_ASSETS=1
 
 script:
-  - npm test -- --coverage --collectCoverageFrom='src/**/*.js' --coverageReporters=text-lcov | coveralls
+  - npm test -- ${COVERAGE:+--coverage} ${EXCLUDE_ASSETS:+--testPathIgnorePatterns assets.test.js}
+
+after_success:
+  - if [ "$COVERAGE" ]; then cat test/.coverage/lcov.info | coveralls ; fi

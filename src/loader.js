@@ -14,13 +14,18 @@ import {replaceAssets} from './output/replace-assets';
 import {ERROR_MODULE_NOT_FOUND} from './constants';
 
 export default function nunjucksLoader(source) {
+    const isWindows = process.platform === 'win32';
     const callback = this.async();
     const options = getLoaderOptions(this, callback);
     const normalizedSearchPaths = [].concat(options.searchPaths).map(path.normalize);
-    const resourcePathImport = getImportPath(
+    let resourcePathImport = getImportPath(
         this.resourcePath,
         normalizedSearchPaths
     );
+
+    if (isWindows) {
+        resourcePathImport = resourcePathImport.replace(/\\/g, '/');
+    }
 
     withDependencies(resourcePathImport, source, {
         ...options,
@@ -55,8 +60,9 @@ export default function nunjucksLoader(source) {
             throwOnUndefined: options.throwOnUndefined,
             trimBlocks: options.trimBlocks,
             lstripBlocks: options.lstripBlocks,
-            // Loader specific option
-            jinjaCompat: options.jinjaCompat
+            // Loader specific options
+            jinjaCompat: options.jinjaCompat,
+            isWindows
         });
         callback(null, `
             ${getRuntimeImport(this)}
