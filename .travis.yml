@@ -9,12 +9,16 @@ node_js:
   - "lts/*"
 
 env:
+  # We need to preserve builds for linux without env
+  - PRESERVE_BUILD=LINUX
   - EXCLUDE_ASSETS=1
 
 jobs:
   exclude:
     - os: linux
       env: EXCLUDE_ASSETS=1
+    - os: windows
+      env: PRESERVE_BUILD=LINUX
 
 script:
   - npm test -- --coverage ${EXCLUDE_ASSETS:+--testPathIgnorePatterns assets.test.js}
