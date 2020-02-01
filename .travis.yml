@@ -1,22 +1,27 @@
 language: node_js
 
+os:
+  - linux
+  - windows
+
+node_js:
+  - "8.9.0"
+  - "lts/*"
+
+env:
+  # We need to preserve builds for linux without env
+  - PRESERVE_BUILD=LINUX
+  - EXCLUDE_ASSETS=1
+
 jobs:
-  include:
+  exclude:
     - os: linux
-      node_js: "8.9.0"
-      env: COVERAGE=1
-    - os: linux
-      node_js: "lts/*"
-      env: COVERAGE=1
-    - os: windows
-      node_js: "8.9.0"
       env: EXCLUDE_ASSETS=1
     - os: windows
-      node_js: "lts/*"
-      env: EXCLUDE_ASSETS=1
+      env: PRESERVE_BUILD=LINUX
 
 script:
-  - npm test -- ${COVERAGE:+--coverage} ${EXCLUDE_ASSETS:+--testPathIgnorePatterns assets.test.js}
+  - npm test -- --coverage ${EXCLUDE_ASSETS:+--testPathIgnorePatterns assets.test.js}
 
 after_success:
-  - if [ "$COVERAGE" ]; then cat test/.coverage/lcov.info | coveralls ; fi
+  - cat test/.coverage/lcov.info | coveralls
