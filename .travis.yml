@@ -1,16 +1,19 @@
 language: node_js
 
+os:
+  - linux
+  - windows
+
+node_js:
+  - "8.9.0"
+  - "lts/*"
+
+env:
+  - EXCLUDE_ASSETS=1
+
 jobs:
-  include:
+  exclude:
     - os: linux
-      node_js: "8.9.0"
-    - os: linux
-      node_js: "lts/*"
-    - os: windows
-      node_js: "8.9.0"
-      env: EXCLUDE_ASSETS=1
-    - os: windows
-      node_js: "lts/*"
       env: EXCLUDE_ASSETS=1
 
 script:
