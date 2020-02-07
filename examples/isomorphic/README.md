@@ -1,5 +1,6 @@
 ---
 title: Using same templates on server and client
+description: Generating templates with CSS Modules, hashed assets paths and etc.
 ---
 
 # Using same templates on server and client
