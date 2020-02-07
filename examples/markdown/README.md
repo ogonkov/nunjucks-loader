@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Using `nunjucks-markdown`
+description: |
+    Example of integration of nunjucks-markdown and simple-nunjucks-loader
 ---
 
 # Using `nunjucks-markdown`

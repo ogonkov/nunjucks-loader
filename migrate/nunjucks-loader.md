@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Migrating from `nunjucks-loader` to `simple-nunjucks-loader`
+description: Options migration from nunjucks-loader to simple-nunjucks-loader
 ---
 
 # Migrating from `nunjucks-loader` to `simple-nunjucks-loader`
