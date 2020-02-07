@@ -1,3 +1,6 @@
+plugins:
+  - jekyll-sitemap
+
 theme: jekyll-theme-cayman
 title: simple-nunjucks-loader
 google_analytics: UA-71730924-3
