@@ -1,4 +1,5 @@
 /.idea/
+/.github/
 /src/
 /test/
 /babel.config.js
