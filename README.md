@@ -5,6 +5,9 @@
 [![Dependencies Status][david-image]][david-url]
 
 # Nunjucks templates loader for Webpack
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/ogonkov/nunjucks-loader.svg)](https://greenkeeper.io/)
+
 This Webpack loader compiles [Nunjucks][nunjucks-github] templates.
 [`html-webpack-plugin`][html-webpack-plugin-github] compatible. 
 
