@@ -48,7 +48,7 @@
     "coveralls": "^3.0.9",
     "eslint": "^6.7.1",
     "file-loader": "^5.0.2",
-    "jest": "^24.9.0",
+    "jest": "^25.1.0",
     "nunjucks": "^3.2.0",
     "uuid": "^3.3.3",
     "webpack": "^4.41.2",
