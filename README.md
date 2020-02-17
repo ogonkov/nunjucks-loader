@@ -3,10 +3,9 @@
 [![node][node]][node-url] 
 [![Build Status][travis-image]][travis-url] 
 [![Dependencies Status][david-image]][david-url]
+[![Greenkeeper badge][greenkeeper-image]][greenkeeper-url]
 
 # Nunjucks templates loader for Webpack
-
-[![Greenkeeper badge](https://badges.greenkeeper.io/ogonkov/nunjucks-loader.svg)](https://greenkeeper.io/)
 
 This Webpack loader compiles [Nunjucks][nunjucks-github] templates.
 [`html-webpack-plugin`][html-webpack-plugin-github] compatible. 
@@ -471,3 +470,5 @@ module.exports.async = true;
 [travis-url]:https://travis-ci.org/ogonkov/nunjucks-loader
 [david-image]:https://david-dm.org/ogonkov/nunjucks-loader/status.svg
 [david-url]:https://david-dm.org/ogonkov/nunjucks-loader
+[greenkeeper-image]:https://badges.greenkeeper.io/ogonkov/nunjucks-loader.svg
+[greenkeeper-url]:https://greenkeeper.io/
