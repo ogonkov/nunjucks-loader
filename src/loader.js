@@ -1,7 +1,7 @@
 import path from 'path';
 
 import {getDependencies} from './precompile/get-dependencies';
-import {getImportPath} from './get-import-path';
+import {getImportPath} from './utils/get-import-path';
 import {getLoaderOptions} from './get-loader-options';
 import {getRuntimeImport} from './output/get-runtime-import';
 import {getTemplateDependenciesImport} from './output/get-template-dependencies-import';

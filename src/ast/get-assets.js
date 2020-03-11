@@ -1,8 +1,8 @@
 import nunjucks from 'nunjucks';
 import {getNodesValues} from './get-nodes-values';
 import {isUnique} from '../utils/is-unique';
-import {getPossiblePaths} from '../get-possible-paths';
-import {getFirstExistedPath} from '../get-first-existed-path';
+import {getPossiblePaths} from '../utils/get-possible-paths';
+import {getFirstExistedPath} from '../utils/get-first-existed-path';
 import {ERROR_MODULE_NOT_FOUND} from '../constants';
 
 /**

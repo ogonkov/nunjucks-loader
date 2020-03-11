@@ -6,7 +6,7 @@ import {getUsedGlobals} from '../ast/get-used-globals';
 import {getUsedExtensions} from '../ast/get-used-extensions';
 import {getUsedFilters} from '../ast/get-used-filters';
 import {getAssets} from '../ast/get-assets';
-import {getTemplatesImports} from '../get-templates-imports';
+import {getTemplatesImports} from '../ast/get-templates-imports';
 
 /**
  * @typedef {Object} NunjucksOptions

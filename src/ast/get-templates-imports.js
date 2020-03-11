@@ -1,6 +1,6 @@
-import {getDependenciesTemplates} from './ast/get-dependencies-templates';
-import {getPossiblePaths} from './get-possible-paths';
-import {getFirstExistedPath} from './get-first-existed-path';
+import {getDependenciesTemplates} from './get-dependencies-templates';
+import {getPossiblePaths} from '../utils/get-possible-paths';
+import {getFirstExistedPath} from '../utils/get-first-existed-path';
 
 /**
  * @param {nunjucks.nodes.Root} nodes
