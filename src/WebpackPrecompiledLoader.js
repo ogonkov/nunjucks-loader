@@ -7,7 +7,7 @@ WebpackPrecompiledLoader.prototype.getSource = function getSource(name) {
     // For some strange reason all precompiled templates get leading slashes
     // on Windows, while templates have it without it
     const windowsIdentifier = `/${name}`;
-    console.log(Object.keys(this.precompiled));
+    console.log(this.isWindows, name, Object.keys(this.precompiled));
     if (!this.isWindows && !(name in this.precompiled) ||
         this.isWindows && !(windowsIdentifier in this.precompiled)) {
         return null;
