@@ -7,3 +7,5 @@
 /.eslintrc
 /.travis.yml
 .DS_Store
+*.spec.js
+*.test.js

@@ -1,8 +1,5 @@
 import nunjucks from 'nunjucks';
-
-function getModule(importedSymbol) {
-    return importedSymbol.default || importedSymbol;
-}
+import {getModule} from '../utils/get-module';
 
 /**
  * @param env
@@ -11,6 +8,7 @@ function getModule(importedSymbol) {
  * @param {Object}   options.options
  * @param {Array}    options.extensions
  * @param {Array}    options.filters
+ * @returns {nunjucks.Environment}
  */
 export function configureEnvironment({
     searchPaths,

@@ -1,4 +1,4 @@
-import {getStringBas64Hash} from './get-string-base64-hash';
+import {getStringBas64Hash} from '../utils/get-string-base64-hash';
 
 export function toAssetsUUID(assets) {
     return assets.map(function([assetPath, assetImport]) {

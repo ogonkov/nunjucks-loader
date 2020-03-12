@@ -21,6 +21,7 @@
   "overrides": [
     {
       "files": [
+        "*.spec.js",
         "test/**/*.js"
       ],
       "env": {

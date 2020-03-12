@@ -2,7 +2,7 @@ import nunjucks from 'nunjucks';
 
 /**
  * @param {nunjucks.nodes.Root} nodes
- * @returns {string[]}
+ * @returns {string[]|nunjucks.nodes.Node[]}
  */
 export function getDependenciesTemplates(nodes) {
     const extendsNodes = nodes.findAll(nunjucks.nodes.Extends);

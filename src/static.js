@@ -1,12 +1,10 @@
-function getModuleValue(importedModule) {
-    return importedModule && importedModule.default || importedModule;
-}
+const {getModule} = require('./utils/get-module');
 
 module.exports = function(filePath, ...args) {
-    var importedSymbol = getModuleValue(filePath);
+    var importedSymbol = getModule(filePath);
 
     if (typeof importedSymbol === 'function') {
-        return getModuleValue(importedSymbol(...args));
+        return getModule(importedSymbol(...args));
     }
 
     return importedSymbol;

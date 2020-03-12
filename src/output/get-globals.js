@@ -1,4 +1,4 @@
-import {toVar} from '../to-var';
+import {toVar} from '../utils/to-var';
 
 export function getGlobals(globals) {
     function imports() {
