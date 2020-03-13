@@ -31,5 +31,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm install
     - run: npm test -- --coverage ${EXCLUDE_ASSETS:+--testPathIgnorePatterns assets.test.js}
+      shell: bash
       env:
         CI: true
