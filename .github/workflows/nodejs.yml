@@ -29,7 +29,15 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - uses: actions/cache@v1
+      id: cache-node-modules
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
     - run: npm install
+      if: steps.cache-node-modules.outputs.cache-hit != 'true'
     - run: npm test -- --coverage "${EXCLUDE_ASSETS:+--testPathIgnorePatterns assets.test.js}"
       shell: bash
       env:
