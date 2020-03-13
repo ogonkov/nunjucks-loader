@@ -54,22 +54,6 @@
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   },
-  "greenkeeper": {
-    "ignore": [
-      "@babel/cli",
-      "@babel/core",
-      "@babel/preset-env",
-      "babel-eslint",
-      "coveralls",
-      "eslint",
-      "file-loader",
-      "jest",
-      "nunjucks",
-      "uuid",
-      "webpack",
-      "webpack-cli"
-    ]
-  },
   "engines": {
     "node": ">= 8.9.0"
   }
