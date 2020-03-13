@@ -39,6 +39,5 @@ jobs:
     - run: npm install
       if: steps.cache-node-modules.outputs.cache-hit != 'true'
     - run: npm test -- --coverage "${EXCLUDE_ASSETS:+--testPathIgnorePatterns assets.test.js}"
-      shell: bash
       env:
         CI: true
