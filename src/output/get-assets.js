@@ -1,8 +1,8 @@
+import {getArgs} from './assets';
+
 /**
  * @param {Array.<string[]>} assets
  */
-import {getArgs} from './assets';
-
 export function getAssets(assets) {
     function imports() {
         const assetsImports = assets.map(function([uuid, assetPath, assetImport]) {
