@@ -28,7 +28,8 @@ export default (fixture, options = {}) => {
                 use: {
                     loader: 'file-loader',
                     options: {
-                        outputPath: 'bundles'
+                        outputPath: 'bundles',
+                        name: '[md5:contenthash:base64:7].[ext]'
                     }
                 }
             }]
