@@ -20,10 +20,6 @@ jobs:
         node-version: [8.9.x, 12.x]
 
     steps:
-    - name: Disable assets test
-      if: matrix.os == 'windows-latest'
-      run: |
-        echo "::set-env name=EXCLUDE_ASSETS::1"
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -38,7 +34,7 @@ jobs:
           ${{ matrix.os }}-node-${{ matrix.node-version }}-
     - run: npm install
       if: steps.cache-node-modules.outputs.cache-hit != 'true'
-    - run: npm test -- --coverage "${EXCLUDE_ASSETS:+--testPathIgnorePatterns assets.test.js}"
+    - run: npm test -- --coverage
       env:
         CI: true
     - name: Report coverage
