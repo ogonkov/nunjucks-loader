@@ -22,7 +22,7 @@ export function getLoaderOptions(loader, callback) {
         globals = {},
         extensions = {},
         filters = {}
-    } = loaderOptions || {};
+    } = loaderOptions;
 
     const options = {
         autoescape,
