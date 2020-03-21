@@ -1,3 +1,5 @@
+import {stringifyRequest} from 'loader-utils';
+
 function getImports(imports, assignments) {
     return `
         ${imports}
@@ -17,8 +19,13 @@ function getImports(imports, assignments) {
     `;
 }
 
-function foldDependenciesToImports([imports, assignment], [, fullPath], i) {
-    const path = JSON.stringify(fullPath);
+function foldDependenciesToImports(
+    loaderContext,
+    [imports, assignment],
+    [, fullPath],
+    i
+) {
+    const path = stringifyRequest(loaderContext, fullPath);
     const importVar = `templateDependencies${i}`;
 
     return [
@@ -32,9 +39,9 @@ function foldDependenciesToImports([imports, assignment], [, fullPath], i) {
     ];
 }
 
-export function getTemplateDependenciesImport(dependencies) {
+export function getTemplateDependenciesImport(loaderContext, dependencies) {
     return getImports(
-        ...dependencies.reduce(foldDependenciesToImports, ['', {
+        ...dependencies.reduce(foldDependenciesToImports.bind(null, loaderContext), ['', {
             templates: '{}',
             globals: '{}',
             extensions: '{}',
