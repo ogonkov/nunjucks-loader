@@ -6,22 +6,22 @@ exports[`Assets should load dynamic assets 1`] = `
   <head>
     <meta charset=\\"utf-8\\">
     <title></title>
-    <link rel=\\"stylesheet\\" href=\\"bundles/3dyV3MW.css\\"/>
+    <link rel=\\"stylesheet\\" href=\\"bundles/fixtures/django_project/app_example/static/foo/bar/style.css\\"/>
   </head>
   <body>
     
     
 
     
-        <p>bundles/I3cOAf3.md</p>
+        <p>bundles/fixtures/django_project/app_example/static/foo/bar/dynamic-example-1.md</p>
     
-        <p>bundles/2Mv2FbA.md</p>
+        <p>bundles/fixtures/django_project/app_example/static/foo/bar/dynamic-example-2.md</p>
     
 
     
-        <p>bundles/I3cOAf3.md</p>
+        <p>bundles/fixtures/django_project/app_example/static/foo/bar/dynamic-example-1.md</p>
     
-        <p>bundles/2Mv2FbA.md</p>
+        <p>bundles/fixtures/django_project/app_example/static/foo/bar/dynamic-example-2.md</p>
     
 
   </body>
@@ -35,11 +35,11 @@ exports[`Assets should load static assets 1`] = `
   <head>
     <meta charset=\\"utf-8\\">
     <title></title>
-    <link rel=\\"stylesheet\\" href=\\"bundles/3dyV3MW.css\\"/>
+    <link rel=\\"stylesheet\\" href=\\"bundles/fixtures/django_project/app_example/static/foo/bar/style.css\\"/>
   </head>
   <body>
     
-    <p><a href=\\"bundles/2NAZ0GV.txt\\">Click here</a></p>
+    <p><a href=\\"bundles/fixtures/django_project/app_example/static/foo/bar/test.txt\\">Click here</a></p>
 
   </body>
 </html>

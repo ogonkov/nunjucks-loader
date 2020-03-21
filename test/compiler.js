@@ -29,7 +29,7 @@ export default (fixture, options = {}) => {
                     loader: 'file-loader',
                     options: {
                         outputPath: 'bundles',
-                        name: '[md5:contenthash:base64:7].[ext]'
+                        name: '[path][name].[ext]'
                     }
                 }
             }]
