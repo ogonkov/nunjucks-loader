@@ -66,11 +66,11 @@ export default function nunjucksLoader(source) {
         });
         callback(null, `
             ${getRuntimeImport(this)}
-            ${getTemplateDependenciesImport(dependencies)}
-            ${globalsImports()}
-            ${extensionsImports()}
-            ${filtersImports()}
-            ${getAssets(assetsUUID).imports()}
+            ${getTemplateDependenciesImport(this, dependencies)}
+            ${globalsImports(this)}
+            ${extensionsImports(this)}
+            ${filtersImports(this)}
+            ${getAssets(assetsUUID).imports(this)}
             ${replaceAssets(precompiled, assetsUUID)}
 
             exports = module.exports = function nunjucksTemplate(ctx) {

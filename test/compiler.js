@@ -28,7 +28,8 @@ export default (fixture, options = {}) => {
                 use: {
                     loader: 'file-loader',
                     options: {
-                        outputPath: 'bundles'
+                        outputPath: 'bundles',
+                        name: '[path][name].[ext]'
                     }
                 }
             }]

@@ -1,8 +1,13 @@
+import {stringifyRequest} from 'loader-utils';
+
 export function getExtensions(extensions) {
-    function imports() {
+    function imports(loaderContext) {
         return extensions.map(([name, importPath]) => (
             `
-                var _extension_${name} = require(${JSON.stringify(importPath)});
+                var _extension_${name} = require(${stringifyRequest(
+                    loaderContext,
+                    importPath
+                )});
                 __nunjucks_module_dependencies__.extensions['${name}'] = {
                     module: _extension_${name}
                 };
