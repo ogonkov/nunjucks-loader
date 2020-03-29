@@ -29,7 +29,7 @@ module.exports = {
     
     plugins: [
         new HTMLWebpackPlugin({
-            template: 'src/page.njk',
+            template: 'template.njk',
             templateParameters: {
                 username: 'Joe'
             }
@@ -38,7 +38,7 @@ module.exports = {
 };
 ```
 
-**src/page.njk**
+**template.njk**
 ```nunjucks
 <p>Hello, {{ username }}!</p>
 ```
