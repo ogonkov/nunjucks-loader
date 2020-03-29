@@ -54,151 +54,25 @@ module.exports = {
 };
 ```
 
-**template-example.njk**
+**template.njk**
 ```nunjucks
 <p>Hello, {{ username }}!</p>
 ```
 
-**app.js**
+**index.js**
 ```js
-import template from './template-example.njk'
+import template from './template.njk'
 
 document.body.innerHTML = template({
   username: 'Mike'
 })
 ```
 
-Bundling of `app.js` above will render paragraph with text "Hello, Mike!" to
+Bundling of `index.js` above will render paragraph with text "Hello, Mike!" to
 the page.
 
-### With `html-webpack-plugin`
-
-For using with `html-webpack-plugin` just add it to `plugins` array, all options
-from it would be available as `htmlWebpackPlugin.options` in Nunjucks template.
-
-
-**webpack.config.js**
-```js
-const HTMLWebpackPlugin = require('html-webpack-plugin');
-
-module.exports = {
-    module: {
-        rules: [
-            {
-                test: /\.njk$/,
-                use: [
-                    {
-                        loader: 'simple-nunjucks-loader',
-                        options: {}
-                    }
-                ]
-            }
-        ]
-    },
-    
-    plugins: [
-        new HTMLWebpackPlugin({
-            template: 'src/page.njk',
-            templateParameters: {
-                username: 'Joe'
-            }
-        })
-    ]
-};
-```
-
-**src/page.njk**
-```nunjucks
-<p>Hello, {{ username }}!</p>
-```
-
-Refer to [`html-webpack-plugin` page][html-webpack-plugin-options] for all
-available options.
-
-### With assets
-
-To load static assets (like images, for example), this loader inserts own
-`static` global function. It works like `static` from Django/Jinja2 integration,
-but resolves paths via Webpack loaders. It just replace calls
-`static('foo.jpeg')` with `static(importedViaWebpackSymbol)`. `static` itself
-just returns loaded module or `default` export of it.
-
-**webpack.config.js**
-
-```js
-module.exports = {
-    module: {
-        rules: [
-            {
-                test: /\.njk$/,
-                use: [
-                    {
-                        loader: 'simple-nunjucks-loader',
-                        options: {
-                            assetsPaths: [
-                                'app_example_a/static',
-                                'app_example_b/static',
-                            ]
-                        }
-                    }
-                ]
-            },
-
-            {
-                test: /\.png$/,
-                use: [{
-                    loader: 'file-loader'
-                }]
-            }
-        ]
-    }
-};
-```
-
-**template.njk**
-
-```nunjucks
-<img
-    src="{{ static('./image.png') }}"
-    alt=""
-/>
-```
-
-The code above will replace `{{ static('./image.png') }}` with hash, that
-`file-loader` returns.
-
-#### Dynamic assets
-
-Loader has limited support for dynamic assets. It was tested with expressions
-like:
-
-```nunjucks
-{{ static('foo/' + bar) }}
-```
-
-```nunjucks
-{{ static('foo/' + bar + '.ext') }}
-```
-
-> :warning: I advocate against using dynamic assets, because:
->
-> 1. I have to support hacky regular expressions :smile:
-> 2. It's hard to find usages of asset, because there is no import of it
-> 3. Final bundle could be bigger without proper maintaining
->
-> From my experience it's better to have some kind of map, that will match some
-> variable to import:
->
-> ```nunjucks
-> {% set examplesMap = {
->     'example-1': static('foo/bar/dynamic-example-1.md'),
->     'example-2': static('foo/bar/dynamic-example-2.md')
-> } %}
->
-> {% for item in [1, 2] %}
->     <p>{{ examplesMap['example-' + item] }}</p>
-> {% endfor %}
-> ```
+[More examples](https://ogonkov.github.io/nunjucks-loader/#examples) on loader
+site.
 
 ## How it works
 By default Nunjunks bundle all precompiled templates to
@@ -329,7 +203,7 @@ module.exports = {
                     options: {
                         globals: {
                             _: 'lodash',
-                            globalEnv: path.join(__dirname, 'app/global-env.js')
+                            globalFn: path.join(__dirname, 'global-fn.js')
                         }
                     }
                 }]
@@ -339,7 +213,7 @@ module.exports = {
 };
 ```
 
-**app/global-env.js**
+**global-fn.js**
 ```js
 module.exports = function(foo, bar) {
     return `Do anything with ${foo} and ${bar}`;
@@ -363,7 +237,7 @@ module.exports = {
                     loader: 'simple-nunjucks-loader',
                     options: {
                         extensions: {
-                            CustomExtension: path.join(__dirname, 'lib/extensions/custom-extension.js')
+                            CustomExtension: path.join(__dirname, 'extension.js')
                         }
                     }
                 }]
@@ -373,7 +247,7 @@ module.exports = {
 };
 ```
 
-**lib/extensions/custom-extension.js**
+**extension.js**
 ```js
 // You should use slim bundle to make it work in browser
 const nunjucks = require('nunjucks/browser/nunjucks-slim');
@@ -406,7 +280,7 @@ module.exports = {
                     loader: 'simple-nunjucks-loader',
                     options: {
                         filters: {
-                            foo: path.join(__dirname, 'foo.js')
+                            filter: path.join(__dirname, 'filter.js')
                         }
                     }
                 }]
@@ -416,7 +290,7 @@ module.exports = {
 };
 ```
 
-**foo.js**
+**filter.js**
 
 ```js
 module.exports = function(val, param) {
@@ -427,7 +301,7 @@ module.exports = function(val, param) {
 **template.njk**
 
 ```nunjucks
-{{ foo_var | foo(3) }}
+{{ foo_var | filter(3) }}
 ```
 
 To mark filter as async, filter module should export `async` flag:
