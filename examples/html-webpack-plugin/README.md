@@ -40,7 +40,7 @@ module.exports = {
 
 **template.njk**
 ```nunjucks
-<p>Hello, {{ username }}!</p>
+{% raw %}<p>Hello, {{ username }}!</p>{% endraw %}
 ```
 
 Refer to [`html-webpack-plugin` page][html-webpack-plugin-options] for all
