@@ -77,12 +77,12 @@ like:
 > variable to import:
 >
 > ```nunjucks
-> {% set examplesMap = {
+> {% raw %}{% set examplesMap = {
 >     'example-1': static('foo/bar/dynamic-example-1.md'),
 >     'example-2': static('foo/bar/dynamic-example-2.md')
-> } %}
+> } %}{% endraw %}
 >
-> {% for item in [1, 2] %}
+> {% raw %}{% for item in [1, 2] %}
 >     <p>{{ examplesMap['example-' + item] }}</p>
-> {% endfor %}
+> {% endfor %}{% endraw %}
 > ```
