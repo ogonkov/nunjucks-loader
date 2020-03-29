@@ -71,6 +71,9 @@ document.body.innerHTML = template({
 Bundling of `app.js` above will render paragraph with text "Hello, Mike!" to
 the page.
 
+[More examples](https://ogonkov.github.io/nunjucks-loader/#examples) on loader
+site.
+
 ## How it works
 By default Nunjunks bundle all precompiled templates to
 `window.nunjucksPrecompiled`, then loads them via custom loader from this
