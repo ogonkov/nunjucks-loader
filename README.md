@@ -54,21 +54,21 @@ module.exports = {
 };
 ```
 
-**template-example.njk**
+**template.njk**
 ```nunjucks
 <p>Hello, {{ username }}!</p>
 ```
 
-**app.js**
+**index.js**
 ```js
-import template from './template-example.njk'
+import template from './template.njk'
 
 document.body.innerHTML = template({
   username: 'Mike'
 })
 ```
 
-Bundling of `app.js` above will render paragraph with text "Hello, Mike!" to
+Bundling of `index.js` above will render paragraph with text "Hello, Mike!" to
 the page.
 
 [More examples](https://ogonkov.github.io/nunjucks-loader/#examples) on loader
@@ -203,7 +203,7 @@ module.exports = {
                     options: {
                         globals: {
                             _: 'lodash',
-                            globalEnv: path.join(__dirname, 'app/global-env.js')
+                            globalFn: path.join(__dirname, 'global-fn.js')
                         }
                     }
                 }]
@@ -213,7 +213,7 @@ module.exports = {
 };
 ```
 
-**app/global-env.js**
+**global-fn.js**
 ```js
 module.exports = function(foo, bar) {
     return `Do anything with ${foo} and ${bar}`;
@@ -237,7 +237,7 @@ module.exports = {
                     loader: 'simple-nunjucks-loader',
                     options: {
                         extensions: {
-                            CustomExtension: path.join(__dirname, 'lib/extensions/custom-extension.js')
+                            CustomExtension: path.join(__dirname, 'extension.js')
                         }
                     }
                 }]
@@ -247,7 +247,7 @@ module.exports = {
 };
 ```
 
-**lib/extensions/custom-extension.js**
+**extension.js**
 ```js
 // You should use slim bundle to make it work in browser
 const nunjucks = require('nunjucks/browser/nunjucks-slim');
@@ -280,7 +280,7 @@ module.exports = {
                     loader: 'simple-nunjucks-loader',
                     options: {
                         filters: {
-                            foo: path.join(__dirname, 'foo.js')
+                            filter: path.join(__dirname, 'filter.js')
                         }
                     }
                 }]
@@ -290,7 +290,7 @@ module.exports = {
 };
 ```
 
-**foo.js**
+**filter.js**
 
 ```js
 module.exports = function(val, param) {
@@ -301,7 +301,7 @@ module.exports = function(val, param) {
 **template.njk**
 
 ```nunjucks
-{{ foo_var | foo(3) }}
+{{ foo_var | filter(3) }}
 ```
 
 To mark filter as async, filter module should export `async` flag:
