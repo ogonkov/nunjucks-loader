@@ -15,5 +15,7 @@ I you happen to use `nunjucks-loader`, you could be interested in
 
 ## Examples
 
+* Using with [`html-webpack-plugin`](examples/html-webpack-plugin/README.md)
+* Loading [assets](examples/assets/README.md) from template
 * [`isomorphic`](examples/isomorphic/README.md) app example
 * [`nunjucks-markdown`](examples/markdown/README.md) usage notes
