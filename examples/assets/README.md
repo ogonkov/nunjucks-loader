@@ -46,13 +46,13 @@ module.exports = {
 
 ```nunjucks
 <img
-    src="{{ static('./image.png') }}"
+    src="{% raw %}{{ static('./image.png') }}{% endraw %}"
     alt=""
 />
 ```
 
-The code above will replace `{{ static('./image.png') }}` with hash, that
-`file-loader` returns.
+The code above will replace `{% raw %}{{ static('./image.png') }}{% endraw %}`
+with hash, that `file-loader` returns.
 
 ## Dynamic assets
 
@@ -60,11 +60,11 @@ Loader has limited support for dynamic assets. It was tested with expressions
 like:
 
 ```nunjucks
-{{ static('foo/' + bar) }}
+{% raw %}{{ static('foo/' + bar) }}{% endraw %}
 ```
 
 ```nunjucks
-{{ static('foo/' + bar + '.ext') }}
+{% raw %}{{ static('foo/' + bar + '.ext') }}{% endraw %}
 ```
 
 > :warning: I advocate against using dynamic assets, because:
