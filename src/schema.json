@@ -95,6 +95,10 @@
         }
       },
       "default": {}
+    },
+    "esModule": {
+      "type": "boolean",
+      "default": false
     }
   },
   "additionalProperties": false

@@ -10,7 +10,7 @@ import {getDynamicPathRegexp} from './get-dynamic-path-regexp';
  * @param {Array.<string[]>} assets
  */
 export function getAssets(assets) {
-    function imports(loaderContext) {
+    function imports(loaderContext, esModule) {
         return assets.map(function([uuid, assetPath, assetImport]) {
             const args = getArgs(assetPath);
             const isDynamicImport = assetImport.startsWith('"');
@@ -40,7 +40,7 @@ export function getAssets(assets) {
                 `const ${importVar} = function(${args.join()}) {
                     return ${getImportStr(importPath, true)()}
                 };` :
-                `${getImportStr(importPath)(importVar)}`;
+                `${getImportStr(importPath, esModule)(importVar)}`;
 
             return `
             ${importInvocation}
