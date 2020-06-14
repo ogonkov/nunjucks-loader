@@ -3,15 +3,10 @@ import path from 'path';
 import {getDependencies} from './precompile/get-dependencies';
 import {getImportPath} from './utils/get-import-path';
 import {getLoaderOptions} from './get-loader-options';
-import {getRuntimeImport} from './output/get-runtime-import';
-import {getTemplateDependenciesImport} from './output/get-template-dependencies-import';
-import {getGlobals} from './output/get-globals';
-import {getExtensions} from './output/get-extensions';
-import {getFilters} from './output/get-filters';
-import {getAssets} from './output/get-assets';
 import {toAssetsUUID} from './output/to-assets-uuid';
 import {replaceAssets} from './output/replace-assets';
 import {ERROR_MODULE_NOT_FOUND, TEMPLATE_DEPENDENCIES} from './constants';
+import {getTemplateImports} from './output/get-template-imports';
 
 export default function nunjucksLoader(source) {
     const isWindows = process.platform === 'win32';
@@ -44,20 +39,7 @@ export default function nunjucksLoader(source) {
         filters,
         isAsyncTemplate
     }) => {
-        const hasAssets = Object.keys(assets).length > 0;
         const assetsUUID = toAssetsUUID(assets);
-        const {
-            imports: globalsImports
-        } = getGlobals(globals.concat(hasAssets ? [
-            ['static', path.join(__dirname, './static.js')]
-        ] : []));
-        const {
-            imports: extensionsImports
-        } = getExtensions(extensions);
-        const {
-            imports: filtersImports
-        } = getFilters(filters);
-
         const resourcePathString = JSON.stringify(resourcePathImport);
         const envOptions = JSON.stringify({
             // https://mozilla.github.io/nunjucks/api.html#constructor
@@ -71,12 +53,13 @@ export default function nunjucksLoader(source) {
             isAsyncTemplate
         });
         callback(null, `
-            ${getRuntimeImport(this)}
-            ${getTemplateDependenciesImport(this, dependencies)}
-            ${globalsImports(this)}
-            ${extensionsImports(this)}
-            ${filtersImports(this)}
-            ${getAssets(assetsUUID).imports(this)}
+        ${getTemplateImports(this, {
+            assets: assetsUUID,
+            dependencies,
+            extensions,
+            filters,
+            globals
+        })}
             ${replaceAssets(precompiled, assetsUUID)}
 
             exports = module.exports = function nunjucksTemplate(ctx) {
