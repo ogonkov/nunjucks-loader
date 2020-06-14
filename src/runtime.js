@@ -48,8 +48,20 @@ module.exports = function runtime(options, {
     }
 
     return {
-        render(name, ctx, cb) {
-            return env.render(name, ctx, cb);
+        render(name, ctx) {
+            return env.render(name, ctx);
+        },
+
+        renderAsync(name, ctx) {
+            return new Promise(function(resolve, reject) {
+                env.render(name, ctx, function(error, response) {
+                    if (error) {
+                        return reject(error);
+                    }
+
+                    resolve(response);
+                });
+            });
         },
 
         isAsync() {

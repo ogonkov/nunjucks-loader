@@ -80,15 +80,7 @@ export default function nunjucksLoader(source) {
               );
 
               if (nunjucks.isAsync()) {
-                return new Promise(function(resolve, reject) {
-                  nunjucks.render(${resourcePathString}, ctx, function(err, res) {
-                    if (err) {
-                      return reject(err);
-                    }
-                    
-                    resolve(res);
-                  });
-                });
+                return nunjucks.renderAsync(${resourcePathString}, ctx);
               }
             
               return nunjucks.render(${resourcePathString}, ctx);
