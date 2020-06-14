@@ -5,11 +5,12 @@ import {toVar} from '../utils/to-var';
 import {getModuleOutput} from './get-module-output';
 
 export function getFilters(filters) {
-    function imports(loaderContext) {
+    function imports(loaderContext, esModule) {
         return filters.map(([filterName, importPath, filterInstance]) => {
             const importVar = toVar(`${IMPORTS_PREFIX}_filter_${filterName}`);
             const importStatement = getImportStr(
                 stringifyRequest(loaderContext, importPath),
+                esModule
             )(importVar);
 
             return `
