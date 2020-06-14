@@ -18,6 +18,8 @@ export function getLoaderOptions(loader, callback) {
         });
     } catch (e) {
         callback(e);
+
+        return null;
     }
 
     for (const key in schema.properties) {

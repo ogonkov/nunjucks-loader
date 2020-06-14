@@ -17,6 +17,11 @@ export default function nunjucksLoader(source) {
     const isWindows = process.platform === 'win32';
     const callback = this.async();
     const options = getLoaderOptions(this, callback);
+
+    if (options === null) {
+        return;
+    }
+
     const normalizedSearchPaths = [].concat(options.searchPaths).map(path.normalize);
     let resourcePathImport = getImportPath(
         this.resourcePath,
