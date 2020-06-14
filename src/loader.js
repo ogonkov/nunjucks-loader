@@ -17,7 +17,6 @@ export default function nunjucksLoader(source) {
         return;
     }
 
-    const {esModule} = options;
     const normalizedSearchPaths = [].concat(options.searchPaths).map(path.normalize);
     let resourcePathImport = getImportPath(
         this.resourcePath,
@@ -62,7 +61,7 @@ export default function nunjucksLoader(source) {
             isAsyncTemplate
         });
         callback(null, `
-        ${getTemplateImports(this, esModule, {
+        ${getTemplateImports(this, options.esModule, {
             assets: assetsUUID,
             dependencies,
             extensions,
