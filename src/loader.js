@@ -70,7 +70,7 @@ export default function nunjucksLoader(source) {
         })}
         ${precompiled}
 
-        exports = module.exports = function nunjucksTemplate(ctx = {}) {
+        function nunjucksTemplate(ctx = {}) {
           var nunjucks = runtime(
             ${envOptions},
             ${TEMPLATE_DEPENDENCIES}
@@ -85,8 +85,13 @@ export default function nunjucksLoader(source) {
           return nunjucks.render(${resourcePathString}, ctx);
         };
 
-        exports.__nunjucks_precompiled_template__ = ${TEMPLATE_DEPENDENCIES}.templates[${resourcePathString}];
-        exports.${TEMPLATE_DEPENDENCIES} = ${TEMPLATE_DEPENDENCIES};
+        nunjucksTemplate.__nunjucks_precompiled_template__ = ${TEMPLATE_DEPENDENCIES}.templates[${resourcePathString}];
+        nunjucksTemplate.${TEMPLATE_DEPENDENCIES} = ${TEMPLATE_DEPENDENCIES};
+
+        ${options.esModule ?
+            'export default' :
+            'exports = module.exports ='
+        } nunjucksTemplate;
         `);
     }, function(error) {
         if (error.code === ERROR_MODULE_NOT_FOUND &&
