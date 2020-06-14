@@ -11,6 +11,10 @@ import {getDynamicPathRegexp} from './get-dynamic-path-regexp';
  */
 export function getAssets(assets) {
     function imports(loaderContext, esModule) {
+        if (assets.length === 0) {
+            return '';
+        }
+
         return assets.map(function([uuid, assetPath, assetImport]) {
             const args = getArgs(assetPath);
             const isDynamicImport = assetImport.startsWith('"');
