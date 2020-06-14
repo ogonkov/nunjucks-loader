@@ -38,7 +38,7 @@ export function getAssets(assets) {
             );
             const importInvocation = isDynamicImport ?
                 `const ${importVar} = function(${args.join()}) {
-                    return ${getImportStr(importPath, true)()}
+                    return ${getImportStr(importPath, esModule, true)()}
                 };` :
                 `${getImportStr(importPath, esModule)(importVar)}`;
 
