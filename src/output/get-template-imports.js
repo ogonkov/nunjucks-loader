@@ -5,7 +5,7 @@ import {getAssets} from './get-assets';
 import {getExtensions} from './get-extensions';
 import {getFilters} from './get-filters';
 
-export function getTemplateImports(loader, {
+export function getTemplateImports(loader, esModule, {
     assets,
     dependencies,
     extensions,
@@ -13,11 +13,11 @@ export function getTemplateImports(loader, {
     globals
 }) {
     return `
-    ${getRuntimeImport(loader)}
-    ${getTemplateDependenciesImport(loader, dependencies)}
-    ${getGlobals(globals).imports(loader)}
-    ${getAssets(assets).imports(loader)}
-    ${getExtensions(extensions).imports(loader)}
-    ${getFilters(filters).imports(loader)}
+    ${getRuntimeImport(loader, esModule)}
+    ${getTemplateDependenciesImport(loader, esModule, dependencies)}
+    ${getGlobals(globals).imports(loader, esModule)}
+    ${getAssets(assets).imports(loader, esModule)}
+    ${getExtensions(extensions).imports(loader, esModule)}
+    ${getFilters(filters).imports(loader, esModule)}
     `;
 }
