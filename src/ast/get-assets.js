@@ -4,6 +4,7 @@ import {isUnique} from '../utils/is-unique';
 import {getPossiblePaths} from '../utils/get-possible-paths';
 import {getFirstExistedPath} from '../utils/get-first-existed-path';
 import {ERROR_MODULE_NOT_FOUND} from '../constants';
+import {StaticExtension} from '../StaticExtension';
 
 /**
  * Parse `Add` value to expression
@@ -35,7 +36,8 @@ function getAddNodeValue(node) {
 }
 
 function getGlobalFnValue(node) {
-    if (node.name.value !== 'static') {
+    if (!(node.extName instanceof StaticExtension) &&
+        node.extName !== StaticExtension.name) {
         return;
     }
 
@@ -56,7 +58,7 @@ function getGlobalFnValue(node) {
 export function getAssets(nodes, searchAssets) {
     const assets = getNodesValues(
         nodes,
-        nunjucks.nodes.FunCall,
+        nunjucks.nodes.CallExtensionAsync,
         getGlobalFnValue
     ).filter(isUnique);
     const possiblePaths = getPossiblePaths(assets, [].concat(searchAssets));

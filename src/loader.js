@@ -4,7 +4,6 @@ import {getDependencies} from './precompile/get-dependencies';
 import {getImportPath} from './utils/get-import-path';
 import {getLoaderOptions} from './get-loader-options';
 import {toAssetsUUID} from './output/to-assets-uuid';
-import {replaceAssets} from './output/replace-assets';
 import {ERROR_MODULE_NOT_FOUND, TEMPLATE_DEPENDENCIES} from './constants';
 import {getTemplateImports} from './output/get-template-imports';
 
@@ -60,7 +59,7 @@ export default function nunjucksLoader(source) {
             filters,
             globals
         })}
-            ${replaceAssets(precompiled, assetsUUID)}
+            ${precompiled}
 
             exports = module.exports = function nunjucksTemplate(ctx) {
               var nunjucks = runtime(
