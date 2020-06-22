@@ -1,3 +1,5 @@
+import path from 'path';
+
 import {precompileToLocalVar} from './local-var-precompile';
 import {getAddonsMeta} from './get-addons-meta';
 import {configureEnvironment} from './configure-environment';
@@ -53,14 +55,27 @@ export async function getDependencies(resourcePath, source, options) {
         filters,
         ...opts
     } = options;
-    const [extensionsInstances, filtersInstances] = await Promise.all([
+    const staticExtPath = path.join(
+        __dirname,
+        '..',
+        'get-static-extension.js'
+    );
+    const [
+        staticExtension,
+        extensionsMeta,
+        filtersMeta
+    ] = await Promise.all([
+        getAddonsMeta([
+            ['StaticExtension', staticExtPath]
+        ]),
         getAddonsMeta(Object.entries(extensions)),
         getAddonsMeta(Object.entries(filters))
     ]);
+    const _extensionsMeta = extensionsMeta.concat(staticExtension);
 
     const nodes = getNodes(
         source,
-        extensionsInstances.map(([,, ext]) => ext),
+        _extensionsMeta.map(([,, ext]) => ext),
         opts
     );
 
@@ -68,8 +83,8 @@ export async function getDependencies(resourcePath, source, options) {
         precompileToLocalVar(source, resourcePath, configureEnvironment({
             searchPaths,
             options: opts,
-            extensions: extensionsInstances,
-            filters: filtersInstances
+            extensions: _extensionsMeta,
+            filters: filtersMeta
         })),
         getTemplatesImports(nodes, searchPaths)
     ]).then(function([precompiled, dependencies]) {
@@ -77,8 +92,8 @@ export async function getDependencies(resourcePath, source, options) {
             precompiled,
             dependencies,
             globals: getUsedGlobals(nodes, globals),
-            extensions: getUsedExtensions(nodes, extensionsInstances),
-            filters: getUsedFilters(nodes, filtersInstances)
+            extensions: getUsedExtensions(nodes, _extensionsMeta),
+            filters: getUsedFilters(nodes, filtersMeta)
         };
     }).then(function(deps) {
         return getAssets(nodes, assetsPaths).then(function(assets) {
