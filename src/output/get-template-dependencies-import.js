@@ -1,21 +1,31 @@
 import {stringifyRequest} from 'loader-utils';
+import {getImportStr} from '../utils/get-import-str';
+import {IMPORTS_PREFIX, TEMPLATE_DEPENDENCIES} from '../constants';
+import {toVar} from '../utils/to-var';
+
+function getAssignments(assignments) {
+    if (assignments === '') {
+        return '{};';
+    }
+
+    return `{${assignments}};`;
+}
+
+function joinAssignments(assignment, importVar, key) {
+    return [
+        assignment[key],
+        `...${importVar}.${TEMPLATE_DEPENDENCIES}.${key}`
+    ].filter(Boolean).join(',\n');
+}
 
 function getImports(imports, assignments) {
     return `
+        const ${TEMPLATE_DEPENDENCIES} = {};
         ${imports}
-        var __nunjucks_module_dependencies__ = {};
-        __nunjucks_module_dependencies__.templates = Object.assign(
-            ${assignments.templates}
-        );
-        __nunjucks_module_dependencies__.globals = Object.assign(
-            ${assignments.globals}
-        );
-        __nunjucks_module_dependencies__.extensions = Object.assign(
-            ${assignments.extensions}
-        );
-        __nunjucks_module_dependencies__.filters = Object.assign(
-            ${assignments.filters}
-        );
+        ${TEMPLATE_DEPENDENCIES}.templates = ${getAssignments(assignments.templates)}
+        ${TEMPLATE_DEPENDENCIES}.globals = ${getAssignments(assignments.globals)}
+        ${TEMPLATE_DEPENDENCIES}.extensions = ${getAssignments(assignments.extensions)}
+        ${TEMPLATE_DEPENDENCIES}.filters = ${getAssignments(assignments.filters)}
     `;
 }
 
@@ -26,26 +36,44 @@ function foldDependenciesToImports(
     i
 ) {
     const path = stringifyRequest(loaderContext, fullPath);
-    const importVar = `templateDependencies${i}`;
+    const importVar = toVar(`${IMPORTS_PREFIX}_dep_${i}`);
+    const join = joinAssignments.bind(null, assignment, importVar);
 
     return [
-        `${imports}var ${importVar} = require(${path}).__nunjucks_module_dependencies__;`,
+        `
+        ${imports}
+        ${getImportStr(path)(importVar)}
+        `,
         {
-            templates: [`${assignment.templates}`, `${importVar}.templates`].join(),
-            globals: [`${assignment.globals}`, `${importVar}.globals`].join(),
-            extensions: [`${assignment.extensions}`, `${importVar}.extensions`].join(),
-            filters: [`${assignment.filters}`, `${importVar}.filters`].join()
+            templates: join('templates'),
+            globals: join('globals'),
+            extensions: join('extensions'),
+            filters: join('filters')
         }
     ];
 }
 
+/**
+ * Import nested templates dependencies
+ *
+ * @example
+ *     var __nunjucks_module_dependencies__ = {}
+ *     import dep0 from './nested-template.njk';
+ *     __nunjucks_module_dependencies__.templates = {
+ *         ...dep0.__nunjucks_module_dependencies__.templates
+ *     };
+ *
+ * @param loaderContext
+ * @param {Array<string[]>} dependencies
+ * @returns {string}
+ */
 export function getTemplateDependenciesImport(loaderContext, dependencies) {
     return getImports(
         ...dependencies.reduce(foldDependenciesToImports.bind(null, loaderContext), ['', {
-            templates: '{}',
-            globals: '{}',
-            extensions: '{}',
-            filters: '{}'
+            templates: '',
+            globals: '',
+            extensions: '',
+            filters: ''
         }])
     );
 }

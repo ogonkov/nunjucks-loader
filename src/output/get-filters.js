@@ -1,17 +1,20 @@
 import {stringifyRequest} from 'loader-utils';
+import {getImportStr} from '../utils/get-import-str';
+import {IMPORTS_PREFIX, TEMPLATE_DEPENDENCIES} from '../constants';
+import {toVar} from '../utils/to-var';
 import {getModuleOutput} from './get-module-output';
 
 export function getFilters(filters) {
     function imports(loaderContext) {
         return filters.map(([filterName, importPath, filterInstance]) => {
-            const importVar = `_filter_${filterName}`;
+            const importVar = toVar(`${IMPORTS_PREFIX}_filter_${filterName}`);
+            const importStatement = getImportStr(
+                stringifyRequest(loaderContext, importPath),
+            )(importVar);
 
             return `
-            var ${importVar} = require(${stringifyRequest(
-                loaderContext,
-                importPath
-            )});
-            __nunjucks_module_dependencies__.filters['${filterName}'] = {
+            ${importStatement}
+            ${TEMPLATE_DEPENDENCIES}.filters['${filterName}'] = {
                 module: ${getModuleOutput(importVar)},
                 async: ${JSON.stringify(filterInstance.async === true)}
             };`;

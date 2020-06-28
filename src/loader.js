@@ -11,7 +11,7 @@ import {getFilters} from './output/get-filters';
 import {getAssets} from './output/get-assets';
 import {toAssetsUUID} from './output/to-assets-uuid';
 import {replaceAssets} from './output/replace-assets';
-import {ERROR_MODULE_NOT_FOUND} from './constants';
+import {ERROR_MODULE_NOT_FOUND, TEMPLATE_DEPENDENCIES} from './constants';
 
 export default function nunjucksLoader(source) {
     const isWindows = process.platform === 'win32';
@@ -82,7 +82,7 @@ export default function nunjucksLoader(source) {
             exports = module.exports = function nunjucksTemplate(ctx) {
               var nunjucks = runtime(
                 ${envOptions},
-                __nunjucks_module_dependencies__
+                ${TEMPLATE_DEPENDENCIES}
               );
 
               if (nunjucks.isAsync()) {
@@ -92,8 +92,8 @@ export default function nunjucksLoader(source) {
               return nunjucks.render(${resourcePathString}, ctx);
             };
 
-            exports.__nunjucks_precompiled_template__ = __nunjucks_module_dependencies__.templates[${resourcePathString}];
-            exports.__nunjucks_module_dependencies__ = __nunjucks_module_dependencies__;
+            exports.__nunjucks_precompiled_template__ = ${TEMPLATE_DEPENDENCIES}.templates[${resourcePathString}];
+            exports.${TEMPLATE_DEPENDENCIES} = ${TEMPLATE_DEPENDENCIES};
         `);
     }, function(error) {
         if (error.code === ERROR_MODULE_NOT_FOUND &&

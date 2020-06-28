@@ -1,3 +1,5 @@
+import {TEMPLATE_DEPENDENCIES} from '../constants';
+
 /**
  * @typedef {Object} NunjucksPrecompiled
  * @property {string} name
@@ -15,7 +17,7 @@ export function localVarWrapper(templates) {
         const {name, template} = templates[i];
 
         out += `
-            __nunjucks_module_dependencies__.templates[${JSON.stringify(name)}] = (function() {
+            ${TEMPLATE_DEPENDENCIES}.templates[${JSON.stringify(name)}] = (function() {
                 ${template}
             })();
         `;

@@ -1,6 +1,9 @@
 import {stringifyRequest} from 'loader-utils';
 
 import {getArgs} from './assets';
+import {getImportStr} from '../utils/get-import-str';
+import {toVar} from '../utils/to-var';
+import {IMPORTS_PREFIX, TEMPLATE_ASSETS} from '../constants';
 
 /**
  * @param {Array.<string[]>} assets
@@ -29,17 +32,23 @@ export function getAssets(assets) {
                 importPath = stringifyRequest(loaderContext, assetImport);
             }
 
+            const importVar = toVar(
+                `${IMPORTS_PREFIX}_asset_${uuid}`
+            );
             const importInvocation = isDynamicImport ?
-                `function(${args.join()}) {
-                    return require(${importPath});
-                }` :
-                `require(${importPath})`;
+                `const ${importVar} = function(${args.join()}) {
+                    return ${getImportStr(importPath, true)()}
+                };` :
+                `${getImportStr(importPath)(importVar)}`;
 
-            return `_templateAssets['${uuid}'] = ${importInvocation};`;
+            return `
+            ${importInvocation}
+            ${TEMPLATE_ASSETS}['${uuid}'] = ${importVar};
+            `;
         }).join('');
 
         return `
-            var _templateAssets = {};
+            const ${TEMPLATE_ASSETS} = {};
             
             ${assetsImports}
         `;
