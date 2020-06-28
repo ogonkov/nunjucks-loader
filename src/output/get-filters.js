@@ -1,4 +1,5 @@
 import {stringifyRequest} from 'loader-utils';
+import {TEMPLATE_DEPENDENCIES} from '../constants';
 import {getModuleOutput} from './get-module-output';
 
 export function getFilters(filters) {
@@ -11,7 +12,7 @@ export function getFilters(filters) {
                 loaderContext,
                 importPath
             )});
-            __nunjucks_module_dependencies__.filters['${filterName}'] = {
+            ${TEMPLATE_DEPENDENCIES}.filters['${filterName}'] = {
                 module: ${getModuleOutput(importVar)},
                 async: ${JSON.stringify(filterInstance.async === true)}
             };`;

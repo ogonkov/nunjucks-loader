@@ -1,19 +1,20 @@
 import {stringifyRequest} from 'loader-utils';
+import {TEMPLATE_DEPENDENCIES} from '../constants';
 
 function getImports(imports, assignments) {
     return `
         ${imports}
-        var __nunjucks_module_dependencies__ = {};
-        __nunjucks_module_dependencies__.templates = Object.assign(
+        var ${TEMPLATE_DEPENDENCIES} = {};
+        ${TEMPLATE_DEPENDENCIES}.templates = Object.assign(
             ${assignments.templates}
         );
-        __nunjucks_module_dependencies__.globals = Object.assign(
+        ${TEMPLATE_DEPENDENCIES}.globals = Object.assign(
             ${assignments.globals}
         );
-        __nunjucks_module_dependencies__.extensions = Object.assign(
+        ${TEMPLATE_DEPENDENCIES}.extensions = Object.assign(
             ${assignments.extensions}
         );
-        __nunjucks_module_dependencies__.filters = Object.assign(
+        ${TEMPLATE_DEPENDENCIES}.filters = Object.assign(
             ${assignments.filters}
         );
     `;
@@ -29,7 +30,7 @@ function foldDependenciesToImports(
     const importVar = `templateDependencies${i}`;
 
     return [
-        `${imports}var ${importVar} = require(${path}).__nunjucks_module_dependencies__;`,
+        `${imports}var ${importVar} = require(${path}).${TEMPLATE_DEPENDENCIES};`,
         {
             templates: [`${assignment.templates}`, `${importVar}.templates`].join(),
             globals: [`${assignment.globals}`, `${importVar}.globals`].join(),
