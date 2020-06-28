@@ -53,7 +53,7 @@ module.exports = function runtime(options, {
         },
 
         renderAsync(name, ctx) {
-            return new Promise(function(resolve, reject) {
+            return new Promise(function renderCallback(resolve, reject) {
                 env.render(name, ctx, function(error, response) {
                     if (error) {
                         return reject(error);
