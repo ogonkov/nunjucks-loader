@@ -1,5 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Advanced compilation extensions should compile async extensions 1`] = `
+"<div id=\\"el100500\\">(async): 
+  This content will be replaced with the content from /stuff
+</div>
+
+
+    <div>
+        <div id=\\"el100500\\">(async): 
+          Content 1
+        </div>
+    </div>
+
+    <div>
+        <div id=\\"el100500\\">(async): 
+          Content 2
+        </div>
+    </div>
+
+"
+`;
+
 exports[`Advanced compilation extensions should compile custom tags 1`] = `
 "<div id=\\"el100500\\">
   This content will be replaced with the content from /stuff

@@ -48,12 +48,27 @@ module.exports = function runtime(options, {
     }
 
     return {
-        render(name, ctx, cb) {
-            return env.render(name, ctx, cb);
+        render(name, ctx) {
+            return env.render(name, ctx);
+        },
+
+        renderAsync(name, ctx) {
+            return new Promise(function renderCallback(resolve, reject) {
+                env.render(name, ctx, function(error, response) {
+                    if (error) {
+                        return reject(error);
+                    }
+
+                    resolve(response);
+                });
+            });
         },
 
         isAsync() {
-            return Object.values(filters).some(({async}) => async === true);
+            return (
+                options.isAsyncTemplate === true ||
+                Object.values(filters).some(({async}) => async === true)
+            );
         }
     };
 };
