@@ -1,4 +1,5 @@
 import {stringifyRequest} from 'loader-utils';
+import {getModuleOutput} from './get-module-output';
 
 export function getExtensions(extensions) {
     function imports(loaderContext) {
@@ -11,7 +12,7 @@ export function getExtensions(extensions) {
                 importPath
             )});
             __nunjucks_module_dependencies__.extensions['${name}'] = {
-                module: ${importVar}
+                module: ${getModuleOutput(importVar)}
             };`;
         }).join('');
     }

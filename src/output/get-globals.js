@@ -1,5 +1,6 @@
 import {toVar} from '../utils/to-var';
 import {stringifyRequest} from 'loader-utils';
+import {getModuleOutput} from './get-module-output';
 
 export function getGlobals(globals) {
     function imports(loaderContext) {
@@ -11,7 +12,7 @@ export function getGlobals(globals) {
                 stringifyRequest(loaderContext, globalPath)
             });
             __nunjucks_module_dependencies__.globals['${globalImport}'] = {
-                module: ${importVar}
+                module: ${getModuleOutput(importVar)}
             };`;
         }).join('')
     }
