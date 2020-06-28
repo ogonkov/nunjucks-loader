@@ -48,7 +48,7 @@ export function getAssets(assets) {
         }).join('');
 
         return `
-            var ${TEMPLATE_ASSETS} = {};
+            const ${TEMPLATE_ASSETS} = {};
             
             ${assetsImports}
         `;
