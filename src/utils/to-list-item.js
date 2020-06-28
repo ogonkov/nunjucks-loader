@@ -10,9 +10,9 @@ export function toListItem(list, callback) {
      * @param {Object<TNode>} item
      * @returns {?TNode}
      */
-    function foo(item) {
+    function findItem(item) {
         return list.find(callback(item));
     }
 
-    return foo;
+    return findItem;
 }
