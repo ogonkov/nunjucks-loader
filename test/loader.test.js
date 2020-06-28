@@ -130,6 +130,24 @@ describe('Advanced compilation', function() {
 
             expect(output()).toMatchSnapshot();
         });
+
+        test('should compile async extensions', async function() {
+            const output = await compiler('fixtures/extensions/multiple.njk', {
+                extensions: {
+                    RemoteExtension: path.join(__dirname, './fixtures/extensions/RemoteAsyncExtension.js')
+                }
+            });
+
+            jest.useFakeTimers();
+
+            const asyncRender = output();
+
+            jest.runAllTimers();
+
+            await expect(asyncRender).resolves.toMatchSnapshot();
+
+            jest.useRealTimers();
+        });
     });
 
     describe('filters', function() {
