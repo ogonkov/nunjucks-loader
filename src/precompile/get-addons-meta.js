@@ -1,10 +1,12 @@
+import {getModule} from '../utils/get-module';
+
 /**
  * @param {[string, string]} addonEntry
  * @return {Promise<[string, string, function]>}
  */
 function loadAddon([name, importPath]) {
     return import(importPath).then(function(instance) {
-        return [name, importPath, instance];
+        return [name, importPath, getModule(instance)];
     });
 }
 

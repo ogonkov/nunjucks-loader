@@ -1,7 +1,7 @@
 [![npm package][npm-image]][npm-url] 
 [![Coverage Status][coverage-image]][coverage-url] 
 [![node][node]][node-url] 
-![Build Status][build-image] 
+[![Build Status][build-image]][build-url] 
 [![Dependencies Status][david-image]][david-url]
 
 # Nunjucks templates loader for Webpack
@@ -341,9 +341,9 @@ module.exports = {
 
 **app/global-env.js**
 ```js
-module.exports = function(foo, bar) {
+export default function globalFn(foo, bar) {
     return `Do anything with ${foo} and ${bar}`;
-};
+}
 ```
 
 ### extensions
@@ -376,13 +376,13 @@ module.exports = {
 **lib/extensions/custom-extension.js**
 ```js
 // You should use slim bundle to make it work in browser
-const nunjucks = require('nunjucks/browser/nunjucks-slim');
+import nunjucks from 'nunjucks/browser/nunjucks-slim';
 
 // See example in docs
 // https://mozilla.github.io/nunjucks/api.html#custom-tags
 class CustomExtension {}
 
-module.exports = new CustomExtension();
+export default new CustomExtension();
 ```
 
 Loader trying to guess which extensions are really used, and keep only required
@@ -419,9 +419,9 @@ module.exports = {
 **foo.js**
 
 ```js
-module.exports = function(val, param) {
+export default function filter(val, param) {
     return `${val + param}`;
-};
+}
 ```
 
 **template.njk**
@@ -435,13 +435,13 @@ To mark filter as async, filter module should export `async` flag:
 **async-filter.js**
 
 ```js
-module.exports = function(val, param, callback) {
+export default function asyncFilter(val, param, callback) {
     setTimeout(function() {
         callback(null, val + param);
     }, 1000);
-};
+}
 
-module.exports.async = true;
+asyncFilter.async = true;
 ```
 
 [nunjucks-github]:https://github.com/mozilla/nunjucks
@@ -457,10 +457,11 @@ module.exports.async = true;
 
 [npm-image]:https://img.shields.io/npm/v/simple-nunjucks-loader.svg
 [npm-url]:http://npmjs.org/package/simple-nunjucks-loader
-[coverage-image]:https://coveralls.io/repos/github/ogonkov/nunjucks-loader/badge.svg?branch=master
-[coverage-url]:https://coveralls.io/github/ogonkov/nunjucks-loader?branch=master
+[coverage-image]:https://coveralls.io/repos/github/ogonkov/nunjucks-loader/badge.svg?branch=trunk-v1
+[coverage-url]:https://coveralls.io/github/ogonkov/nunjucks-loader?branch=trunk-v1
 [node]: https://img.shields.io/node/v/simple-nunjucks-loader.svg
 [node-url]: https://nodejs.org
-[build-image]:https://github.com/ogonkov/nunjucks-loader/workflows/Node.js%20CI/badge.svg
+[build-image]:https://github.com/ogonkov/nunjucks-loader/workflows/Tests/badge.svg?branch=trunk-v1
+[build-url]:https://github.com/ogonkov/nunjucks-loader/actions?query=branch%3Atrunk-v1+workflow%3ATests
 [david-image]:https://david-dm.org/ogonkov/nunjucks-loader/status.svg
 [david-url]:https://david-dm.org/ogonkov/nunjucks-loader
