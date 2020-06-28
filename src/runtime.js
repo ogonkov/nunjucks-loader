@@ -65,7 +65,10 @@ module.exports = function runtime(options, {
         },
 
         isAsync() {
-            return Object.values(filters).some(({async}) => async === true);
+            return (
+                options.isAsyncTemplate === true ||
+                Object.values(filters).some(({async}) => async === true)
+            );
         }
     };
 };

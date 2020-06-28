@@ -7,6 +7,7 @@ import {getUsedExtensions} from '../ast/get-used-extensions';
 import {getUsedFilters} from '../ast/get-used-filters';
 import {getAssets} from '../ast/get-assets';
 import {getTemplatesImports} from '../ast/get-templates-imports';
+import {hasAsyncTags} from '../ast/has-async-tags';
 
 /**
  * @typedef {Object} NunjucksOptions
@@ -83,7 +84,8 @@ export async function getDependencies(resourcePath, source, options) {
         return getAssets(nodes, assetsPaths).then(function(assets) {
             return {
                 ...deps,
-                assets
+                assets,
+                isAsyncTemplate: hasAsyncTags(nodes)
             };
         })
     });

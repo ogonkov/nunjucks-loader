@@ -36,7 +36,8 @@ export default function nunjucksLoader(source) {
         precompiled,
         globals,
         extensions,
-        filters
+        filters,
+        isAsyncTemplate
     }) => {
         const hasAssets = Object.keys(assets).length > 0;
         const assetsUUID = toAssetsUUID(assets);
@@ -53,16 +54,16 @@ export default function nunjucksLoader(source) {
         } = getFilters(filters);
 
         const resourcePathString = JSON.stringify(resourcePathImport);
-        // Only required options
-        // https://mozilla.github.io/nunjucks/api.html#constructor
         const envOptions = JSON.stringify({
+            // https://mozilla.github.io/nunjucks/api.html#constructor
             autoescape: options.autoescape,
             throwOnUndefined: options.throwOnUndefined,
             trimBlocks: options.trimBlocks,
             lstripBlocks: options.lstripBlocks,
             // Loader specific options
             jinjaCompat: options.jinjaCompat,
-            isWindows
+            isWindows,
+            isAsyncTemplate
         });
         callback(null, `
             ${getRuntimeImport(this)}
