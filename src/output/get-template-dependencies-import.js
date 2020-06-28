@@ -1,22 +1,29 @@
 import {stringifyRequest} from 'loader-utils';
 import {TEMPLATE_DEPENDENCIES} from '../constants';
 
+function getAssignments(assignments) {
+    if (assignments === '') {
+        return '{};';
+    }
+
+    return `{${assignments}};`;
+}
+
+function joinAssignments(assignment, importVar, key) {
+    return [
+        assignment[key],
+        `...${importVar}.${TEMPLATE_DEPENDENCIES}.${key}`
+    ].filter(Boolean).join(',\n');
+}
+
 function getImports(imports, assignments) {
     return `
+        const ${TEMPLATE_DEPENDENCIES} = {};
         ${imports}
-        var ${TEMPLATE_DEPENDENCIES} = {};
-        ${TEMPLATE_DEPENDENCIES}.templates = Object.assign(
-            ${assignments.templates}
-        );
-        ${TEMPLATE_DEPENDENCIES}.globals = Object.assign(
-            ${assignments.globals}
-        );
-        ${TEMPLATE_DEPENDENCIES}.extensions = Object.assign(
-            ${assignments.extensions}
-        );
-        ${TEMPLATE_DEPENDENCIES}.filters = Object.assign(
-            ${assignments.filters}
-        );
+        ${TEMPLATE_DEPENDENCIES}.templates = ${getAssignments(assignments.templates)}
+        ${TEMPLATE_DEPENDENCIES}.globals = ${getAssignments(assignments.globals)}
+        ${TEMPLATE_DEPENDENCIES}.extensions = ${getAssignments(assignments.extensions)}
+        ${TEMPLATE_DEPENDENCIES}.filters = ${getAssignments(assignments.filters)}
     `;
 }
 
@@ -28,14 +35,18 @@ function foldDependenciesToImports(
 ) {
     const path = stringifyRequest(loaderContext, fullPath);
     const importVar = `templateDependencies${i}`;
+    const join = joinAssignments.bind(null, assignment, importVar);
 
     return [
-        `${imports}var ${importVar} = require(${path}).${TEMPLATE_DEPENDENCIES};`,
+        `
+        ${imports}
+        var ${importVar} = require(${path});
+        `,
         {
-            templates: [`${assignment.templates}`, `${importVar}.templates`].join(),
-            globals: [`${assignment.globals}`, `${importVar}.globals`].join(),
-            extensions: [`${assignment.extensions}`, `${importVar}.extensions`].join(),
-            filters: [`${assignment.filters}`, `${importVar}.filters`].join()
+            templates: join('templates'),
+            globals: join('globals'),
+            extensions: join('extensions'),
+            filters: join('filters')
         }
     ];
 }
@@ -43,10 +54,10 @@ function foldDependenciesToImports(
 export function getTemplateDependenciesImport(loaderContext, dependencies) {
     return getImports(
         ...dependencies.reduce(foldDependenciesToImports.bind(null, loaderContext), ['', {
-            templates: '{}',
-            globals: '{}',
-            extensions: '{}',
-            filters: '{}'
+            templates: '',
+            globals: '',
+            extensions: '',
+            filters: ''
         }])
     );
 }
