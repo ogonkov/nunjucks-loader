@@ -1,7 +1,7 @@
 [![npm package][npm-image]][npm-url] 
 [![Coverage Status][coverage-image]][coverage-url] 
 [![node][node]][node-url] 
-![Build Status][build-image] 
+[![Build Status][build-image]][build-url] 
 [![Dependencies Status][david-image]][david-url]
 
 # Nunjucks templates loader for Webpack
@@ -336,6 +336,7 @@ asyncFilter.async = true;
 [coverage-url]:https://coveralls.io/github/ogonkov/nunjucks-loader?branch=master
 [node]: https://img.shields.io/node/v/simple-nunjucks-loader.svg
 [node-url]: https://nodejs.org
-[build-image]:https://github.com/ogonkov/nunjucks-loader/workflows/Node.js%20CI/badge.svg
+[build-image]:https://github.com/ogonkov/nunjucks-loader/workflows/Tests/badge.svg?branch=master
+[build-url]:https://github.com/ogonkov/nunjucks-loader/actions?query=branch%3Amaster+workflow%3ATests
 [david-image]:https://david-dm.org/ogonkov/nunjucks-loader/status.svg
 [david-url]:https://david-dm.org/ogonkov/nunjucks-loader
