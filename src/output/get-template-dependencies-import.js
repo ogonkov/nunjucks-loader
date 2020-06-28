@@ -58,9 +58,9 @@ function foldDependenciesToImports(
  *
  * @example
  *     var __nunjucks_module_dependencies__ = {}
- *     import {__nunjucks_module_dependencies__ as dep0} from '';
+ *     import dep0 from './nested-template.njk';
  *     __nunjucks_module_dependencies__.templates = {
- *         ...dep0.templates
+ *         ...dep0.__nunjucks_module_dependencies__.templates
  *     };
  *
  * @param loaderContext
