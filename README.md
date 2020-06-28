@@ -336,6 +336,6 @@ asyncFilter.async = true;
 [coverage-url]:https://coveralls.io/github/ogonkov/nunjucks-loader?branch=master
 [node]: https://img.shields.io/node/v/simple-nunjucks-loader.svg
 [node-url]: https://nodejs.org
-[build-image]:https://github.com/ogonkov/nunjucks-loader/workflows/Node.js%20CI/badge.svg
+[build-image]:https://github.com/ogonkov/nunjucks-loader/workflows/Tests/badge.svg?branch=master
 [david-image]:https://david-dm.org/ogonkov/nunjucks-loader/status.svg
 [david-url]:https://david-dm.org/ogonkov/nunjucks-loader
