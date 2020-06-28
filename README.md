@@ -457,11 +457,11 @@ asyncFilter.async = true;
 
 [npm-image]:https://img.shields.io/npm/v/simple-nunjucks-loader.svg
 [npm-url]:http://npmjs.org/package/simple-nunjucks-loader
-[coverage-image]:https://coveralls.io/repos/github/ogonkov/nunjucks-loader/badge.svg?branch=master
-[coverage-url]:https://coveralls.io/github/ogonkov/nunjucks-loader?branch=master
+[coverage-image]:https://coveralls.io/repos/github/ogonkov/nunjucks-loader/badge.svg?branch=trunk-v1
+[coverage-url]:https://coveralls.io/github/ogonkov/nunjucks-loader?branch=trunk-v1
 [node]: https://img.shields.io/node/v/simple-nunjucks-loader.svg
 [node-url]: https://nodejs.org
-[build-image]:https://github.com/ogonkov/nunjucks-loader/workflows/Tests/badge.svg?branch=master
-[build-url]:https://github.com/ogonkov/nunjucks-loader/actions?query=branch%3Amaster+workflow%3ATests
+[build-image]:https://github.com/ogonkov/nunjucks-loader/workflows/Tests/badge.svg?branch=trunk-v1
+[build-url]:https://github.com/ogonkov/nunjucks-loader/actions?query=branch%3Atrunk-v1+workflow%3ATests
 [david-image]:https://david-dm.org/ogonkov/nunjucks-loader/status.svg
 [david-url]:https://david-dm.org/ogonkov/nunjucks-loader
