@@ -10,42 +10,31 @@ export function getLoaderOptions(loader, callback) {
     } catch (e) {
         callback(e);
     }
-    const {
-        autoescape,
-        throwOnUndefined,
-        trimBlocks,
-        lstripBlocks,
-        tags,
-        jinjaCompat = false,
-        searchPaths = '.',
-        assetsPaths = '.',
-        globals = {},
-        extensions = {},
-        filters = {}
-    } = loaderOptions;
-
-    const options = {
-        autoescape,
-        throwOnUndefined,
-        trimBlocks,
-        lstripBlocks,
-        jinjaCompat,
-        tags,
-        searchPaths,
-        assetsPaths,
-        globals,
-        extensions,
-        filters
-    };
 
     try {
-        validate(schema, options, {
+        validate(schema, loaderOptions, {
             name: 'Simple Nunjucks Loader',
             baseDataPath: 'options'
         });
     } catch (e) {
         callback(e);
+
+        return null;
     }
 
-    return options;
+    for (const key in schema.properties) {
+        if (!Object.prototype.hasOwnProperty.call(schema.properties, key) ||
+            key in loaderOptions) {
+            continue;
+        }
+
+        const schemaProp = schema.properties[key];
+        if (!('default' in schemaProp)) {
+            continue;
+        }
+
+        loaderOptions[key] = schemaProp['default'];
+    }
+
+    return loaderOptions;
 }

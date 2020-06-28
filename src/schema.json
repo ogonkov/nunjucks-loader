@@ -14,7 +14,8 @@
       "type": "boolean"
     },
     "jinjaCompat": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "tags": {
       "type": "object",
@@ -51,7 +52,8 @@
             "type": "string"
           }
         }
-      ]
+      ],
+      "default": "."
     },
     "assetsPaths": {
       "oneOf": [
@@ -64,7 +66,8 @@
             "type": "string"
           }
         }
-      ]
+      ],
+      "default": "."
     },
     "globals": {
       "type": "object",
@@ -72,7 +75,8 @@
         ".+": {
           "type": "string"
         }
-      }
+      },
+      "default": {}
     },
     "extensions": {
       "type": "object",
@@ -80,7 +84,8 @@
         ".+": {
           "type": "string"
         }
-      }
+      },
+      "default": {}
     },
     "filters": {
       "type": "object",
@@ -88,7 +93,8 @@
         ".+": {
           "type": "string"
         }
-      }
+      },
+      "default": {}
     }
   },
   "additionalProperties": false
