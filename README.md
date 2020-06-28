@@ -92,7 +92,8 @@ so bundle get rebuild in watch mode only when required.
 
 ### Asynchronous support
 
-When loader found async filter in template dependencies, it returns `Promise`,
+When loader found async tags or async filters or extensions in the template,
+it calls `render` with callback under the hood, and returns `Promise`,
 instead of render result.
 
 ## Options
