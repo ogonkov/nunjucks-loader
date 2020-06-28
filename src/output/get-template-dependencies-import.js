@@ -1,5 +1,7 @@
 import {stringifyRequest} from 'loader-utils';
-import {TEMPLATE_DEPENDENCIES} from '../constants';
+import {getImportStr} from '../utils/get-import-str';
+import {IMPORTS_PREFIX, TEMPLATE_DEPENDENCIES} from '../constants';
+import {toVar} from '../utils/to-var';
 
 function getAssignments(assignments) {
     if (assignments === '') {
@@ -34,13 +36,13 @@ function foldDependenciesToImports(
     i
 ) {
     const path = stringifyRequest(loaderContext, fullPath);
-    const importVar = `templateDependencies${i}`;
+    const importVar = toVar(`${IMPORTS_PREFIX}_dep_${i}`);
     const join = joinAssignments.bind(null, assignment, importVar);
 
     return [
         `
         ${imports}
-        var ${importVar} = require(${path});
+        ${getImportStr(path)(importVar)}
         `,
         {
             templates: join('templates'),
@@ -51,6 +53,20 @@ function foldDependenciesToImports(
     ];
 }
 
+/**
+ * Import nested templates dependencies
+ *
+ * @example
+ *     var __nunjucks_module_dependencies__ = {}
+ *     import {__nunjucks_module_dependencies__ as dep0} from '';
+ *     __nunjucks_module_dependencies__.templates = {
+ *         ...dep0.templates
+ *     };
+ *
+ * @param loaderContext
+ * @param {Array<string[]>} dependencies
+ * @returns {string}
+ */
 export function getTemplateDependenciesImport(loaderContext, dependencies) {
     return getImports(
         ...dependencies.reduce(foldDependenciesToImports.bind(null, loaderContext), ['', {
