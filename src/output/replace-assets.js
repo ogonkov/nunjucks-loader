@@ -1,6 +1,6 @@
 import {toRegExpSource} from '../utils/to-regexp-source';
 import {getArgs, isDynamicPath} from './assets';
-import {TEMPLATE_ASSETS} from '../constants';
+import {TEMPLATE_DEPENDENCIES} from '../constants';
 
 
 function getAssetReplaceRegExp(path) {
@@ -27,7 +27,10 @@ function replaceAssetPath(precompiled, [uuid, path]) {
         function(match, ...args) {
             const staticArgs = args.slice(0, argsCount);
 
-            return [`${TEMPLATE_ASSETS}['${uuid}']`, ...staticArgs].join();
+            return [
+                `${TEMPLATE_DEPENDENCIES}.assets['${uuid}']`,
+                ...staticArgs
+            ].join();
         }
     );
 }

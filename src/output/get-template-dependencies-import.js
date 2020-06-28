@@ -26,6 +26,7 @@ function getImports(imports, assignments) {
         ${TEMPLATE_DEPENDENCIES}.globals = ${getAssignments(assignments.globals)}
         ${TEMPLATE_DEPENDENCIES}.extensions = ${getAssignments(assignments.extensions)}
         ${TEMPLATE_DEPENDENCIES}.filters = ${getAssignments(assignments.filters)}
+        ${TEMPLATE_DEPENDENCIES}.assets = ${getAssignments(assignments.assets)}
     `;
 }
 
@@ -48,7 +49,8 @@ function foldDependenciesToImports(
             templates: join('templates'),
             globals: join('globals'),
             extensions: join('extensions'),
-            filters: join('filters')
+            filters: join('filters'),
+            assets: join('assets')
         }
     ];
 }
