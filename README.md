@@ -96,6 +96,8 @@ When loader found async tags or async filters or extensions in the template,
 it calls `render` with callback under the hood, and returns `Promise`,
 instead of render result.
 
+All assets, that loaded via `{% static %}` tag, are asynchronous too.
+
 ## Options
 Loader supports limited number of [Nunjuncks options][nunjucks-docs-configure].
 It's doesn't support `watch` (we use `webpack` own dependencies watch),
