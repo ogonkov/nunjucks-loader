@@ -1,5 +1,6 @@
 import {ASSETS_KEY} from './runtime-contants';
 import {getModule} from './utils/get-module';
+import {getRegexMatches} from './utils/get-regex-matches';
 
 export function StaticExtension() {
     this.tags = ['static'];
@@ -22,10 +23,13 @@ export function StaticExtension() {
             }
 
             const assetMeta = assets[assetUUID];
-
-            if (assetMeta.path === url) {
+            if (typeof assetMeta.path !== 'string' && assetMeta.path.test(url)) {
                 asset = assetMeta;
+            } else if (assetMeta.path === url) {
+                asset = assetMeta;
+            }
 
+            if (asset) {
                 break;
             }
         }
@@ -36,6 +40,20 @@ export function StaticExtension() {
             ));
         }
 
-        callback(null, getModule(asset.module));
+        const assetModule = getModule(asset.module);
+
+        if (typeof assetModule === 'function') {
+            const args = getRegexMatches(url, asset.path);
+            
+            Promise.resolve(assetModule(...args)).then(function(template) {
+                callback(null, getModule(template));
+            }, function(error) {
+                callback(error);
+            });
+
+            return;
+        }
+
+        callback(null, assetModule);
     };
 }

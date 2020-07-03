@@ -4,6 +4,7 @@ import {getArgs} from './assets';
 import {getImportStr} from '../utils/get-import-str';
 import {toVar} from '../utils/to-var';
 import {IMPORTS_PREFIX, TEMPLATE_DEPENDENCIES} from '../constants';
+import {getDynamicPathRegexp} from './get-dynamic-path-regexp';
 
 /**
  * @param {Array.<string[]>} assets
@@ -44,7 +45,10 @@ export function getAssets(assets) {
             return `
             ${importInvocation}
             ${TEMPLATE_DEPENDENCIES}.assets['${uuid}'] = {
-              path: ${JSON.stringify(assetPath)},
+              path: ${isDynamicImport ?
+                getDynamicPathRegexp(assetPath).toString() :
+                JSON.stringify(assetPath)
+              },
               module: ${importVar}
             };
             `;
