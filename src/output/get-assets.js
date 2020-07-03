@@ -43,7 +43,10 @@ export function getAssets(assets) {
 
             return `
             ${importInvocation}
-            ${TEMPLATE_DEPENDENCIES}.assets['${uuid}'] = ${importVar};
+            ${TEMPLATE_DEPENDENCIES}.assets['${uuid}'] = {
+              path: ${JSON.stringify(assetPath)},
+              module: ${importVar}
+            };
             `;
         }).join('');
     }

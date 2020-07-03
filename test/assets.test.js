@@ -8,7 +8,7 @@ describe('Assets', function() {
             ]
         });
 
-        expect(output()).toMatchSnapshot();
+        await expect(output()).resolves.toMatchSnapshot();
     });
 
     test('should load dynamic assets', async function() {
@@ -18,6 +18,6 @@ describe('Assets', function() {
             ]
         });
 
-        expect(output()).toMatchSnapshot();
+        await expect(output()).resolves.toMatchSnapshot();
     });
 });

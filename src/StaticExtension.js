@@ -1,4 +1,5 @@
-import nunjucks from 'nunjucks/browser/nunjucks-slim';
+import {ASSETS_KEY} from './runtime-contants';
+import {getModule} from './utils/get-module';
 
 export function StaticExtension() {
     this.tags = ['static'];
@@ -11,12 +12,30 @@ export function StaticExtension() {
     };
     this.run = function run(...args) {
         const callback = args.pop();
-        const [, url] = args;
+        const [context, url] = args;
+        const assets = context.lookup(ASSETS_KEY);
+        let asset;
 
-        import(url).then(function(path) {
-            callback(null, new nunjucks.runtime.SafeString(path));
-        }, function(error) {
-            callback(error);
-        });
+        for (const assetUUID in assets) {
+            if (!Object.prototype.hasOwnProperty.call(assets, assetUUID)) {
+                continue;
+            }
+
+            const assetMeta = assets[assetUUID];
+
+            if (assetMeta.path === url) {
+                asset = assetMeta;
+
+                break;
+            }
+        }
+
+        if (!asset) {
+            return callback(new Error(
+                `StaticExtension: cannot find module ${JSON.stringify(url)}`
+            ));
+        }
+
+        callback(null, getModule(asset.module));
     };
 }
