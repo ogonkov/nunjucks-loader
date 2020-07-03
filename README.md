@@ -90,6 +90,21 @@ code to avoid creating `window.nunjucksPrecompiled`.
 It also adds each found template as dependency for template that need it,
 so bundle get rebuild in watch mode only when required.
 
+### Assets support
+
+Loader add own `{% static %}` tag, for loading assets, and track their change.
+
+Signature is same to `static` tag from Django.
+
+**template.njk**
+
+```nunjucks
+<img alt="" src="{% static 'image.jpg' %}" />
+```
+
+See [more examples](https://ogonkov.github.io/nunjucks-loader/examples/assets/)
+of setup and using assets in loader.
+
 ### Asynchronous support
 
 When loader found async tags or async filters or extensions in the template,
