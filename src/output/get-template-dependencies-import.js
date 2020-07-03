@@ -75,7 +75,8 @@ export function getTemplateDependenciesImport(loaderContext, dependencies) {
             templates: '',
             globals: '',
             extensions: '',
-            filters: ''
+            filters: '',
+            assets: ''
         }])
     );
 }
