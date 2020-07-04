@@ -13,7 +13,7 @@ export function StaticExtension() {
     };
     this.run = function run(...args) {
         const callback = args.pop();
-        const [context, url] = args;
+        const [context, url, kwargs] = args;
         const assets = context.lookup(ASSETS_KEY);
         let asset;
 
@@ -41,17 +41,31 @@ export function StaticExtension() {
         }
 
         const assetModule = getModule(asset.module);
+        const exportVar = kwargs && kwargs.as || null;
 
         if (typeof assetModule === 'function') {
             const args = getRegexMatches(url, asset.path);
-            
-            Promise.resolve(assetModule(...args)).then(function(template) {
-                callback(null, getModule(template));
+
+            Promise.resolve(assetModule(...args)).then(function(assetModule) {
+                const asset = getModule(assetModule);
+                if (exportVar) {
+                    context.setVariable(exportVar, asset);
+
+                    return callback(null, '');
+                }
+
+                callback(null, asset);
             }, function(error) {
                 callback(error);
             });
 
             return;
+        }
+
+        if (exportVar) {
+            context.setVariable(exportVar, assetModule);
+
+            return callback(null, '');
         }
 
         callback(null, assetModule);
