@@ -90,7 +90,20 @@ module.exports = {
   // preset: null,
 
   // Run tests from one or more projects
-  // projects: null,
+  projects: [
+    {
+      displayName: 'cjs',
+      globals: {
+        __USE_ES__: false
+      }
+    },
+    {
+      displayName: 'es',
+      globals: {
+        __USE_ES__: true
+      }
+    }
+  ],
 
   // Use this configuration option to add custom reporters to Jest
   // reporters: undefined,

@@ -13,8 +13,8 @@ export default (fixture, options = {}) => {
         entry: `./${fixture}`,
         output: {
             libraryTarget: 'commonjs2',
-            path: path.resolve(__dirname),
-            filename: `bundles/${bundleName}.js`,
+            path: path.join(__dirname, 'bundles'),
+            filename: `${bundleName}.js`,
         },
         module: {
             rules: [{

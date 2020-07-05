@@ -1,6 +1,7 @@
 import compiler from './compiler';
 
 const loaderOptions = {
+    esModule: __USE_ES__,
     assetsPaths: [
         'test/fixtures/django_project/app_example/static'
     ]
