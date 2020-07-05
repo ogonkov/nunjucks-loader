@@ -20,13 +20,13 @@ function joinAssignments(assignment, importVar, key) {
 
 function getImports(imports, assignments) {
     return `
-        const ${TEMPLATE_DEPENDENCIES} = {};
-        ${imports}
-        ${TEMPLATE_DEPENDENCIES}.templates = ${getAssignments(assignments.templates)}
-        ${TEMPLATE_DEPENDENCIES}.globals = ${getAssignments(assignments.globals)}
-        ${TEMPLATE_DEPENDENCIES}.extensions = ${getAssignments(assignments.extensions)}
-        ${TEMPLATE_DEPENDENCIES}.filters = ${getAssignments(assignments.filters)}
-        ${TEMPLATE_DEPENDENCIES}.assets = ${getAssignments(assignments.assets)}
+    const ${TEMPLATE_DEPENDENCIES} = {};
+    ${imports}
+    ${TEMPLATE_DEPENDENCIES}.templates = ${getAssignments(assignments.templates)}
+    ${TEMPLATE_DEPENDENCIES}.globals = ${getAssignments(assignments.globals)}
+    ${TEMPLATE_DEPENDENCIES}.extensions = ${getAssignments(assignments.extensions)}
+    ${TEMPLATE_DEPENDENCIES}.filters = ${getAssignments(assignments.filters)}
+    ${TEMPLATE_DEPENDENCIES}.assets = ${getAssignments(assignments.assets)}
     `;
 }
 
