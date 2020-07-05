@@ -72,7 +72,7 @@ By default Nunjunks bundle all precompiled templates to
 `window.nunjucksPrecompiled`, then loads them via custom loader from this
 global object. If precompiled template reference some other template file,
 it is loaded from disk (in NodeJS environment), or fetched via `XMLHttpRequest`
-from internet.
+from internet and precompile downloaded template in runtime.
 
 Both are not webpack-way for projects bundling.
 
