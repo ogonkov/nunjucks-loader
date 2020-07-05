@@ -1,5 +1,3 @@
-import path from 'path';
-
 import {precompileToLocalVar} from './local-var-precompile';
 import {getAddonsMeta} from './get-addons-meta';
 import {configureEnvironment} from './configure-environment';
@@ -55,27 +53,17 @@ export async function getDependencies(resourcePath, source, options) {
         filters,
         ...opts
     } = options;
-    const staticExtPath = path.join(
-        __dirname,
-        '..',
-        'get-static-extension.js'
-    );
     const [
-        staticExtension,
         extensionsMeta,
         filtersMeta
     ] = await Promise.all([
-        getAddonsMeta([
-            ['StaticExtension', staticExtPath]
-        ]),
         getAddonsMeta(Object.entries(extensions)),
         getAddonsMeta(Object.entries(filters))
     ]);
-    const _extensionsMeta = extensionsMeta.concat(staticExtension);
 
     const nodes = getNodes(
         source,
-        _extensionsMeta.map(([,, ext]) => ext),
+        extensionsMeta.map(([,, ext]) => ext),
         opts
     );
 
@@ -83,7 +71,7 @@ export async function getDependencies(resourcePath, source, options) {
         precompileToLocalVar(source, resourcePath, configureEnvironment({
             searchPaths,
             options: opts,
-            extensions: _extensionsMeta,
+            extensions: extensionsMeta,
             filters: filtersMeta
         })),
         getTemplatesImports(nodes, searchPaths)
@@ -92,7 +80,7 @@ export async function getDependencies(resourcePath, source, options) {
             precompiled,
             dependencies,
             globals: getUsedGlobals(nodes, globals),
-            extensions: getUsedExtensions(nodes, _extensionsMeta),
+            extensions: getUsedExtensions(nodes, extensionsMeta),
             filters: getUsedFilters(nodes, filtersMeta)
         };
     }).then(function(deps) {

@@ -29,6 +29,14 @@ export default function nunjucksLoader(source) {
 
     getDependencies(resourcePathImport, source, {
         ...options,
+        extensions: {
+            StaticExtension: path.join(
+                __dirname,
+                'static-extension',
+                'get-static-extension.js'
+            ),
+            ...options.extensions
+        },
         searchPaths: normalizedSearchPaths
     }).then(({
         assets,
