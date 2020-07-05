@@ -60,25 +60,25 @@ export default function nunjucksLoader(source) {
             filters,
             globals
         })}
-            ${precompiled}
+        ${precompiled}
 
-            exports = module.exports = function nunjucksTemplate(ctx = {}) {
-              var nunjucks = runtime(
-                ${envOptions},
-                ${TEMPLATE_DEPENDENCIES}
-              );
+        exports = module.exports = function nunjucksTemplate(ctx = {}) {
+          var nunjucks = runtime(
+            ${envOptions},
+            ${TEMPLATE_DEPENDENCIES}
+          );
 
-              ctx.${ASSETS_KEY} = ${TEMPLATE_DEPENDENCIES}.assets;
+          ctx.${ASSETS_KEY} = ${TEMPLATE_DEPENDENCIES}.assets;
 
-              if (nunjucks.isAsync()) {
-                return nunjucks.renderAsync(${resourcePathString}, ctx);
-              }
-            
-              return nunjucks.render(${resourcePathString}, ctx);
-            };
+          if (nunjucks.isAsync()) {
+            return nunjucks.renderAsync(${resourcePathString}, ctx);
+          }
+        
+          return nunjucks.render(${resourcePathString}, ctx);
+        };
 
-            exports.__nunjucks_precompiled_template__ = ${TEMPLATE_DEPENDENCIES}.templates[${resourcePathString}];
-            exports.${TEMPLATE_DEPENDENCIES} = ${TEMPLATE_DEPENDENCIES};
+        exports.__nunjucks_precompiled_template__ = ${TEMPLATE_DEPENDENCIES}.templates[${resourcePathString}];
+        exports.${TEMPLATE_DEPENDENCIES} = ${TEMPLATE_DEPENDENCIES};
         `);
     }, function(error) {
         if (error.code === ERROR_MODULE_NOT_FOUND &&
