@@ -2,7 +2,6 @@ import nunjucks from 'nunjucks';
 import {getModule} from '../utils/get-module';
 
 /**
- * @param env
  * @param {Object}   options
  * @param {string[]} options.searchPaths
  * @param {Object}   options.options

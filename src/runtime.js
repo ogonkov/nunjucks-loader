@@ -1,8 +1,8 @@
-const {WebpackPrecompiledLoader} = require('./WebpackPrecompiledLoader');
+import {WebpackPrecompiledLoader} from './WebpackPrecompiledLoader';
 
-const nunjucks = require('nunjucks/browser/nunjucks-slim');
+import nunjucks from 'nunjucks/browser/nunjucks-slim';
 
-module.exports = function runtime(options, {
+export default function runtime(options, {
     globals,
     extensions,
     filters,
@@ -71,4 +71,4 @@ module.exports = function runtime(options, {
             );
         }
     };
-};
+}

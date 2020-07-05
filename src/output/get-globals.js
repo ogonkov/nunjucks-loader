@@ -5,11 +5,12 @@ import {toVar} from '../utils/to-var';
 import {getModuleOutput} from './get-module-output';
 
 export function getGlobals(globals) {
-    function imports(loaderContext) {
+    function imports(loaderContext, esModule) {
         return globals.map(([globalImport, globalPath]) => {
             const importVar = toVar(`${IMPORTS_PREFIX}_global_${globalImport}`);
             const importStatement = getImportStr(
-                stringifyRequest(loaderContext,globalPath)
+                stringifyRequest(loaderContext,globalPath),
+                esModule
             )(importVar);
 
             return `

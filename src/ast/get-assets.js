@@ -12,6 +12,8 @@ import {StaticExtension} from '../static-extension/StaticExtension';
  *   'foo' + bar + 'qux'
  *
  * @param {nunjucks.nodes.Add} node
+ *
+ * @returns {string}
  */
 function getAddNodeValue(node) {
     if (!(node instanceof nunjucks.nodes.Add)) {

@@ -1,9 +1,13 @@
 import path from 'path';
 import compiler from './compiler';
 
+const loaderBaseOptions = {
+    esModule: __USE_ES__
+};
+
 describe('Simple compilation', function() {
     test('should compile single files', async function() {
-        const output = await compiler('fixtures/single.njk');
+        const output = await compiler('fixtures/single.njk', loaderBaseOptions);
 
         expect(output({
             title: 'App',
@@ -12,7 +16,7 @@ describe('Simple compilation', function() {
     });
 
     test('should compile templates with inheritance', async function() {
-        const output = await compiler('fixtures/child.njk');
+        const output = await compiler('fixtures/child.njk', loaderBaseOptions);
 
         expect(output({
             parent_link: 'https://example.com/1',
@@ -21,7 +25,7 @@ describe('Simple compilation', function() {
     });
 
     test('should inherit from parent with super', async function() {
-        const output = await compiler('fixtures/inheritance.njk');
+        const output = await compiler('fixtures/inheritance.njk', loaderBaseOptions);
 
         expect(output({
             name: 'Joe'
@@ -29,7 +33,7 @@ describe('Simple compilation', function() {
     });
 
     test('should compile templates with multiple includes', async function() {
-        const output = await compiler('fixtures/multiple-same-includes.njk');
+        const output = await compiler('fixtures/multiple-same-includes.njk', loaderBaseOptions);
 
         expect(output({
             parent_link: 'https://example.com/parent',
@@ -38,7 +42,7 @@ describe('Simple compilation', function() {
     });
 
     test('should compile templates with filters', async function() {
-        const output = await compiler('fixtures/builtin-filters.njk');
+        const output = await compiler('fixtures/builtin-filters.njk', loaderBaseOptions);
 
         expect(output({
             text: 'nunjucks foolter'
@@ -46,7 +50,7 @@ describe('Simple compilation', function() {
     });
 
     test('should compile builtin tags', async function() {
-        const output = await compiler('fixtures/builtin-tags.njk');
+        const output = await compiler('fixtures/builtin-tags.njk', loaderBaseOptions);
 
         expect(output({
             tired: true
@@ -54,13 +58,14 @@ describe('Simple compilation', function() {
     });
 
     test('should compile macro', async function() {
-        const output = await compiler('fixtures/macro.njk');
+        const output = await compiler('fixtures/macro.njk', loaderBaseOptions);
 
         expect(output()).toMatchSnapshot();
     });
 
     test('should install Jinja compat', async function() {
         const output = await compiler('fixtures/jinja-syntax.njk', {
+            ...loaderBaseOptions,
             jinjaCompat: true
         });
 
@@ -71,6 +76,7 @@ describe('Simple compilation', function() {
 describe('Advanced compilation', function() {
     test('should compile templates with non-relative paths', async function() {
         const output = await compiler('fixtures/django_project/app_example/templates/main/main.njk', {
+            ...loaderBaseOptions,
             searchPaths: [
                 'test/fixtures/django_project/app_example/templates',
                 '.'
@@ -82,6 +88,7 @@ describe('Advanced compilation', function() {
 
     describe('globals', function() {
         const loaderOptions = {
+            ...loaderBaseOptions,
             globals: {
                 foobar: path.join(__dirname, './fixtures/globals/globals.js')
             }
@@ -108,6 +115,7 @@ describe('Advanced compilation', function() {
 
     describe('extensions', function() {
         const loaderOptions = {
+            ...loaderBaseOptions,
             extensions: {
                 RemoteExtension: path.join(__dirname, './fixtures/extensions/RemoteExtension.js')
             }
@@ -133,6 +141,7 @@ describe('Advanced compilation', function() {
 
         test('should compile async extensions', async function() {
             const output = await compiler('fixtures/extensions/multiple.njk', {
+                ...loaderBaseOptions,
                 extensions: {
                     RemoteExtension: path.join(__dirname, './fixtures/extensions/RemoteAsyncExtension.js')
                 }
@@ -152,6 +161,7 @@ describe('Advanced compilation', function() {
 
     describe('filters', function() {
         const loaderOptions = {
+            ...loaderBaseOptions,
             filters: {
                 foo: path.join(__dirname, './fixtures/filters/foo-filter.js')
             }
@@ -180,6 +190,7 @@ describe('Advanced compilation', function() {
 
         test('should compile async filters', async function() {
             const output = await compiler('fixtures/filters/children.njk', {
+                ...loaderBaseOptions,
                 filters: {
                     foo: path.join(__dirname, './fixtures/filters/foo-filter-async.js')
                 }

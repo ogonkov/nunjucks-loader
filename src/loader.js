@@ -7,6 +7,7 @@ import {toAssetsUUID} from './output/to-assets-uuid';
 import {ERROR_MODULE_NOT_FOUND, TEMPLATE_DEPENDENCIES} from './constants';
 import {getTemplateImports} from './output/get-template-imports';
 import {ASSETS_KEY} from './static-extension/contants';
+import {getModuleOutput} from './output/get-module-output';
 
 export default function nunjucksLoader(source) {
     const isWindows = process.platform === 'win32';
@@ -61,7 +62,7 @@ export default function nunjucksLoader(source) {
             isAsyncTemplate
         });
         callback(null, `
-        ${getTemplateImports(this, {
+        ${getTemplateImports(this, options.esModule, {
             assets: assetsUUID,
             dependencies,
             extensions,
@@ -70,8 +71,8 @@ export default function nunjucksLoader(source) {
         })}
         ${precompiled}
 
-        exports = module.exports = function nunjucksTemplate(ctx = {}) {
-          var nunjucks = runtime(
+        function nunjucksTemplate(ctx = {}) {
+          var nunjucks = (${getModuleOutput('runtime')})(
             ${envOptions},
             ${TEMPLATE_DEPENDENCIES}
           );
@@ -85,8 +86,13 @@ export default function nunjucksLoader(source) {
           return nunjucks.render(${resourcePathString}, ctx);
         };
 
-        exports.__nunjucks_precompiled_template__ = ${TEMPLATE_DEPENDENCIES}.templates[${resourcePathString}];
-        exports.${TEMPLATE_DEPENDENCIES} = ${TEMPLATE_DEPENDENCIES};
+        nunjucksTemplate.__nunjucks_precompiled_template__ = ${TEMPLATE_DEPENDENCIES}.templates[${resourcePathString}];
+        nunjucksTemplate.${TEMPLATE_DEPENDENCIES} = ${TEMPLATE_DEPENDENCIES};
+
+        ${options.esModule ?
+            'export default' :
+            'exports = module.exports ='
+        } nunjucksTemplate;
         `);
     }, function(error) {
         if (error.code === ERROR_MODULE_NOT_FOUND &&

@@ -32,6 +32,7 @@ function getImports(imports, assignments) {
 
 function foldDependenciesToImports(
     loaderContext,
+    esModule,
     [imports, assignment],
     [, fullPath],
     i
@@ -43,7 +44,7 @@ function foldDependenciesToImports(
     return [
         `
         ${imports}
-        ${getImportStr(path)(importVar)}
+        ${getImportStr(path, esModule)(importVar)}
         `,
         {
             templates: join('templates'),
@@ -65,13 +66,14 @@ function foldDependenciesToImports(
  *         ...dep0.__nunjucks_module_dependencies__.templates
  *     };
  *
- * @param loaderContext
+ * @param {Object} loaderContext
+ * @param {boolean} esModule
  * @param {Array<string[]>} dependencies
  * @returns {string}
  */
-export function getTemplateDependenciesImport(loaderContext, dependencies) {
+export function getTemplateDependenciesImport(loaderContext, esModule, dependencies) {
     return getImports(
-        ...dependencies.reduce(foldDependenciesToImports.bind(null, loaderContext), ['', {
+        ...dependencies.reduce(foldDependenciesToImports.bind(null, loaderContext, esModule), ['', {
             templates: '',
             globals: '',
             extensions: '',
