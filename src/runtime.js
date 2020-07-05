@@ -4,7 +4,7 @@ const nunjucks = require('nunjucks/browser/nunjucks-slim');
 
 module.exports = function runtime(options, {
     globals,
-    extensions = {},
+    extensions,
     filters,
     templates: precompiled
 }) {
