@@ -324,7 +324,9 @@ export default function filter(val, param) {
 {{ foo_var | filter(3) }}
 ```
 
-To mark filter as async, filter module should export `async` flag:
+Nunjucks is not aware that filter is asynchronous when parse template to AST. 
+Because of that, you should mark filter as async. To do that, filter module
+should export `async` flag:
 
 **async-filter.js**
 
