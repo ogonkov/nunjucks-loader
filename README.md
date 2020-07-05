@@ -76,12 +76,20 @@ from internet.
 
 Both are not webpack-way for projects bundling.
 
-This loader workaround this behaviour by precompiling templates *and* dependant
-templates as separate bundle chunks. It also use custom wrapper for precompiled
-code to avoid creating `window.nunjucksPrecompiled`.
+This loader got template source, parse it with Nunjucks parser, to get AST of
+template. This AST is iterated to get info on imported templates, used filters
+and extensions.
 
-It also adds each found template as dependency for template that need it,
-so bundle get rebuild in watch mode only when required.
+Next step is precompile template, to make it faster. Loader injects own wrapper
+to avoid default behaviour with creating global `window.nunjucksPrecompiled`.
+
+One final step is gather all parts together. Loader is inserts imports of
+templates, filters and extensions that somehow noted in template, this will make
+Webpack to rebuild template only when one of essential part is changed.
+
+Then loader expose module that will create separate environment with only
+required filters and extensions. This module is what you invoke to get your
+template rendered.
 
 ### Assets support
 
