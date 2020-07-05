@@ -35,9 +35,20 @@ function getAddNodeValue(node) {
     }).join(' + ');
 }
 
+/**
+ * @param {nunjucks.nodes.Node} node
+ * @param {Function}            ExtensionClass
+ * @return {boolean}
+ */
+function isExtension(node, ExtensionClass) {
+    return (
+        node.extName instanceof ExtensionClass ||
+        node.extName === ExtensionClass.name
+    );
+}
+
 function getNodeValue(node) {
-    if (!(node.extName instanceof StaticExtension) &&
-        node.extName !== StaticExtension.name) {
+    if (!isExtension(node, StaticExtension)) {
         return;
     }
 
