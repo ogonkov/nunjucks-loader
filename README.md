@@ -112,7 +112,7 @@ it calls `render` with callback under the hood, and returns `Promise`,
 instead of render result.
 
 Because of asynchronous nature of Webpack assets loading, all assets, that
-loaded via `{% static %}` tag, make template to return `Promise`.
+loaded via `{% static %}` tag, make template to return `Promise` too.
 
 ## Options
 Loader supports limited number of [Nunjuncks options][nunjucks-docs-configure].
