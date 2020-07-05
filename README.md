@@ -21,13 +21,6 @@ save a bit on optional `glob` dependency:
 npm install --no-optional --save-dev simple-nunjucks-loader
 ```
 
-## Note on global variables
-
-By default Nunjucks wrap templates to global `window.nunjucksPrecompiled`.
-Loader **didn't expose `window.nunjucksPrecompiled`**. If your code relied on
-this object, it will definitely break. Use imports of required template
-or adopt [`expose-loader`][expose-loader-github] to your build pipeline.
-
 ## Usage
 
 This loader will [precompile][nunjucks-docs-precompiling]
