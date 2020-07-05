@@ -6,14 +6,22 @@ export function StaticExtension() {
     this.tags = ['static'];
     this.parse = function parse(parser, nodes) {
         const token = parser.nextToken();
-        const args = parser.parseSignature(null, true);
+        const assetPath = parser.parseExpression();
+        const args = new nodes.NodeList();
+        args.addChild(assetPath);
+
+        if (parser.skipSymbol('as')) {
+            const alias = parser.parsePrimary();
+            args.addChild(alias);
+        }
+
         parser.advanceAfterBlockEnd(token.value);
 
         return new nodes.CallExtensionAsync(this, 'run', args);
     };
     this.run = function run(...args) {
         const callback = args.pop();
-        const [context, url, kwargs] = args;
+        const [context, url, exportVar] = args;
         const assets = context.lookup(ASSETS_KEY);
         let asset;
 
@@ -41,7 +49,6 @@ export function StaticExtension() {
         }
 
         const assetModule = getModule(asset.module);
-        const exportVar = kwargs && kwargs.as || null;
 
         if (typeof assetModule === 'function') {
             const args = getRegexMatches(url, asset.path);
