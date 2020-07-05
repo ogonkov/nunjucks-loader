@@ -29,6 +29,52 @@ exports[`Assets should load dynamic assets 1`] = `
 "
 `;
 
+exports[`Assets should load exported dynamic assets 1`] = `
+"<!DOCTYPE html>
+<html lang=\\"en\\">
+  <head>
+    <meta charset=\\"utf-8\\">
+    <title></title>
+    <link rel=\\"stylesheet\\" href=\\"bundles/fixtures/django_project/app_example/static/foo/bar/style.css\\"/>
+  </head>
+  <body>
+    
+    
+
+    
+        <p>bundles/fixtures/django_project/app_example/static/foo/bar/dynamic-example-1.md</p>
+    
+        <p>bundles/fixtures/django_project/app_example/static/foo/bar/dynamic-example-2.md</p>
+    
+
+    
+        <p>bundles/fixtures/django_project/app_example/static/foo/bar/dynamic-example-1.md</p>
+    
+        <p>bundles/fixtures/django_project/app_example/static/foo/bar/dynamic-example-2.md</p>
+    
+
+  </body>
+</html>
+"
+`;
+
+exports[`Assets should load exported static assets 1`] = `
+"<!DOCTYPE html>
+<html lang=\\"en\\">
+  <head>
+    <meta charset=\\"utf-8\\">
+    <title></title>
+    <link rel=\\"stylesheet\\" href=\\"bundles/fixtures/django_project/app_example/static/foo/bar/style.css\\"/>
+  </head>
+  <body>
+    
+    <p><a href=\\"bundles/fixtures/django_project/app_example/static/foo/bar/test.txt\\">Click here</a></p>
+
+  </body>
+</html>
+"
+`;
+
 exports[`Assets should load static assets 1`] = `
 "<!DOCTYPE html>
 <html lang=\\"en\\">

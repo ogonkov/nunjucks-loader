@@ -1,0 +1,15 @@
+{% extends 'test/fixtures/assets/base.njk' %}
+
+{% block body %}
+    {% set foo = 'example' %}
+
+    {% for item in [1, 2] %}
+        {%- static 'foo/bar/dynamic-' + foo + '-' + item + '.md' as 'dynamic_asset' %}
+        <p>{{ dynamic_asset }}</p>
+    {% endfor %}
+
+    {% for fileName in ['example-1.md', 'example-2.md'] %}
+        {%- static 'foo/bar/dynamic-' + fileName as 'dynamic_asset' %}
+        <p>{{ dynamic_asset }}</p>
+    {% endfor %}
+{% endblock body %}
