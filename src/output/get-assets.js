@@ -8,6 +8,7 @@ import {getDynamicPathRegexp} from './get-dynamic-path-regexp';
 
 /**
  * @param {Array.<string[]>} assets
+ * @returns {{imports: function(Object, boolean): string}}
  */
 export function getAssets(assets) {
     function imports(loaderContext, esModule) {

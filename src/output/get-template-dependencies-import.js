@@ -66,7 +66,7 @@ function foldDependenciesToImports(
  *         ...dep0.__nunjucks_module_dependencies__.templates
  *     };
  *
- * @param loaderContext
+ * @param {Object} loaderContext
  * @param {boolean} esModule
  * @param {Array<string[]>} dependencies
  * @returns {string}
