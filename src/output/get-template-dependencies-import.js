@@ -20,12 +20,13 @@ function joinAssignments(assignment, importVar, key) {
 
 function getImports(imports, assignments) {
     return `
-        const ${TEMPLATE_DEPENDENCIES} = {};
-        ${imports}
-        ${TEMPLATE_DEPENDENCIES}.templates = ${getAssignments(assignments.templates)}
-        ${TEMPLATE_DEPENDENCIES}.globals = ${getAssignments(assignments.globals)}
-        ${TEMPLATE_DEPENDENCIES}.extensions = ${getAssignments(assignments.extensions)}
-        ${TEMPLATE_DEPENDENCIES}.filters = ${getAssignments(assignments.filters)}
+    const ${TEMPLATE_DEPENDENCIES} = {};
+    ${imports}
+    ${TEMPLATE_DEPENDENCIES}.templates = ${getAssignments(assignments.templates)}
+    ${TEMPLATE_DEPENDENCIES}.globals = ${getAssignments(assignments.globals)}
+    ${TEMPLATE_DEPENDENCIES}.extensions = ${getAssignments(assignments.extensions)}
+    ${TEMPLATE_DEPENDENCIES}.filters = ${getAssignments(assignments.filters)}
+    ${TEMPLATE_DEPENDENCIES}.assets = ${getAssignments(assignments.assets)}
     `;
 }
 
@@ -48,7 +49,8 @@ function foldDependenciesToImports(
             templates: join('templates'),
             globals: join('globals'),
             extensions: join('extensions'),
-            filters: join('filters')
+            filters: join('filters'),
+            assets: join('assets')
         }
     ];
 }
@@ -73,7 +75,8 @@ export function getTemplateDependenciesImport(loaderContext, dependencies) {
             templates: '',
             globals: '',
             extensions: '',
-            filters: ''
+            filters: '',
+            assets: ''
         }])
     );
 }

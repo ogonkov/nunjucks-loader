@@ -1,5 +1,5 @@
 {% extends 'test/fixtures/assets/base.njk' %}
 
 {% block body %}
-    <p><a href="{{ static('foo/bar/test.txt') }}">Click here</a></p>
+    <p><a href="{% static 'foo/bar/test.txt' %}">Click here</a></p>
 {% endblock %}

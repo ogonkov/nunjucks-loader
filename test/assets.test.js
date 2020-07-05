@@ -1,23 +1,33 @@
 import compiler from './compiler';
 
+const loaderOptions = {
+    assetsPaths: [
+        'test/fixtures/django_project/app_example/static'
+    ]
+};
+
 describe('Assets', function() {
     test('should load static assets', async function() {
-        const output = await compiler('fixtures/assets/template.njk', {
-            assetsPaths: [
-                'test/fixtures/django_project/app_example/static'
-            ]
-        });
+        const output = await compiler('fixtures/assets/template.njk', loaderOptions);
 
-        expect(output()).toMatchSnapshot();
+        await expect(output()).resolves.toMatchSnapshot();
+    });
+
+    test('should load exported static assets', async function() {
+        const output = await compiler('fixtures/assets/template-as.njk', loaderOptions);
+
+        await expect(output()).resolves.toMatchSnapshot();
     });
 
     test('should load dynamic assets', async function() {
-        const output = await compiler('fixtures/assets/dynamic.njk', {
-            assetsPaths: [
-                'test/fixtures/django_project/app_example/static'
-            ]
-        });
+        const output = await compiler('fixtures/assets/dynamic.njk', loaderOptions);
 
-        expect(output()).toMatchSnapshot();
+        await expect(output()).resolves.toMatchSnapshot();
+    });
+
+    test('should load exported dynamic assets', async function() {
+        const output = await compiler('fixtures/assets/dynamic-as.njk', loaderOptions);
+
+        await expect(output()).resolves.toMatchSnapshot();
     });
 });

@@ -11,11 +11,11 @@ function loadAddon([name, importPath]) {
 }
 
 /**
- * @param {Object.<string, string>} addonEntries
+ * @param {Array.<string[]>} addonEntries
  * @returns {Promise<Array[]>}
  */
 export function getAddonsMeta(addonEntries) {
-    const entries = Object.entries(addonEntries).map(loadAddon);
+    const entries = addonEntries.map(loadAddon);
 
     return Promise.all(entries);
 }

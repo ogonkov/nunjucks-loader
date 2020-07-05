@@ -21,13 +21,6 @@ save a bit on optional `glob` dependency:
 npm install --no-optional --save-dev simple-nunjucks-loader
 ```
 
-## Note on global variables
-
-By default Nunjucks wrap templates to global `window.nunjucksPrecompiled`.
-Loader **didn't expose `window.nunjucksPrecompiled`**. If your code relied on
-this object, it will definitely break. Use imports of required template
-or adopt [`expose-loader`][expose-loader-github] to your build pipeline.
-
 ## Usage
 
 This loader will [precompile][nunjucks-docs-precompiling]
@@ -79,22 +72,48 @@ By default Nunjunks bundle all precompiled templates to
 `window.nunjucksPrecompiled`, then loads them via custom loader from this
 global object. If precompiled template reference some other template file,
 it is loaded from disk (in NodeJS environment), or fetched via `XMLHttpRequest`
-from internet.
+from internet and precompile downloaded template in runtime.
 
 Both are not webpack-way for projects bundling.
 
-This loader workaround this behaviour by precompiling templates *and* dependant
-templates as separate bundle chunks. It also use custom wrapper for precompiled
-code to avoid creating `window.nunjucksPrecompiled`.
+This loader got template source, parse it with Nunjucks parser, to get AST of
+template. This AST is iterated to get info on imported templates, used filters
+and extensions.
 
-It also adds each found template as dependency for template that need it,
-so bundle get rebuild in watch mode only when required.
+Next step is precompile template, to make it faster. Loader injects own wrapper
+to avoid default behaviour with creating global `window.nunjucksPrecompiled`.
+
+One final step is gather all parts together. Loader is inserts imports of
+templates, filters and extensions that somehow noted in template, this will make
+Webpack to rebuild template only when one of essential part is changed.
+
+Then loader expose module that will create separate environment with only
+required filters and extensions. This module is what you invoke to get your
+template rendered.
+
+### Assets support
+
+Loader add own `{% static %}` tag, for loading assets, and track their change.
+
+Signature is same to `static` tag from Django.
+
+**template.njk**
+
+```nunjucks
+<img alt="" src="{% static 'image.jpg' %}" />
+```
+
+See [more examples](https://ogonkov.github.io/nunjucks-loader/examples/assets/)
+of setup and using assets in loader.
 
 ### Asynchronous support
 
 When loader found async tags or async filters or extensions in the template,
 it calls `render` with callback under the hood, and returns `Promise`,
 instead of render result.
+
+Because of asynchronous nature of Webpack assets loading, all assets, that
+loaded via `{% static %}` tag, make template to return `Promise` too.
 
 ## Options
 Loader supports limited number of [Nunjuncks options][nunjucks-docs-configure].
@@ -305,7 +324,9 @@ export default function filter(val, param) {
 {{ foo_var | filter(3) }}
 ```
 
-To mark filter as async, filter module should export `async` flag:
+Nunjucks is not aware that filter is asynchronous when parse template to AST. 
+Because of that, you should mark filter as async. To do that, filter module
+should export `async` flag:
 
 **async-filter.js**
 

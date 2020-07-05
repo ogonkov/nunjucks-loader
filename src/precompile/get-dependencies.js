@@ -54,8 +54,8 @@ export async function getDependencies(resourcePath, source, options) {
         ...opts
     } = options;
     const [extensionsInstances, filtersInstances] = await Promise.all([
-        getAddonsMeta(extensions),
-        getAddonsMeta(filters)
+        getAddonsMeta(Object.entries(extensions)),
+        getAddonsMeta(Object.entries(filters))
     ]);
 
     const nodes = getNodes(
