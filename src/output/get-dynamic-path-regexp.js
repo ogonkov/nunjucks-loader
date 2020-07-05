@@ -1,11 +1,12 @@
 import {toRegExpSource} from '../utils/to-regexp-source';
+import {unquote} from '../utils/unquote';
 
 function toGlob(part) {
     if (!part.startsWith('"')) {
         return '([^+]+)';
     }
 
-    return part.replace(/^"|"$/g, '');
+    return unquote(part);
 }
 
 export function getDynamicPathRegexp(path) {
