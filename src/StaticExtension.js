@@ -2,9 +2,12 @@ import {ASSETS_KEY} from './runtime-contants';
 import {getModule} from './utils/get-module';
 import {getRegexMatches} from './utils/get-regex-matches';
 
-export function StaticExtension() {
-    this.tags = ['static'];
-    this.parse = function parse(parser, nodes) {
+export class StaticExtension {
+    constructor() {
+        this.tags = ['static'];
+    }
+
+    parse(parser, nodes) {
         const token = parser.nextToken();
         const assetPath = parser.parseExpression();
         const args = new nodes.NodeList();
@@ -18,8 +21,9 @@ export function StaticExtension() {
         parser.advanceAfterBlockEnd(token.value);
 
         return new nodes.CallExtensionAsync(this, 'run', args);
-    };
-    this.run = function run(...args) {
+    }
+
+    run(...args) {
         const callback = args.pop();
         const [context, url, exportVar] = args;
         const assets = context.lookup(ASSETS_KEY);
@@ -76,5 +80,5 @@ export function StaticExtension() {
         }
 
         callback(null, assetModule);
-    };
+    }
 }
