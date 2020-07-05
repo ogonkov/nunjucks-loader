@@ -7,6 +7,7 @@ import {toAssetsUUID} from './output/to-assets-uuid';
 import {ERROR_MODULE_NOT_FOUND, TEMPLATE_DEPENDENCIES} from './constants';
 import {getTemplateImports} from './output/get-template-imports';
 import {ASSETS_KEY} from './static-extension/contants';
+import {getModuleOutput} from './output/get-module-output';
 
 export default function nunjucksLoader(source) {
     const isWindows = process.platform === 'win32';
@@ -71,7 +72,7 @@ export default function nunjucksLoader(source) {
         ${precompiled}
 
         function nunjucksTemplate(ctx = {}) {
-          var nunjucks = runtime(
+          var nunjucks = (${getModuleOutput('runtime')})(
             ${envOptions},
             ${TEMPLATE_DEPENDENCIES}
           );
