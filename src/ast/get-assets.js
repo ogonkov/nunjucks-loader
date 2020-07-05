@@ -4,7 +4,7 @@ import {isUnique} from '../utils/is-unique';
 import {getPossiblePaths} from '../utils/get-possible-paths';
 import {getFirstExistedPath} from '../utils/get-first-existed-path';
 import {ERROR_MODULE_NOT_FOUND} from '../constants';
-import {StaticExtension} from '../StaticExtension';
+import {StaticExtension} from '../static-extension/StaticExtension';
 
 /**
  * Parse `Add` value to expression

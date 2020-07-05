@@ -6,7 +6,7 @@ import {getLoaderOptions} from './get-loader-options';
 import {toAssetsUUID} from './output/to-assets-uuid';
 import {ERROR_MODULE_NOT_FOUND, TEMPLATE_DEPENDENCIES} from './constants';
 import {getTemplateImports} from './output/get-template-imports';
-import {ASSETS_KEY} from './runtime-contants';
+import {ASSETS_KEY} from './static-extension/contants';
 
 export default function nunjucksLoader(source) {
     const isWindows = process.platform === 'win32';
