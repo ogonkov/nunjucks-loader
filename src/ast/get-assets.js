@@ -35,7 +35,7 @@ function getAddNodeValue(node) {
     }).join(' + ');
 }
 
-function getGlobalFnValue(node) {
+function getNodeValue(node) {
     if (!(node.extName instanceof StaticExtension) &&
         node.extName !== StaticExtension.name) {
         return;
@@ -59,7 +59,7 @@ export function getAssets(nodes, searchAssets) {
     const assets = getNodesValues(
         nodes,
         nunjucks.nodes.CallExtensionAsync,
-        getGlobalFnValue
+        getNodeValue
     ).filter(isUnique);
     const possiblePaths = getPossiblePaths(assets, [].concat(searchAssets));
     const resolvedAssets = possiblePaths.map(function([path, paths]) {
