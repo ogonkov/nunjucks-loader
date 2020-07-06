@@ -14,7 +14,7 @@ export class StaticExtension {
         args.addChild(assetPath);
 
         if (parser.skipSymbol('as')) {
-            const alias = parser.parseExpression();
+            const alias = parser.parsePrimary();
             args.addChild(new nodes.Literal(alias.lineno, alias.colno, alias.value));
         }
 
