@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-type: "production"
+    labels:
+      - support
+    assignees:
+      - ogonkov
+    versioning-strategy: increase-if-necessary
