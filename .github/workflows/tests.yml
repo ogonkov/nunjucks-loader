@@ -12,6 +12,11 @@ on:
     branches:
       - master
       - trunk-v*
+    paths:
+      - '*.js'
+      - 'src/*'
+      - 'test/*'
+      - 'package.json'
 
 jobs:
   tests:
