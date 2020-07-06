@@ -2,7 +2,7 @@
 [![Coverage Status][coverage-image]][coverage-url] 
 [![node][node]][node-url] 
 [![Build Status][build-image]][build-url] 
-[![Dependencies Status][dependencies-image]][dependencies-url]
+![Dependencies Status][dependencies-image]
 
 # Nunjucks templates loader for Webpack
 
@@ -360,4 +360,3 @@ asyncFilter.async = true;
 [build-image]:https://github.com/ogonkov/nunjucks-loader/workflows/Tests/badge.svg?branch=master
 [build-url]:https://github.com/ogonkov/nunjucks-loader/actions?query=branch%3Amaster+workflow%3ATests
 [dependencies-image]:https://api.dependabot.com/badges/status?host=github&repo=ogonkov/nunjucks-loader
-[dependencies-url]:https://dependabot.com
