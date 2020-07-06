@@ -1,6 +1,6 @@
 {% extends 'test/fixtures/assets/base.njk' %}
 
 {% block body %}
-    {%- static 'foo/bar/test.txt' as 'static_export' %}
+    {%- static 'foo/bar/test.txt' as static_export %}
     <p><a href="{{ static_export }}">Click here</a></p>
 {% endblock %}
