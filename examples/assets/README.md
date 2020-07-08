@@ -9,7 +9,7 @@ title: Assets loading
 > in `macro` and then import it in template, you need to update imports to pass
 > context to imported template:
 >
->     {% from 'some/component-with-static-tag.htm' import component with context  %}
+>     {% raw %}{% from 'some/component-with-static-tag.htm' import component with context  %}{% endraw %}
 
 To load static assets (like images, for example), this loader inserts own
 `static` tag. It works like `static` from Django, but resolves paths via
@@ -82,9 +82,9 @@ like:
 > variable to import:
 >
 > ```nunjucks
-> {% static 'foo/bar/dynamic-example-1.md' as example_1 %}
+> {% raw %}{% static 'foo/bar/dynamic-example-1.md' as example_1 %}
 > {% static 'foo/bar/dynamic-example-2.md' as example_2 %}
-> {% raw %}{% set examplesMap = {
+> {% set examplesMap = {
 >     'example-1': example_1,
 >     'example-2': example_2
 > } %}{% endraw %}
