@@ -27,7 +27,7 @@ I believe that it's not how it should work, so looking forward to bug to fix.
 ## Run demo
 
 ```bash
-git clone -b gh-pages git@github.com:ogonkov/nunjucks-loader.git
+git clone -b gh-pages git@github.com:ogonkov/nunjucks-loader.git && cd $_
 cd examples/isomorphic
 npm install
 npm run build

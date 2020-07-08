@@ -1,4 +1,4 @@
-{% set styles = static('src/app/list/item.css') %}
+{% static 'src/app/list/item.css' as styles %}
 
 {% macro item(id, text, done=False, edit=False) %}
 <li class="{{ styles | values('item') | join(' ') }}">

@@ -3,7 +3,7 @@
 {% block title %}Isomorphic example{% endblock %}
 
 {% block body %}
-    {% set styles = static('./src/app/layout/layout.css') %}
+    {% static './src/app/layout/layout.css' as styles %}
 
     <header class="{{ styles | values('header') | join(' ') }}">
         {%- block header %}{% endblock %}

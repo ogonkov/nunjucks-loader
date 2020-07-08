@@ -14,10 +14,10 @@
     <code>nunjucks-markdown</code> requires <code>Environment</code> instance
     to render markdown file. Since we don't have environment access in loader,
     we can achieve same by using <code>raw-loader</code>, and
-    <code>static()</code> global.
+    <code>static</code> tag.
 </p>
 
-{% set changelog = static('src/CHANGELOG.md') %}
+{% static 'src/CHANGELOG.md' as changelog %}
 {% markdown %}{{ changelog }}{% endmarkdown %}
 </div>
 

@@ -50,7 +50,7 @@ Solution is to replace `browser/nunjucks.js` with
 ## Run demo
 
 ```bash
-git clone -b gh-pages git@github.com:ogonkov/nunjucks-loader.git
+git clone -b gh-pages git@github.com:ogonkov/nunjucks-loader.git && cd $_
 cd examples/markdown
 npm install
 npm run build

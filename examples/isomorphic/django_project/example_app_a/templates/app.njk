@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block main %}
-    {% from "components/button/button.njk" import button %}
+    {% from "components/button/button.njk" import button with context %}
 
-    {% set toolbarStyles = static('./src/components/toolbar/toolbar.css') %}
+    {% static './src/components/toolbar/toolbar.css' as toolbarStyles %}
     <nav class="{{ toolbarStyles | values('toolbar') | join(' ') }}">
         <ul
             data-ui-area="toolbar"
@@ -19,7 +19,7 @@
         </ul>
     </nav>
 
-    {% set listStyles = static('src/app/list/list.css') %}
+    {% static 'src/app/list/list.css' as listStyles %}
     <ul
         data-ui-area="todos"
         class="{{ listStyles | values('list') | join(' ') }}"
