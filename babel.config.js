@@ -5,6 +5,7 @@ module.exports = function(api) {
         presets: [
             ['@babel/preset-env', {
                 modules: isESM ? false : 'auto',
+                debug: true,
                 targets: {
                     node: isESM ? '13.2.0' : '8.9.0'
                 }
