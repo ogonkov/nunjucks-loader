@@ -4,6 +4,10 @@
   "description": "Webpack loader for Nunjucks",
   "main": "lib/cjs/loader.cjs",
   "type": "module",
+  "exports": {
+    "import": "lib/esm/loader.js",
+    "require": "lib/cjs/loader.cjs"
+  },
   "scripts": {
     "build:esm": "NODE_ENV=esm babel src --out-dir=lib/esm --copy-files --ignore 'src/**/*.spec.js'",
     "build:cjs": "NODE_ENV=cjs babel src --out-dir=lib/cjs --out-file-extension .cjs --copy-files --ignore 'src/**/*.spec.js'",
