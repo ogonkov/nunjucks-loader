@@ -5,8 +5,9 @@
   "main": "lib/cjs/loader.cjs",
   "type": "module",
   "scripts": {
-    "build:cjs": "NODE_ENV=cjs rm -rf lib && babel src --out-dir=lib/cjs --out-file-extension .cjs --copy-files --ignore 'src/**/*.spec.js'",
-    "build": "npm run build:cjs",
+    "build:esm": "NODE_ENV=esm babel src --out-dir=lib/esm --copy-files --ignore 'src/**/*.spec.js'",
+    "build:cjs": "NODE_ENV=cjs babel src --out-dir=lib/cjs --out-file-extension .cjs --copy-files --ignore 'src/**/*.spec.js'",
+    "build": "rm -rf lib && npm run build:esm && npm run build:cjs",
     "lint": "eslint src",
     "pretest": "rm -rf test/.coverage && npm run lint",
     "test": "jest",
