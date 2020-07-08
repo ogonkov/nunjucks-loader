@@ -23,6 +23,6 @@
   },
   "dependencies": {
     "normalize.css": "^8.0.1",
-    "nunjucks": "^3.2.0"
+    "nunjucks": "^3.2.1"
   }
 }

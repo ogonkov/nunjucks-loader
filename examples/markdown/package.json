@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "marked": "^0.8.0",
-    "nunjucks": "^3.2.0",
+    "nunjucks": "^3.2.1",
     "nunjucks-markdown": "^2.0.1"
   }
 }
