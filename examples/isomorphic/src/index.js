@@ -38,11 +38,13 @@ UI.todos.addEventListener('keydown', function(event) {
         });
 
         model.save().then(function() {
-            UI.todos.innerHTML = (itemsTpl({
+            return itemsTpl({
                 state: {
                     todos: todos.toJSON()
                 }
-            }));
+            });
+        }).then(function(tpl) {
+            UI.todos.innerHTML = tpl;
         });
     }
 });

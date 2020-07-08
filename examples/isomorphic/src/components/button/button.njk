@@ -1,5 +1,5 @@
 {% macro button(text="", type="button", name="") %}
-{% set styles = static('./src/components/button/button.css') %}
+{% static 'src/components/button/button.css' as styles %}
 
 <button
     class="{{ styles | values('button') | join(' ') }}"

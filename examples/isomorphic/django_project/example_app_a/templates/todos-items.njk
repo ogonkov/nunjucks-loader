@@ -1,5 +1,6 @@
-{% set state = state or static('src/app/initial-state.json') %}
-{% import "todos.njk" as "todos" %}
+{% static 'src/app/initial-state.json' as initial_state %}
+{% set state = state or initial_state %}
+{% import "todos.njk" as "todos" with context %}
 
 {% for todo in state.todos %}
     {{ todos.item(todo.id, todo.text, todo.done) }}
