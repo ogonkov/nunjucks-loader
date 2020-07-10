@@ -267,7 +267,7 @@ module.exports = {
 };
 ```
 
-> Using ES modules syntax for extensions
+> :boom: Using ES modules syntax for extensions
 > [is not yet possible](https://github.com/ogonkov/nunjucks-loader/issues/81)
 
 **extension.js**
@@ -313,7 +313,7 @@ module.exports = {
 };
 ```
 
-> Using ES modules syntax for filters
+> :boom: Using ES modules syntax for filters
 > [is not yet possible](https://github.com/ogonkov/nunjucks-loader/issues/81)
 
 **filter.js**
