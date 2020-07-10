@@ -1,11 +1,12 @@
 module.exports = function(api) {
-    api.cache(true);
+    const isESM = api.env('esm');
 
     return {
         presets: [
             ['@babel/preset-env', {
+                modules: isESM ? false : 'auto',
                 targets: {
-                    node: '8.9.0'
+                    node: isESM ? '13.2.0' : '8.9.0'
                 }
             }]
         ]
