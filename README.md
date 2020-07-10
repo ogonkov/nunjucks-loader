@@ -235,9 +235,9 @@ module.exports = {
 
 **global-fn.js**
 ```js
-export default function globalFn(foo, bar) {
+module.exports = function globalFn(foo, bar) {
     return `Do anything with ${foo} and ${bar}`;
-}
+};
 ```
 
 ### extensions
@@ -270,13 +270,13 @@ module.exports = {
 **extension.js**
 ```js
 // You should use slim bundle to make it work in browser
-import nunjucks from 'nunjucks/browser/nunjucks-slim';
+const nunjucks = require('nunjucks/browser/nunjucks-slim');
 
 // See example in docs
 // https://mozilla.github.io/nunjucks/api.html#custom-tags
 class CustomExtension {}
 
-export default new CustomExtension();
+module.exports = new CustomExtension();
 ```
 
 Loader trying to guess which extensions are really used, and keep only required
@@ -313,9 +313,9 @@ module.exports = {
 **filter.js**
 
 ```js
-export default function filter(val, param) {
+module.exports = function filter(val, param) {
     return `${val + param}`;
-}
+};
 ```
 
 **template.njk**
@@ -331,13 +331,15 @@ should export `async` flag:
 **async-filter.js**
 
 ```js
-export default function asyncFilter(val, param, callback) {
+function asyncFilter(val, param, callback) {
     setTimeout(function() {
         callback(null, val + param);
     }, 1000);
 }
 
 asyncFilter.async = true;
+
+module.exports = asyncFilter;
 ```
 
 [nunjucks-github]:https://github.com/mozilla/nunjucks
