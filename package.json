@@ -4,7 +4,7 @@
   "description": "Webpack loader for Nunjucks",
   "main": "lib/cjs/loader.js",
   "scripts": {
-    "build:cjs": "NODE_ENV=cjs babel src --out-dir=lib/cjs --copy-files --ignore 'src/**/*.spec.js",
+    "build:cjs": "NODE_ENV=cjs babel src --out-dir=lib/cjs --copy-files --ignore 'src/**/*.spec.js'",
     "build": "rm -rf lib && npm run build:cjs",
     "lint": "eslint src",
     "pretest": "rm -rf test/.coverage && npm run lint",
