@@ -267,6 +267,9 @@ module.exports = {
 };
 ```
 
+> Using ES modules syntax for extensions
+> [is not yet possible](https://github.com/ogonkov/nunjucks-loader/issues/81)
+
 **extension.js**
 ```js
 // You should use slim bundle to make it work in browser
@@ -309,6 +312,9 @@ module.exports = {
     }
 };
 ```
+
+> Using ES modules syntax for filters
+> [is not yet possible](https://github.com/ogonkov/nunjucks-loader/issues/81)
 
 **filter.js**
 
