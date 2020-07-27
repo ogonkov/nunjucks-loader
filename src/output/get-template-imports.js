@@ -1,9 +1,9 @@
-import {getRuntimeImport} from './get-runtime-import';
-import {getTemplateDependenciesImport} from './get-template-dependencies-import';
-import {getGlobals} from './get-globals';
 import {getAssets} from './get-assets';
 import {getExtensions} from './get-extensions';
 import {getFilters} from './get-filters';
+import {getGlobals} from './get-globals';
+import {getRuntimeImport} from './get-runtime-import';
+import {getTemplateDependenciesImport} from './get-template-dependencies-import';
 
 export function getTemplateImports(loader, esModule, {
     assets,

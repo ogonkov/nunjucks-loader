@@ -1,5 +1,5 @@
-import {toListItem} from '../utils/to-list-item';
 import {indexOf} from '../utils/index-of';
+import {toListItem} from '../utils/to-list-item';
 
 /**
  * Filter list of nodes

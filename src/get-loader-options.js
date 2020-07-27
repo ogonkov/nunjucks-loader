@@ -1,5 +1,6 @@
 import {getOptions} from 'loader-utils';
 import validate from 'schema-utils';
+
 import schema from './schema';
 
 export function getLoaderOptions(loader, callback) {

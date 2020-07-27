@@ -1,9 +1,11 @@
 import fs from 'fs';
 import {promisify} from 'util';
+
+import {ERROR_MODULE_NOT_FOUND} from '../constants';
+
+import {getErrorCopy} from './get-error-copy';
 import {getGlob} from './get-glob';
 import {unquote} from './unquote';
-import {getErrorCopy} from './get-error-copy';
-import {ERROR_MODULE_NOT_FOUND} from '../constants';
 
 const fsAccess = promisify(fs.access);
 function isExists(path) {

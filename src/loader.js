@@ -1,13 +1,13 @@
 import path from 'path';
 
-import {getDependencies} from './precompile/get-dependencies';
-import {getImportPath} from './utils/get-import-path';
-import {getLoaderOptions} from './get-loader-options';
-import {toAssetsUUID} from './output/to-assets-uuid';
 import {ERROR_MODULE_NOT_FOUND, TEMPLATE_DEPENDENCIES} from './constants';
-import {getTemplateImports} from './output/get-template-imports';
-import {ASSETS_KEY} from './static-extension/contants';
+import {getLoaderOptions} from './get-loader-options';
 import {getModuleOutput} from './output/get-module-output';
+import {getTemplateImports} from './output/get-template-imports';
+import {toAssetsUUID} from './output/to-assets-uuid';
+import {getDependencies} from './precompile/get-dependencies';
+import {ASSETS_KEY} from './static-extension/contants';
+import {getImportPath} from './utils/get-import-path';
 
 export default function nunjucksLoader(source) {
     const isWindows = process.platform === 'win32';
