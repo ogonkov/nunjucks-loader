@@ -1,9 +1,10 @@
 import {stringifyRequest} from 'loader-utils';
 
-import {getArgs} from './assets';
+import {IMPORTS_PREFIX, TEMPLATE_DEPENDENCIES} from '../constants';
 import {getImportStr} from '../utils/get-import-str';
 import {toVar} from '../utils/to-var';
-import {IMPORTS_PREFIX, TEMPLATE_DEPENDENCIES} from '../constants';
+
+import {getArgs} from './assets';
 import {getDynamicPathRegexp} from './get-dynamic-path-regexp';
 
 /**

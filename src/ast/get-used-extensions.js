@@ -1,5 +1,6 @@
-import {getUsagesOf} from './get-usages-of';
 import nunjucks from 'nunjucks';
+
+import {getUsagesOf} from './get-usages-of';
 
 /**
  * @template TNode

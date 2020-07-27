@@ -1,10 +1,12 @@
 import nunjucks from 'nunjucks';
-import {getNodesValues} from './get-nodes-values';
-import {isUnique} from '../utils/is-unique';
-import {getPossiblePaths} from '../utils/get-possible-paths';
-import {getFirstExistedPath} from '../utils/get-first-existed-path';
+
 import {ERROR_MODULE_NOT_FOUND} from '../constants';
 import {StaticExtension} from '../static-extension/StaticExtension';
+import {getFirstExistedPath} from '../utils/get-first-existed-path';
+import {getPossiblePaths} from '../utils/get-possible-paths';
+import {isUnique} from '../utils/is-unique';
+
+import {getNodesValues} from './get-nodes-values';
 
 /**
  * Parse `Add` value to expression

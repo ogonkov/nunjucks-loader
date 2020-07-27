@@ -1,4 +1,5 @@
 import nunjucks from 'nunjucks';
+
 import {getModule} from '../utils/get-module';
 
 /**
