@@ -3,7 +3,11 @@ import {unquote} from './unquote';
 
 function getFilePath(searchPath, possiblePath) {
     const [firstPart, ...restParts] = possiblePath.split(' + ');
-    const filePath = path.resolve(searchPath, unquote(firstPart));
+    let filePath = path.resolve(searchPath, unquote(firstPart));
+
+    if (firstPart.endsWith('/"') && !filePath.endsWith('/')) {
+        filePath = `${filePath}/`;
+    }
 
     return restParts.length > 0 ?
         `${[`"${filePath}"`, ...restParts].join(' + ')}` : filePath;

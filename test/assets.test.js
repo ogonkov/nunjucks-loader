@@ -1,3 +1,5 @@
+/* globals __USE_ES__ */
+
 import compiler from './compiler';
 
 const loaderOptions = {
@@ -22,6 +24,12 @@ describe('Assets', function() {
 
     test('should load dynamic assets', async function() {
         const output = await compiler('fixtures/assets/dynamic.njk', loaderOptions);
+
+        await expect(output()).resolves.toMatchSnapshot();
+    });
+
+    test('should load dynamic assets with trailing slashes', async function() {
+        const output = await compiler('fixtures/assets/dynamic-trailing-slash.njk', loaderOptions);
 
         await expect(output()).resolves.toMatchSnapshot();
     });
