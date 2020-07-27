@@ -1,4 +1,5 @@
 import path from 'path';
+
 import {unquote} from './unquote';
 
 function getFilePath(searchPath, possiblePath) {

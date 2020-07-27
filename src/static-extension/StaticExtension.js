@@ -1,6 +1,7 @@
-import {ASSETS_KEY} from './contants';
 import {getModule} from '../utils/get-module';
 import {getRegexMatches} from '../utils/get-regex-matches';
+
+import {ASSETS_KEY} from './contants';
 
 export class StaticExtension {
     constructor() {

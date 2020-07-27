@@ -1,6 +1,7 @@
+import nunjucks from 'nunjucks/browser/nunjucks-slim';
+
 import {WebpackPrecompiledLoader} from './WebpackPrecompiledLoader';
 
-import nunjucks from 'nunjucks/browser/nunjucks-slim';
 
 export default function runtime(options, {
     globals,

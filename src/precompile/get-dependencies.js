@@ -1,13 +1,14 @@
-import {precompileToLocalVar} from './local-var-precompile';
-import {getAddonsMeta} from './get-addons-meta';
-import {configureEnvironment} from './configure-environment';
+import {getAssets} from '../ast/get-assets';
 import {getNodes} from '../ast/get-nodes';
-import {getUsedGlobals} from '../ast/get-used-globals';
+import {getTemplatesImports} from '../ast/get-templates-imports';
 import {getUsedExtensions} from '../ast/get-used-extensions';
 import {getUsedFilters} from '../ast/get-used-filters';
-import {getAssets} from '../ast/get-assets';
-import {getTemplatesImports} from '../ast/get-templates-imports';
+import {getUsedGlobals} from '../ast/get-used-globals';
 import {hasAsyncTags} from '../ast/has-async-tags';
+
+import {configureEnvironment} from './configure-environment';
+import {getAddonsMeta} from './get-addons-meta';
+import {precompileToLocalVar} from './local-var-precompile';
 
 /**
  * @typedef {Object} NunjucksOptions

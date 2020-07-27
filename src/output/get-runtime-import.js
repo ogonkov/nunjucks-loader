@@ -1,5 +1,7 @@
-import {stringifyRequest} from 'loader-utils';
 import path from 'path';
+
+import {stringifyRequest} from 'loader-utils';
+
 import {getImportStr} from '../utils/get-import-str';
 
 export function getRuntimeImport(loaderContext, esModule) {

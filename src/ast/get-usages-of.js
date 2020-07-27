@@ -1,5 +1,4 @@
 import {toListItem} from '../utils/to-list-item';
-import {indexOf} from '../utils/index-of';
 
 /**
  * Filter list of nodes
@@ -24,7 +23,7 @@ export function getUsagesOf(nodeType, nodes) {
                 .map(toListItem(list, callback))
                 .filter(Boolean)
                 .filter(([addonName], i, list) => (
-                    i === indexOf(list, ([name]) => addonName === name)
+                    i === list.findIndex(([name]) => addonName === name)
                 ))
         );
     }
