@@ -1,6 +1,13 @@
 {
+  "plugins": [
+    "import"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
   "parser": "babel-eslint",
-  "extends": "eslint:recommended",
   "parserOptions": {
     "ecmaVersion": 9,
     "sourceType": "module"
