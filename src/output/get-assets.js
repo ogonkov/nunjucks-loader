@@ -21,10 +21,16 @@ export function getAssets(assets) {
                 importPath = assetImport.split(' + ').map(
                     function(part) {
                         if (part.startsWith('"')) {
-                            return stringifyRequest(
+                            let nextPart = stringifyRequest(
                                 loaderContext,
                                 part.replace(/^"|"$/g, '')
                             );
+
+                            if (!nextPart.endsWith('/"') && part.endsWith('/"')) {
+                                nextPart = nextPart.replace(/"$/, '/"');
+                            }
+
+                            return nextPart;
                         }
 
                         return part;
