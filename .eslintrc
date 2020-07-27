@@ -23,6 +23,17 @@
       {
         "avoidEscape": true
       }
+    ],
+
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": false
+        }
+      }
     ]
   },
   "overrides": [
