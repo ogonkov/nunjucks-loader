@@ -1,6 +1,6 @@
 {
   "name": "simple-nunjucks-loader",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Webpack loader for Nunjucks",
   "main": "lib/cjs/loader.js",
   "scripts": {
