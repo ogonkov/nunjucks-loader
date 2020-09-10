@@ -14,19 +14,28 @@ export function getAddNodeValue(node) {
         throw new TypeError('Wrong node type');
     }
 
-    return [node.left, node.right].map(function(node) {
+    const stack = [node.left, node.right];
+    const value = [];
+
+    while (stack.length) {
+        const node = stack.shift();
         if (node instanceof nunjucks.nodes.Add) {
-            return getAddNodeValue(node);
+            stack.unshift(node.left, node.right);
+            continue;
         }
 
         if (node instanceof nunjucks.nodes.Literal) {
-            return `"${node.value}"`;
+            value.push(`"${node.value}"`);
+            continue;
         }
 
         if (node instanceof nunjucks.nodes.Symbol) {
-            return node.value;
+            value.push(node.value);
+            continue;
         }
 
         throw new TypeError('Unsupported node signature');
-    }).join(' + ');
+    }
+
+    return value.join(' + ');
 }
