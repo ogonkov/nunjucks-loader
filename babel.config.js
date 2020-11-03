@@ -1,3 +1,5 @@
+const nodeVersion = require('./package.json').engines.node;
+
 module.exports = function(api) {
     const isESM = api.env('esm');
 
@@ -6,7 +8,7 @@ module.exports = function(api) {
             ['@babel/preset-env', {
                 modules: isESM ? false : 'auto',
                 targets: {
-                    node: isESM ? '13.2.0' : '8.9.0'
+                    node: isESM ? '13.2.0' : nodeVersion.replace(/>=\s+/, '')
                 }
             }]
         ]

@@ -9,6 +9,8 @@
 This Webpack loader compiles [Nunjucks][nunjucks-github] templates.
 [`html-webpack-plugin`][html-webpack-plugin-github] compatible. 
 
+> For Webpack 4 support use loader 2.x version
+
 ## Install
 ```bash
 npm install --save-dev simple-nunjucks-loader

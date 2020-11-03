@@ -32,8 +32,7 @@
   },
   "homepage": "https://ogonkov.github.io/nunjucks-loader/",
   "dependencies": {
-    "loader-utils": "^2.0.0",
-    "schema-utils": "^2.6.1"
+    "loader-utils": "^2.0.0"
   },
   "optionalDependencies": {
     "glob": "^7.1.6"
@@ -42,21 +41,20 @@
     "nunjucks": "^3.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.4",
-    "@babel/core": "^7.7.4",
-    "@babel/preset-env": "^7.7.4",
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
     "babel-eslint": "^10.0.3",
     "coveralls": "^3.0.9",
-    "eslint": "^6.0.0",
+    "eslint": "^7.0.0",
     "eslint-plugin-import": "^2.22.0",
-    "file-loader": "^5.0.2",
-    "jest": "^24.9.0",
+    "file-loader": "^6.2.0",
+    "jest": "^26.0.0",
     "nunjucks": "^3.2.0",
-    "uuid": "^3.3.3",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "uuid": "^8.0.0",
+    "webpack": "^5.0.0"
   },
   "engines": {
-    "node": ">= 8.9.0"
+    "node": ">= 10.13.0"
   }
 }
