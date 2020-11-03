@@ -1,22 +1,10 @@
-import {getOptions} from 'loader-utils';
-import validate from 'schema-utils';
-
 import schema from './schema';
 
 export function getLoaderOptions(loader, callback) {
     let loaderOptions;
 
     try {
-        loaderOptions = getOptions(loader);
-    } catch (e) {
-        callback(e);
-    }
-
-    try {
-        validate(schema, loaderOptions, {
-            name: 'Simple Nunjucks Loader',
-            baseDataPath: 'options'
-        });
+        loaderOptions = loader.getOptions(schema);
     } catch (e) {
         callback(e);
 
