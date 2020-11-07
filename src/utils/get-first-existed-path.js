@@ -35,6 +35,10 @@ function getGlobExpression(pathExpression) {
     return unquote(pathExpression.replace(/" \+ [^ ]+( \+ "|$)/g, '*'));
 }
 
+/**
+ * @param {string[]} paths
+ * @returns {Promise<string>}
+ */
 export async function getFirstExistedPath(paths) {
     for (const path of paths) {
         const exist = await isExists(path);
