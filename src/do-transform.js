@@ -20,6 +20,15 @@ export async function doTransform(source, loaderContext, {
     options,
     normalizedSearchPaths
 }) {
+    const nunjucksOptions = {
+        // https://mozilla.github.io/nunjucks/api.html#configure
+        autoescape: options.autoescape,
+        throwOnUndefined: options.throwOnUndefined,
+        trimBlocks: options.trimBlocks,
+        lstripBlocks: options.lstripBlocks,
+        tags: options.tags
+    };
+
     const {
         assets,
         dependencies,
@@ -40,11 +49,7 @@ export async function doTransform(source, loaderContext, {
     const assetsUUID = toAssetsUUID(assets);
     const resourcePathString = JSON.stringify(resourcePathImport);
     const envOptions = JSON.stringify({
-        // https://mozilla.github.io/nunjucks/api.html#constructor
-        autoescape: options.autoescape,
-        throwOnUndefined: options.throwOnUndefined,
-        trimBlocks: options.trimBlocks,
-        lstripBlocks: options.lstripBlocks,
+        ...nunjucksOptions,
         // Loader specific options
         jinjaCompat: options.jinjaCompat,
         isWindows,
