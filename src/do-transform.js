@@ -48,7 +48,7 @@ export async function doTransform(source, loaderContext, {
     );
     const {
         assets,
-        dependencies,
+        templates: dependencies,
         globals,
         extensions,
         filters

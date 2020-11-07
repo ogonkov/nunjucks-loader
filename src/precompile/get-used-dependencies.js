@@ -52,13 +52,13 @@ export async function getUsedDependencies(
         globals
     } = loaderOptions;
 
-    const [dependencies, assets] = await Promise.all([
+    const [templates, assets] = await Promise.all([
         getTemplatesImports(nodes, searchPaths),
         getAssets(nodes, assetsPaths)
     ]);
 
     return {
-        dependencies,
+        templates,
         globals: getUsedGlobals(nodes, globals),
         extensions: getUsedExtensions(nodes, extensions),
         filters: getUsedFilters(nodes, filters),
