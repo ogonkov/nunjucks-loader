@@ -17,7 +17,7 @@ export function getPathRemover(targetPath) {
     function removePath(pathToRemove) {
         return normalizedTargetPath
             .replace(path.resolve(pathToRemove), '')
-            .replace(/^\//, '');
+            .replace(/^[\\/]/, '');
     }
 
     return removePath;
