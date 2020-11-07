@@ -1,5 +1,4 @@
-import path from 'path';
-
+import {getPathRemover} from './get-path-remover';
 import {sortBy} from './sort-by';
 
 
@@ -11,10 +10,8 @@ const sortByLength = sortBy('length');
  * @returns {string}
  */
 export function getImportPath(resourcePath, searchPaths) {
-    const [importPath] = searchPaths.map((searchPath) => resourcePath
-            .replace(path.resolve(searchPath), '')
-            .replace(/^\//, '')
-        ).sort(sortByLength);
+    const removeSearchPath = getPathRemover(resourcePath);
+    const [importPath] = searchPaths.map(removeSearchPath).sort(sortByLength);
 
     return importPath;
 }
