@@ -12,7 +12,6 @@ import {precompileToLocalVar} from './precompile/precompile-to-local-var';
 import {ASSETS_KEY} from './static-extension/contants';
 
 
-const isWindows = process.platform === 'win32';
 const staticExtensionPath = path.join(
     __dirname,
     'static-extension',
@@ -69,7 +68,6 @@ export async function doTransform(source, loaderContext, {
         ...nunjucksOptions,
         // Loader specific options
         jinjaCompat: options.jinjaCompat,
-        isWindows,
         isAsyncTemplate
     });
 
