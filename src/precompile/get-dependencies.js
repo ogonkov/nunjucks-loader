@@ -68,12 +68,13 @@ export async function getDependencies(resourcePath, source, options) {
         getAssets(nodes, assetsPaths)
     ]);
 
-    const precompiled = precompileToLocalVar(source, resourcePath, configureEnvironment({
+    const env = configureEnvironment({
         searchPaths,
         options: opts,
         extensions: extensionsInstances,
         filters: filtersInstances
-    }));
+    });
+    const precompiled = precompileToLocalVar(source, resourcePath, env);
 
     return {
         precompiled,
