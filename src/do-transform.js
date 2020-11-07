@@ -4,7 +4,9 @@ import {TEMPLATE_DEPENDENCIES} from './constants';
 import {getModuleOutput} from './output/get-module-output';
 import {getTemplateImports} from './output/get-template-imports';
 import {toAssetsUUID} from './output/to-assets-uuid';
+import {configureEnvironment} from './precompile/configure-environment';
 import {getDependencies} from './precompile/get-dependencies';
+import {precompileToLocalVar} from './precompile/precompile-to-local-var';
 import {ASSETS_KEY} from './static-extension/contants';
 
 
@@ -32,10 +34,11 @@ export async function doTransform(source, loaderContext, {
     const {
         assets,
         dependencies,
-        precompiled,
         globals,
         extensions,
+        extensionsInstances,
         filters,
+        filtersInstances,
         isAsyncTemplate
     } = await getDependencies(resourcePathImport, source, {
         ...options,
@@ -55,6 +58,14 @@ export async function doTransform(source, loaderContext, {
         isWindows,
         isAsyncTemplate
     });
+
+    const env = configureEnvironment({
+        searchPaths: normalizedSearchPaths,
+        options: nunjucksOptions,
+        extensions: extensionsInstances,
+        filters: filtersInstances
+    });
+    const precompiled = precompileToLocalVar(source, resourcePathImport, env);
 
     return `
         ${getTemplateImports(loaderContext, options.esModule, {

@@ -6,9 +6,7 @@ import {getUsedFilters} from '../ast/get-used-filters';
 import {getUsedGlobals} from '../ast/get-used-globals';
 import {hasAsyncTags} from '../ast/has-async-tags';
 
-import {configureEnvironment} from './configure-environment';
 import {getAddonsMeta} from './get-addons-meta';
-import {precompileToLocalVar} from './precompile-to-local-var';
 
 /**
  * @typedef {Object} NunjucksOptions
@@ -73,20 +71,13 @@ export async function getDependencies(
         getAssets(nodes, assetsPaths)
     ]);
 
-    const env = configureEnvironment({
-        searchPaths,
-        options: nunjucksOptions,
-        extensions: extensionsInstances,
-        filters: filtersInstances
-    });
-    const precompiled = precompileToLocalVar(source, resourcePath, env);
-
     return {
-        precompiled,
         dependencies,
         globals: getUsedGlobals(nodes, globals),
         extensions: getUsedExtensions(nodes, extensionsInstances),
+        extensionsInstances,
         filters: getUsedFilters(nodes, filtersInstances),
+        filtersInstances,
         assets,
         isAsyncTemplate: hasAsyncTags(nodes)
     };
