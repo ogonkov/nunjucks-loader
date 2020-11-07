@@ -26,10 +26,6 @@ export default function nunjucksLoader(source) {
         normalizedSearchPaths
     );
 
-    if (isWindows) {
-        resourcePathImport = resourcePathImport.replace(/\\/g, '/');
-    }
-
     getDependencies(resourcePathImport, source, {
         ...options,
         extensions: {
