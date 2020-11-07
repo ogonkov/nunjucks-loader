@@ -59,6 +59,14 @@ export async function doTransform(source, loaderContext, {
         isAsyncTemplate
     });
 
+    const outputImports = getTemplateImports(loaderContext, options.esModule, {
+        assets: assetsUUID,
+        dependencies,
+        extensions,
+        filters,
+        globals
+    });
+
     const env = configureEnvironment({
         searchPaths: normalizedSearchPaths,
         options: nunjucksOptions,
@@ -68,13 +76,7 @@ export async function doTransform(source, loaderContext, {
     const outputPrecompiled = precompileToLocalVar(source, resourcePathImport, env);
 
     return `
-        ${getTemplateImports(loaderContext, options.esModule, {
-            assets: assetsUUID,
-            dependencies,
-            extensions,
-            filters,
-            globals
-        })}
+        ${outputImports}
         ${outputPrecompiled}
 
         function nunjucksTemplate(ctx = {}) {
