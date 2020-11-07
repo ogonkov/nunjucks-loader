@@ -65,7 +65,7 @@ export async function doTransform(source, loaderContext, {
         extensions: extensionsInstances,
         filters: filtersInstances
     });
-    const precompiled = precompileToLocalVar(source, resourcePathImport, env);
+    const outputPrecompiled = precompileToLocalVar(source, resourcePathImport, env);
 
     return `
         ${getTemplateImports(loaderContext, options.esModule, {
@@ -75,7 +75,7 @@ export async function doTransform(source, loaderContext, {
             filters,
             globals
         })}
-        ${precompiled}
+        ${outputPrecompiled}
 
         function nunjucksTemplate(ctx = {}) {
           var nunjucks = (${getModuleOutput('runtime')})(
