@@ -75,6 +75,10 @@ export async function doTransform(source, loaderContext, {
     });
     const outputPrecompiled = precompileToLocalVar(source, resourcePathImport, env);
 
+    const outputExport = options.esModule ?
+        'export default' :
+        'exports = module.exports =';
+
     return `
         ${outputImports}
         ${outputPrecompiled}
@@ -97,9 +101,6 @@ export async function doTransform(source, loaderContext, {
         nunjucksTemplate.__nunjucks_precompiled_template__ = ${TEMPLATE_DEPENDENCIES}.templates[${resourcePathString}];
         nunjucksTemplate.${TEMPLATE_DEPENDENCIES} = ${TEMPLATE_DEPENDENCIES};
 
-        ${options.esModule ?
-            'export default' :
-            'exports = module.exports ='
-        } nunjucksTemplate;
+        ${outputExport} nunjucksTemplate;
     `;
 }
