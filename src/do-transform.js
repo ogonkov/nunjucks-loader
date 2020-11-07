@@ -1,11 +1,13 @@
 import path from 'path';
 
+import {hasAsyncTags} from './ast/has-async-tags';
 import {TEMPLATE_DEPENDENCIES} from './constants';
 import {getModuleOutput} from './output/get-module-output';
 import {getTemplateImports} from './output/get-template-imports';
 import {toAssetsUUID} from './output/to-assets-uuid';
 import {configureEnvironment} from './precompile/configure-environment';
-import {getDependencies} from './precompile/get-dependencies';
+import {getUsedDependencies} from './precompile/get-used-dependencies';
+import {loadDependencies} from './precompile/load-dependencies';
 import {precompileToLocalVar} from './precompile/precompile-to-local-var';
 import {ASSETS_KEY} from './static-extension/contants';
 
@@ -32,22 +34,34 @@ export async function doTransform(source, loaderContext, {
     };
 
     const {
+        nodes,
+        extensions: extensionsInstances,
+        filters: filtersInstances
+    } = await loadDependencies(
+        source,
+        {
+            StaticExtension: staticExtensionPath,
+            ...options.extensions
+        },
+        options.filters,
+        nunjucksOptions
+    );
+    const {
         assets,
         dependencies,
         globals,
         extensions,
+        filters
+    } = await getUsedDependencies(
+        nodes,
         extensionsInstances,
-        filters,
         filtersInstances,
-        isAsyncTemplate
-    } = await getDependencies(resourcePathImport, source, {
-        ...options,
-        extensions: {
-            StaticExtension: staticExtensionPath,
-            ...options.extensions
-        },
-        searchPaths: normalizedSearchPaths
-    }, nunjucksOptions);
+        {
+            ...options,
+            searchPaths: normalizedSearchPaths
+        }
+    );
+    const isAsyncTemplate = hasAsyncTags(nodes);
 
     const assetsUUID = toAssetsUUID(assets);
     const resourcePathString = JSON.stringify(resourcePathImport);

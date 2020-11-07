@@ -1,12 +1,8 @@
 import {getAssets} from '../ast/get-assets';
-import {getNodes} from '../ast/get-nodes';
 import {getTemplatesImports} from '../ast/get-templates-imports';
 import {getUsedExtensions} from '../ast/get-used-extensions';
 import {getUsedFilters} from '../ast/get-used-filters';
 import {getUsedGlobals} from '../ast/get-used-globals';
-import {hasAsyncTags} from '../ast/has-async-tags';
-
-import {getAddonsMeta} from './get-addons-meta';
 
 /**
  * @typedef {Object} NunjucksOptions
@@ -38,35 +34,25 @@ import {getAddonsMeta} from './get-addons-meta';
  */
 
 /**
- * @param {string} resourcePath
- * @param {string} source
+ * @param {nunjucks.nodes.Root} nodes
+ * @param {InstancesList} extensions
+ * @param {InstancesList} filters
  * @param {Object} loaderOptions
- * @param {NunjucksOptions} nunjucksOptions
  * @returns {Promise<Object>}
  */
-export async function getDependencies(
-    resourcePath,
-    source,
-    loaderOptions,
-    nunjucksOptions
+export async function getUsedDependencies(
+    nodes,
+    extensions,
+    filters,
+    loaderOptions
 ) {
     const {
         searchPaths,
         assetsPaths,
-        globals,
-        extensions,
-        filters
+        globals
     } = loaderOptions;
-    const extensionsInstances = await getAddonsMeta(Object.entries(extensions));
 
-    const nodes = getNodes(
-        source,
-        extensionsInstances.map(([,, ext]) => ext),
-        nunjucksOptions
-    );
-
-    const [filtersInstances, dependencies, assets] = await Promise.all([
-        getAddonsMeta(Object.entries(filters)),
+    const [dependencies, assets] = await Promise.all([
         getTemplatesImports(nodes, searchPaths),
         getAssets(nodes, assetsPaths)
     ]);
@@ -74,11 +60,8 @@ export async function getDependencies(
     return {
         dependencies,
         globals: getUsedGlobals(nodes, globals),
-        extensions: getUsedExtensions(nodes, extensionsInstances),
-        extensionsInstances,
-        filters: getUsedFilters(nodes, filtersInstances),
-        filtersInstances,
-        assets,
-        isAsyncTemplate: hasAsyncTags(nodes)
+        extensions: getUsedExtensions(nodes, extensions),
+        filters: getUsedFilters(nodes, filters),
+        assets
     };
 }
