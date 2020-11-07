@@ -8,19 +8,12 @@ import {getGlob} from './get-glob';
 import {unquote} from './unquote';
 
 const fsAccess = promisify(fs.access);
-function isExists(path) {
+async function isExists(path) {
     if (isExpression(path)) {
-        return getGlob().then(function(glob) {
-            return new Promise(function(resolve, reject) {
-                glob(getGlobExpression(path), function(err, files) {
-                    if (err) {
-                        return reject(err);
-                    }
+        const glob = await getGlob();
+        const files = await glob(getGlobExpression(path));
 
-                    resolve(files.length > 0);
-                });
-            });
-        });
+        return files.length > 0;
     }
 
     return fsAccess(path);
