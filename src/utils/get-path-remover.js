@@ -8,12 +8,14 @@ import path from 'path';
  * @returns {function(string): string}
  */
 export function getPathRemover(targetPath) {
+    const normalizedTargetPath = path.resolve(targetPath);
+
     /**
      * @param {string} pathToRemove
      * @returns {string}
      */
     function removePath(pathToRemove) {
-        return targetPath
+        return normalizedTargetPath
             .replace(path.resolve(pathToRemove), '')
             .replace(/^\//, '');
     }
