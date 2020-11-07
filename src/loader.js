@@ -11,6 +11,11 @@ import {getImportPath} from './utils/get-import-path';
 
 
 const isWindows = process.platform === 'win32';
+const staticExtensionPath = path.join(
+    __dirname,
+    'static-extension',
+    'get-static-extension.js'
+);
 
 export default function nunjucksLoader(source) {
     const callback = this.async();
@@ -29,11 +34,7 @@ export default function nunjucksLoader(source) {
     getDependencies(resourcePathImport, source, {
         ...options,
         extensions: {
-            StaticExtension: path.join(
-                __dirname,
-                'static-extension',
-                'get-static-extension.js'
-            ),
+            StaticExtension: staticExtensionPath,
             ...options.extensions
         },
         searchPaths: normalizedSearchPaths
