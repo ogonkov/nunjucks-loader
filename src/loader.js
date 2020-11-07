@@ -9,8 +9,10 @@ import {getDependencies} from './precompile/get-dependencies';
 import {ASSETS_KEY} from './static-extension/contants';
 import {getImportPath} from './utils/get-import-path';
 
+
+const isWindows = process.platform === 'win32';
+
 export default function nunjucksLoader(source) {
-    const isWindows = process.platform === 'win32';
     const callback = this.async();
     const options = getLoaderOptions(this, callback);
 
