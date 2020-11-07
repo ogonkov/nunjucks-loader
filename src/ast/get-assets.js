@@ -65,6 +65,19 @@ function getNodeValue(node) {
     return asset.value;
 }
 
+async function filterPaths([path, paths]) {
+    try {
+        const importPath = await getFirstExistedPath(paths);
+        return [path, importPath];
+    } catch (error) {
+        if (error.code !== ERROR_MODULE_NOT_FOUND) {
+            throw new Error(`Asset "${path}" not found`);
+        }
+
+        throw error;
+    }
+}
+
 /**
  * @param {nunjucks.nodes.Root} nodes
  * @param {string|string[]}     searchAssets
@@ -77,17 +90,7 @@ export function getAssets(nodes, searchAssets) {
         getNodeValue
     ).filter(isUnique);
     const possiblePaths = getPossiblePaths(assets, [].concat(searchAssets));
-    const resolvedAssets = possiblePaths.map(function([path, paths]) {
-        return getFirstExistedPath(paths).then(function(importPath) {
-            return [path, importPath];
-        }, function(error) {
-            if (error.code !== ERROR_MODULE_NOT_FOUND) {
-                throw new Error(`Asset "${path}" not found`);
-            }
-
-            throw error;
-        })
-    });
+    const resolvedAssets = possiblePaths.map(filterPaths);
 
     return Promise.all(resolvedAssets);
 }
