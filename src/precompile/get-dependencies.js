@@ -63,8 +63,7 @@ export async function getDependencies(resourcePath, source, options) {
     );
 
     const filtersInstances = await getAddonsMeta(Object.entries(filters));
-
-    return Promise.all([
+    const [precompiled, dependencies] = await Promise.all([
         precompileToLocalVar(source, resourcePath, configureEnvironment({
             searchPaths,
             options: opts,
@@ -72,21 +71,18 @@ export async function getDependencies(resourcePath, source, options) {
             filters: filtersInstances
         })),
         getTemplatesImports(nodes, searchPaths)
-    ]).then(function([precompiled, dependencies]) {
-        return {
-            precompiled,
-            dependencies,
-            globals: getUsedGlobals(nodes, globals),
-            extensions: getUsedExtensions(nodes, extensionsInstances),
-            filters: getUsedFilters(nodes, filtersInstances)
-        };
-    }).then(function(deps) {
-        return getAssets(nodes, assetsPaths).then(function(assets) {
-            return {
-                ...deps,
-                assets,
-                isAsyncTemplate: hasAsyncTags(nodes)
-            };
-        })
-    });
+    ]);
+    const deps = {
+        precompiled,
+        dependencies,
+        globals: getUsedGlobals(nodes, globals),
+        extensions: getUsedExtensions(nodes, extensionsInstances),
+        filters: getUsedFilters(nodes, filtersInstances)
+    };
+    const assets = await getAssets(nodes, assetsPaths);
+    return {
+        ...deps,
+        assets,
+        isAsyncTemplate: hasAsyncTags(nodes)
+    };
 }
