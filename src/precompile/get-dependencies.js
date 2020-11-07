@@ -54,16 +54,15 @@ export async function getDependencies(resourcePath, source, options) {
         filters,
         ...opts
     } = options;
-    const [extensionsInstances, filtersInstances] = await Promise.all([
-        getAddonsMeta(Object.entries(extensions)),
-        getAddonsMeta(Object.entries(filters))
-    ]);
+    const extensionsInstances = await getAddonsMeta(Object.entries(extensions));
 
     const nodes = getNodes(
         source,
         extensionsInstances.map(([,, ext]) => ext),
         opts
     );
+
+    const filtersInstances = await getAddonsMeta(Object.entries(filters));
 
     return Promise.all([
         precompileToLocalVar(source, resourcePath, configureEnvironment({
