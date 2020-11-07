@@ -8,6 +8,11 @@ import {getGlob} from './get-glob';
 import {unquote} from './unquote';
 
 const fsAccess = promisify(fs.access);
+
+/**
+ * @param {string} path
+ * @returns {Promise<boolean>}
+ */
 async function isExists(path) {
     if (isExpression(path)) {
         const glob = await getGlob();
@@ -16,7 +21,12 @@ async function isExists(path) {
         return files.length > 0;
     }
 
-    return fsAccess(path);
+    try {
+        await fsAccess(path);
+        return true;
+    } catch (exception) {
+        return false;
+    }
 }
 
 function isExpression(str) {
