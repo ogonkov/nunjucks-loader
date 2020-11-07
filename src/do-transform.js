@@ -1,0 +1,87 @@
+import path from 'path';
+
+import {TEMPLATE_DEPENDENCIES} from './constants';
+import {getModuleOutput} from './output/get-module-output';
+import {getTemplateImports} from './output/get-template-imports';
+import {toAssetsUUID} from './output/to-assets-uuid';
+import {getDependencies} from './precompile/get-dependencies';
+import {ASSETS_KEY} from './static-extension/contants';
+
+
+const isWindows = process.platform === 'win32';
+const staticExtensionPath = path.join(
+    __dirname,
+    'static-extension',
+    'get-static-extension.js'
+);
+
+export async function doTransform(source, loaderContext, {
+    resourcePathImport,
+    options,
+    normalizedSearchPaths
+}) {
+    const {
+        assets,
+        dependencies,
+        precompiled,
+        globals,
+        extensions,
+        filters,
+        isAsyncTemplate
+    } = await getDependencies(resourcePathImport, source, {
+        ...options,
+        extensions: {
+            StaticExtension: staticExtensionPath,
+            ...options.extensions
+        },
+        searchPaths: normalizedSearchPaths
+    });
+
+    const assetsUUID = toAssetsUUID(assets);
+    const resourcePathString = JSON.stringify(resourcePathImport);
+    const envOptions = JSON.stringify({
+        // https://mozilla.github.io/nunjucks/api.html#constructor
+        autoescape: options.autoescape,
+        throwOnUndefined: options.throwOnUndefined,
+        trimBlocks: options.trimBlocks,
+        lstripBlocks: options.lstripBlocks,
+        // Loader specific options
+        jinjaCompat: options.jinjaCompat,
+        isWindows,
+        isAsyncTemplate
+    });
+
+    return `
+        ${getTemplateImports(loaderContext, options.esModule, {
+            assets: assetsUUID,
+            dependencies,
+            extensions,
+            filters,
+            globals
+        })}
+        ${precompiled}
+
+        function nunjucksTemplate(ctx = {}) {
+          var nunjucks = (${getModuleOutput('runtime')})(
+            ${envOptions},
+            ${TEMPLATE_DEPENDENCIES}
+          );
+
+          ctx.${ASSETS_KEY} = ${TEMPLATE_DEPENDENCIES}.assets;
+
+          if (nunjucks.isAsync()) {
+            return nunjucks.renderAsync(${resourcePathString}, ctx);
+          }
+        
+          return nunjucks.render(${resourcePathString}, ctx);
+        };
+
+        nunjucksTemplate.__nunjucks_precompiled_template__ = ${TEMPLATE_DEPENDENCIES}.templates[${resourcePathString}];
+        nunjucksTemplate.${TEMPLATE_DEPENDENCIES} = ${TEMPLATE_DEPENDENCIES};
+
+        ${options.esModule ?
+            'export default' :
+            'exports = module.exports ='
+        } nunjucksTemplate;
+    `;
+}
