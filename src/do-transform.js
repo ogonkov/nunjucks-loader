@@ -44,7 +44,7 @@ export async function doTransform(source, loaderContext, {
             ...options.extensions
         },
         searchPaths: normalizedSearchPaths
-    });
+    }, nunjucksOptions);
 
     const assetsUUID = toAssetsUUID(assets);
     const resourcePathString = JSON.stringify(resourcePathImport);

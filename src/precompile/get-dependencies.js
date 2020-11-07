@@ -42,24 +42,29 @@ import {precompileToLocalVar} from './precompile-to-local-var';
 /**
  * @param {string} resourcePath
  * @param {string} source
- * @param {NunjucksOptions} options
+ * @param {Object} loaderOptions
+ * @param {NunjucksOptions} nunjucksOptions
  * @returns {Promise<Object>}
  */
-export async function getDependencies(resourcePath, source, options) {
+export async function getDependencies(
+    resourcePath,
+    source,
+    loaderOptions,
+    nunjucksOptions
+) {
     const {
         searchPaths,
         assetsPaths,
         globals,
         extensions,
-        filters,
-        ...opts
-    } = options;
+        filters
+    } = loaderOptions;
     const extensionsInstances = await getAddonsMeta(Object.entries(extensions));
 
     const nodes = getNodes(
         source,
         extensionsInstances.map(([,, ext]) => ext),
-        opts
+        nunjucksOptions
     );
 
     const [filtersInstances, dependencies, assets] = await Promise.all([
@@ -70,7 +75,7 @@ export async function getDependencies(resourcePath, source, options) {
 
     const env = configureEnvironment({
         searchPaths,
-        options: opts,
+        options: nunjucksOptions,
         extensions: extensionsInstances,
         filters: filtersInstances
     });
