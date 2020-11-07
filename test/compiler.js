@@ -44,7 +44,14 @@ export default (fixture, options = {}) => {
             }
 
             if (stats.hasErrors()) {
-                reject(new Error(stats.toJson().errors));
+                const [error] = stats.toJson().errors;
+                const errorCopy = new Error(error.message);
+
+                Object.entries(error).forEach(([k, v]) => {
+                    errorCopy[k] = v;
+                });
+
+                reject(errorCopy);
             }
 
             import(`./bundles/${bundleName}.js`).then(function(module) {
