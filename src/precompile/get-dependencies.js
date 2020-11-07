@@ -62,26 +62,25 @@ export async function getDependencies(resourcePath, source, options) {
         opts
     );
 
-    const filtersInstances = await getAddonsMeta(Object.entries(filters));
-    const [precompiled, dependencies] = await Promise.all([
-        precompileToLocalVar(source, resourcePath, configureEnvironment({
-            searchPaths,
-            options: opts,
-            extensions: extensionsInstances,
-            filters: filtersInstances
-        })),
-        getTemplatesImports(nodes, searchPaths)
+    const [filtersInstances, dependencies, assets] = await Promise.all([
+        getAddonsMeta(Object.entries(filters)),
+        getTemplatesImports(nodes, searchPaths),
+        getAssets(nodes, assetsPaths)
     ]);
-    const deps = {
+
+    const precompiled = await precompileToLocalVar(source, resourcePath, configureEnvironment({
+        searchPaths,
+        options: opts,
+        extensions: extensionsInstances,
+        filters: filtersInstances
+    }));
+
+    return {
         precompiled,
         dependencies,
         globals: getUsedGlobals(nodes, globals),
         extensions: getUsedExtensions(nodes, extensionsInstances),
-        filters: getUsedFilters(nodes, filtersInstances)
-    };
-    const assets = await getAssets(nodes, assetsPaths);
-    return {
-        ...deps,
+        filters: getUsedFilters(nodes, filtersInstances),
         assets,
         isAsyncTemplate: hasAsyncTags(nodes)
     };
