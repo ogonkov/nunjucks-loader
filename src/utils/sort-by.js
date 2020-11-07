@@ -9,7 +9,7 @@ function numericalComparison(a, b) {
 
 /**
  * @param {string} attribute
- * @param {function(*, *): number} comparison
+ * @param {function(*, *): number} [comparison]
  * @returns {function(*, *): number}
  */
 export function sortBy(attribute, comparison = numericalComparison) {
