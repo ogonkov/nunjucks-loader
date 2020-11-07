@@ -8,7 +8,7 @@ import {hasAsyncTags} from '../ast/has-async-tags';
 
 import {configureEnvironment} from './configure-environment';
 import {getAddonsMeta} from './get-addons-meta';
-import {precompileToLocalVar} from './local-var-precompile';
+import {precompileToLocalVar} from './precompile-to-local-var';
 
 /**
  * @typedef {Object} NunjucksOptions
@@ -68,7 +68,7 @@ export async function getDependencies(resourcePath, source, options) {
         getAssets(nodes, assetsPaths)
     ]);
 
-    const precompiled = await precompileToLocalVar(source, resourcePath, configureEnvironment({
+    const precompiled = precompileToLocalVar(source, resourcePath, configureEnvironment({
         searchPaths,
         options: opts,
         extensions: extensionsInstances,
