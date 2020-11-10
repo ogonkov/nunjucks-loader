@@ -1,5 +1,3 @@
-import path from 'path';
-
 import {hasAsyncTags} from './ast/has-async-tags';
 import {getLoaderOutput} from './output/get-loader-output';
 import {getTemplateImports} from './output/get-template-imports';
@@ -10,10 +8,8 @@ import {loadDependencies} from './precompile/load-dependencies';
 import {precompileToLocalVar} from './precompile/precompile-to-local-var';
 
 
-const staticExtensionPath = path.join(
-    __dirname,
-    'static-extension',
-    'get-static-extension.js'
+const staticExtensionPath = require.resolve(
+    './static-extension/get-static-extension'
 );
 
 export async function doTransform(source, loaderContext, {
