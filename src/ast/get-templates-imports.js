@@ -1,5 +1,6 @@
 import {getFirstExistedPath} from '../utils/get-first-existed-path';
 import {getPossiblePaths} from '../utils/get-possible-paths';
+import {isUniqueTemplate} from '../utils/is-unique-template';
 
 import {getDependenciesTemplates} from './get-dependencies-templates';
 
@@ -20,6 +21,11 @@ async function filterPaths([path, paths]) {
     }
 }
 
+
+function filterUniqueTemplates(templates) {
+    return templates.filter(isUniqueTemplate);
+}
+
 /**
  * @param {nunjucks.nodes.Root} nodes
  * @param {string[]}            searchPaths
@@ -30,5 +36,5 @@ export function getTemplatesImports(nodes, searchPaths) {
     const possiblePaths = getPossiblePaths(templateDeps, searchPaths);
     const resolvedTemplates = possiblePaths.map(filterPaths);
 
-    return Promise.all(resolvedTemplates);
+    return Promise.all(resolvedTemplates).then(filterUniqueTemplates);
 }
