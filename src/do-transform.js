@@ -1,15 +1,13 @@
 import path from 'path';
 
 import {hasAsyncTags} from './ast/has-async-tags';
-import {TEMPLATE_DEPENDENCIES} from './constants';
-import {getModuleOutput} from './output/get-module-output';
+import {getLoaderOutput} from './output/get-loader-output';
 import {getTemplateImports} from './output/get-template-imports';
 import {toAssetsUUID} from './output/to-assets-uuid';
 import {configureEnvironment} from './precompile/configure-environment';
 import {getUsedDependencies} from './precompile/get-used-dependencies';
 import {loadDependencies} from './precompile/load-dependencies';
 import {precompileToLocalVar} from './precompile/precompile-to-local-var';
-import {ASSETS_KEY} from './static-extension/contants';
 
 
 const staticExtensionPath = path.join(
@@ -63,7 +61,6 @@ export async function doTransform(source, loaderContext, {
     const isAsyncTemplate = hasAsyncTags(nodes);
 
     const assetsUUID = toAssetsUUID(assets);
-    const resourcePathString = JSON.stringify(resourcePathImport);
     const envOptions = JSON.stringify({
         ...nunjucksOptions,
         // Loader specific options
@@ -91,37 +88,11 @@ export async function doTransform(source, loaderContext, {
         'export default' :
         'exports = module.exports =';
 
-    return `
-        ${outputImports}
-        ${outputPrecompiled}
-
-        function nunjucksTemplate(ctx = {}) {
-            const templateContext = {
-                ${ASSETS_KEY}: ${TEMPLATE_DEPENDENCIES}.assets,
-                ...ctx
-            };
-
-            var nunjucks = (${getModuleOutput('runtime')})(
-                ${envOptions},
-                ${TEMPLATE_DEPENDENCIES}
-            );
-
-            if (nunjucks.isAsync()) {
-                return nunjucks.renderAsync(
-                    ${resourcePathString},
-                    templateContext
-                );
-            }
-        
-            return nunjucks.render(
-                ${resourcePathString},
-                templateContext
-            );
-        };
-
-        nunjucksTemplate.__nunjucks_precompiled_template__ = ${TEMPLATE_DEPENDENCIES}.templates[${resourcePathString}];
-        nunjucksTemplate.${TEMPLATE_DEPENDENCIES} = ${TEMPLATE_DEPENDENCIES};
-
-        ${outputExport} nunjucksTemplate;
-    `;
+    return getLoaderOutput({
+        templateImport: JSON.stringify(resourcePathImport),
+        imports: outputImports,
+        precompiled: outputPrecompiled,
+        envOptions,
+        defaultExport: outputExport
+    });
 }
