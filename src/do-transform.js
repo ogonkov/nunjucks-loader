@@ -96,18 +96,27 @@ export async function doTransform(source, loaderContext, {
         ${outputPrecompiled}
 
         function nunjucksTemplate(ctx = {}) {
-          var nunjucks = (${getModuleOutput('runtime')})(
-            ${envOptions},
-            ${TEMPLATE_DEPENDENCIES}
-          );
+            const templateContext = {
+                ${ASSETS_KEY}: ${TEMPLATE_DEPENDENCIES}.assets,
+                ...ctx
+            };
 
-          ctx.${ASSETS_KEY} = ${TEMPLATE_DEPENDENCIES}.assets;
+            var nunjucks = (${getModuleOutput('runtime')})(
+                ${envOptions},
+                ${TEMPLATE_DEPENDENCIES}
+            );
 
-          if (nunjucks.isAsync()) {
-            return nunjucks.renderAsync(${resourcePathString}, ctx);
-          }
+            if (nunjucks.isAsync()) {
+                return nunjucks.renderAsync(
+                    ${resourcePathString},
+                    templateContext
+                );
+            }
         
-          return nunjucks.render(${resourcePathString}, ctx);
+            return nunjucks.render(
+                ${resourcePathString},
+                templateContext
+            );
         };
 
         nunjucksTemplate.__nunjucks_precompiled_template__ = ${TEMPLATE_DEPENDENCIES}.templates[${resourcePathString}];
