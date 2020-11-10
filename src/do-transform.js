@@ -58,14 +58,13 @@ export async function doTransform(source, loaderContext, {
             searchPaths: normalizedSearchPaths
         }
     );
-    const isAsyncTemplate = hasAsyncTags(nodes);
 
     const assetsUUID = toAssetsUUID(assets);
     const envOptions = JSON.stringify({
         ...nunjucksOptions,
         // Loader specific options
         jinjaCompat: options.jinjaCompat,
-        isAsyncTemplate
+        isAsyncTemplate: hasAsyncTags(nodes)
     });
 
     const outputImports = getTemplateImports(loaderContext, options.esModule, {
