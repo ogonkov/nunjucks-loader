@@ -13,3 +13,14 @@ it('should join add tag', function() {
         '"a" + "b" + "c" + "d"'
     );
 });
+
+it('should join add node with variables', function() {
+    const nodes = nunjucks.parser.parse(
+        '{{ "a" + b + "c" + d }}'
+    );
+    const addNode = nodes.children[0].children[0];
+
+    expect(getAddNodeValue(addNode)).toBe(
+        '"a" + b + "c" + d'
+    );
+});
