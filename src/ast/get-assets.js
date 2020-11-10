@@ -6,38 +6,8 @@ import {getFirstExistedPath} from '../utils/get-first-existed-path';
 import {getPossiblePaths} from '../utils/get-possible-paths';
 import {isUnique} from '../utils/is-unique';
 
+import {getAddNodeValue} from './get-add-node-value';
 import {getNodesValues} from './get-nodes-values';
-
-/**
- * Parse `Add` value to expression
- * @example
- *   'foo' + bar + 'qux'
- *
- * @param {nunjucks.nodes.Add} node
- *
- * @returns {string}
- */
-function getAddNodeValue(node) {
-    if (!(node instanceof nunjucks.nodes.Add)) {
-        throw new TypeError('Wrong node type');
-    }
-
-    return [node.left, node.right].map(function(node) {
-        if (node instanceof nunjucks.nodes.Add) {
-            return getAddNodeValue(node);
-        }
-
-        if (node instanceof nunjucks.nodes.Literal) {
-            return `"${node.value}"`;
-        }
-
-        if (node instanceof nunjucks.nodes.Symbol) {
-            return node.value;
-        }
-
-        throw new TypeError('Unsupported node signature');
-    }).join(' + ');
-}
 
 /**
  * @param {nunjucks.nodes.Node} node
@@ -65,6 +35,19 @@ function getNodeValue(node) {
     return asset.value;
 }
 
+async function filterPaths([path, paths]) {
+    try {
+        const importPath = await getFirstExistedPath(paths);
+        return [path, importPath];
+    } catch (error) {
+        if (error.code !== ERROR_MODULE_NOT_FOUND) {
+            throw new Error(`Asset "${path}" not found`);
+        }
+
+        throw error;
+    }
+}
+
 /**
  * @param {nunjucks.nodes.Root} nodes
  * @param {string|string[]}     searchAssets
@@ -77,17 +60,7 @@ export function getAssets(nodes, searchAssets) {
         getNodeValue
     ).filter(isUnique);
     const possiblePaths = getPossiblePaths(assets, [].concat(searchAssets));
-    const resolvedAssets = possiblePaths.map(function([path, paths]) {
-        return getFirstExistedPath(paths).then(function(importPath) {
-            return [path, importPath];
-        }, function(error) {
-            if (error.code !== ERROR_MODULE_NOT_FOUND) {
-                throw new Error(`Asset "${path}" not found`);
-            }
-
-            throw error;
-        })
-    });
+    const resolvedAssets = possiblePaths.map(filterPaths);
 
     return Promise.all(resolvedAssets);
 }

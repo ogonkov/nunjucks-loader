@@ -21,6 +21,6 @@ function getStringHash(str) {
     return hash;
 }
 
-export function getStringBas64Hash(str) {
+export function getStringBase64Hash(str) {
     return Buffer.from(String(getStringHash(str))).toString('base64');
 }

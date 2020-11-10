@@ -4,10 +4,10 @@ import {getModule} from '../utils/get-module';
  * @param {[string, string]} addonEntry
  * @return {Promise<[string, string, function]>}
  */
-function loadAddon([name, importPath]) {
-    return import(importPath).then(function(instance) {
-        return [name, importPath, getModule(instance)];
-    });
+async function loadAddon([name, importPath]) {
+    const instance = await import(importPath);
+
+    return [name, importPath, getModule(instance)];
 }
 
 /**

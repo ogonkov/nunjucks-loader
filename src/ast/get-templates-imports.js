@@ -1,7 +1,30 @@
 import {getFirstExistedPath} from '../utils/get-first-existed-path';
 import {getPossiblePaths} from '../utils/get-possible-paths';
+import {isUniqueTemplate} from '../utils/is-unique-template';
 
 import {getDependenciesTemplates} from './get-dependencies-templates';
+
+
+/**
+ * Find first existed path
+ *
+ * @param {string} path
+ * @param {string[]} paths
+ * @returns {Promise<string[]>}
+ */
+async function filterPaths([path, paths]) {
+    try {
+        const importPath = await getFirstExistedPath(paths);
+        return [path, importPath];
+    } catch {
+        throw new Error(`Template "${path}" not found`);
+    }
+}
+
+
+function filterUniqueTemplates(templates) {
+    return templates.filter(isUniqueTemplate);
+}
 
 /**
  * @param {nunjucks.nodes.Root} nodes
@@ -11,13 +34,7 @@ import {getDependenciesTemplates} from './get-dependencies-templates';
 export function getTemplatesImports(nodes, searchPaths) {
     const templateDeps = getDependenciesTemplates(nodes);
     const possiblePaths = getPossiblePaths(templateDeps, searchPaths);
-    const resolvedTemplates = possiblePaths.map(function([path, paths]) {
-        return getFirstExistedPath(paths).then(function(importPath) {
-            return [path, importPath];
-        }, function() {
-            throw new Error(`Template "${path}" not found`);
-        });
-    });
+    const resolvedTemplates = possiblePaths.map(filterPaths);
 
-    return Promise.all(resolvedTemplates);
+    return Promise.all(resolvedTemplates).then(filterUniqueTemplates);
 }
