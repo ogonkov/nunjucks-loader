@@ -10,9 +10,9 @@
     "pretest": "rm -rf test/.coverage && npm run lint",
     "test": "jest",
     "posttest": "rm -rf ./test/bundles/",
-    "preversion": "npm test",
+    "preversion": "./contrib/good-to-go.sh && npm test",
     "postversion": "git push && git push --tags",
-    "prepack": "./contrib/good-to-pack.sh && npm run build"
+    "prepack": "npm run build"
   },
   "repository": {
     "type": "git",
