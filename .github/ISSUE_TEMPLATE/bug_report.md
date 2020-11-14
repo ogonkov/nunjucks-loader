@@ -7,6 +7,15 @@ assignees: ''
 
 ---
 
+**Environment**
+Node version: <!-- node -v -->
+simple-nunjucks-loader version: <!-- npm ls simple-nunjucks-loader -->
+webpack version: <!-- npm ls webpack -->
+
+<!--
+    Post any additional info about used packages if applicable
+-->
+
 **Describe the bug**
 <!-- A clear and concise description of what the bug is. -->
 
