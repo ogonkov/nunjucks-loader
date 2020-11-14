@@ -13,7 +13,7 @@ simple-nunjucks-loader version: <!-- npm ls simple-nunjucks-loader -->
 webpack version: <!-- npm ls webpack -->
 
 <!--
-    Post any additional info if applicable
+    Post any additional info about used packages if applicable
 -->
 
 **Describe the bug**
