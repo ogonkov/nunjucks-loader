@@ -8,3 +8,5 @@ SCRIPT_DIR="$(dirname -- "$0")"
 . "$SCRIPT_DIR/git-check-branch-name.sh"
 # shellcheck source=git-check-branch-is-clean.sh
 . "$SCRIPT_DIR/git-check-branch-is-clean.sh"
+# shellcheck source=git-check-branch-is-even.sh
+. "$SCRIPT_DIR/git-check-branch-is-even.sh"
