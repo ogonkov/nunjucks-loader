@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 SCRIPT_DIR="$(dirname -- "$0")"
 # shellcheck source=git-utils.sh
 . "$SCRIPT_DIR/git-utils.sh"
