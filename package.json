@@ -12,7 +12,7 @@
     "posttest": "rm -rf ./test/bundles/",
     "preversion": "npm test",
     "postversion": "git push && git push --tags",
-    "prepack": "npm run build"
+    "prepack": "./contrib/good-to-pack.sh && npm run build"
   },
   "repository": {
     "type": "git",
