@@ -13,7 +13,6 @@ export function getTemplateLoaderImport(loaderContext, esModule) {
     );
 
     return `${getImportStr(loaderPath, esModule)(
-        NUNJUCKS_LOADER_IMPORT,
-        'WebpackPrecompiledLoader'
+        NUNJUCKS_LOADER_IMPORT
     )}`;
 }

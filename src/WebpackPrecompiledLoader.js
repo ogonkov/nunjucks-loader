@@ -1,4 +1,4 @@
-export class WebpackPrecompiledLoader {
+export default class WebpackPrecompiledLoader {
     constructor(precompiled = {}) {
         this.precompiled = precompiled;
     }

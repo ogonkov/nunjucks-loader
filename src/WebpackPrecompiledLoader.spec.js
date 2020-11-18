@@ -1,4 +1,4 @@
-import {WebpackPrecompiledLoader} from './WebpackPrecompiledLoader';
+import WebpackPrecompiledLoader from './WebpackPrecompiledLoader';
 
 const precompiledTemplateMock = {
     root() {}
