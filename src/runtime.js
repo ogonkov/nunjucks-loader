@@ -1,19 +1,21 @@
 import nunjucks from 'nunjucks/browser/nunjucks-slim';
 
-import {WebpackPrecompiledLoader} from './WebpackPrecompiledLoader';
 
-
-export default function runtime(options, {
-    globals,
-    extensions,
-    filters,
-    templates: precompiled
-}) {
+export default function runtime(
+    options,
+    {
+        globals,
+        extensions,
+        filters,
+        templates: precompiled
+    },
+    TemplatesLoader
+) {
     if (options.jinjaCompat === true) {
         nunjucks.installJinjaCompat();
     }
 
-    const templatesLoader = new WebpackPrecompiledLoader(precompiled);
+    const templatesLoader = new TemplatesLoader(precompiled);
     const env = new nunjucks.Environment(
         templatesLoader,
         options

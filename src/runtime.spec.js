@@ -1,4 +1,6 @@
+import {WebpackPrecompiledLoader} from './WebpackPrecompiledLoader';
 import runtime from './runtime';
+
 
 describe('render', function() {
     test('should render template', function() {
@@ -15,7 +17,7 @@ describe('render', function() {
             templates: {
                 'foo.njk': precompiled
             }
-        });
+        }, WebpackPrecompiledLoader);
 
         expect(tpl.render('foo.njk', {
             username: 'Joe Doe'
@@ -37,7 +39,7 @@ describe('isAsync', function() {
                     module: ''
                 }
             }
-        });
+        }, WebpackPrecompiledLoader);
 
         expect(tpl.isAsync()).toBe(true);
     });

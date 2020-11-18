@@ -1,4 +1,4 @@
-import {TEMPLATE_DEPENDENCIES} from '../constants';
+import {NUNJUCKS_LOADER_IMPORT, TEMPLATE_DEPENDENCIES} from '../constants';
 import {ASSETS_KEY} from '../static-extension/contants';
 
 import {getModuleOutput} from './get-module-output';
@@ -23,7 +23,8 @@ export function getLoaderOutput({
 
             var nunjucks = (${getModuleOutput('runtime')})(
                 ${envOptions},
-                ${TEMPLATE_DEPENDENCIES}
+                ${TEMPLATE_DEPENDENCIES},
+                ${getModuleOutput(NUNJUCKS_LOADER_IMPORT)}
             );
 
             if (nunjucks.isAsync()) {
