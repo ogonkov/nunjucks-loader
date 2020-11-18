@@ -65,6 +65,7 @@ export async function doTransform(source, loaderContext, {
     });
 
     const outputImports = getTemplateImports(loaderContext, options.esModule, {
+        loaderClass: options.loaderClass,
         assets: assetsUUID,
         dependencies,
         extensions,

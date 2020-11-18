@@ -7,6 +7,7 @@ import {getTemplateDependenciesImport} from './get-template-dependencies-import'
 import {getTemplateLoaderImport} from './get-template-loader-import';
 
 export function getTemplateImports(loader, esModule, {
+    loaderClass,
     assets,
     dependencies,
     extensions,
@@ -14,7 +15,7 @@ export function getTemplateImports(loader, esModule, {
     globals
 }) {
     return `
-    ${getTemplateLoaderImport(loader, esModule)}
+    ${getTemplateLoaderImport(loader, esModule, loaderClass)}
     ${getRuntimeImport(loader, esModule)}
     ${getTemplateDependenciesImport(loader, esModule, dependencies)}
     ${getGlobals(globals).imports(loader, esModule)}

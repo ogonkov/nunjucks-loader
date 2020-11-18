@@ -215,4 +215,14 @@ describe('Advanced compilation', function() {
             jest.useRealTimers();
         });
     });
+
+    describe('loaderClass', function() {
+        it('should overrider templates loader', async function () {
+            const output = await compiler('fixtures/base.njk', {
+                loaderClass: require.resolve('./fixtures/template-loader/TemplateLoader.js')
+            });
+
+            expect(output()).toBe('<p>Template from custom loader</p>');
+        });
+    });
 });
