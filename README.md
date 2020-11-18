@@ -110,9 +110,10 @@ of setup and using assets in loader.
 
 ### Asynchronous support
 
-When loader found async tags or async filters or extensions in the template,
-it calls `render` with callback under the hood, and returns `Promise`,
-instead of render result.
+When loader found async
+[templates loader](https://mozilla.github.io/nunjucks/api.html#writing-a-loader),
+async tags, async filters or extensions in the template, it calls `render`
+with callback under the hood, and returns `Promise`, instead of render result.
 
 Because of asynchronous nature of Webpack assets loading, all assets, that
 loaded via `{% static %}` tag, make template to return `Promise` too.
