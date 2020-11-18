@@ -132,6 +132,7 @@ All other options get passed to Nunjunks `Environment` during files loading.
 |**[`globals`](#globals)**|`Object.<string, string>`|`{}`|Map global function to corresponding module|
 |**[`extensions`](#extensions)**|`Object.<string, string>`|`{}`|Map extension to corresponding module|
 |**[`filters`](#filters)**|`Object.<string, string>`|`{}`|Map filters to corresponding module|
+|**[`loaderClass`](#loaderclass)**|`string`|`undefined`|Class to be used as [nunjucks templates loader](https://mozilla.github.io/nunjucks/api.html#writing-a-loader)|
 |<!-- Add custom options above -->**`autoescape`**|`{Boolean}`|`true`|See [Nunjuncks options][nunjucks-docs-configure] for description of options below|
 |**`throwOnUndefined`**|`{Boolean}`|`false`||
 |**`trimBlocks`**|`{Boolean}`|`false`||
@@ -350,6 +351,18 @@ asyncFilter.async = true;
 
 module.exports = asyncFilter;
 ```
+
+### loaderClass
+
+This option will replace import of default
+[Nunjucks templates loader](https://mozilla.github.io/nunjucks/api.html#writing-a-loader)
+with a custom implementation.
+
+Custom implementation should return precompiled code, because bundle used slim
+version of Nunjucks, that didn't have compiler.
+
+See [default loader implementation](./src/WebpackPrecompiledLoader.js)
+for reference.
 
 [nunjucks-github]:https://github.com/mozilla/nunjucks
 [html-webpack-plugin-github]:https://github.com/jantimon/html-webpack-plugin
