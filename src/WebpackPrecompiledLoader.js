@@ -1,17 +1,20 @@
-export function WebpackPrecompiledLoader(precompiled = {}) {
-    this.precompiled = precompiled;
-}
-
-WebpackPrecompiledLoader.prototype.getSource = function getSource(name) {
-    if (!(name in this.precompiled)) {
-        return null;
+export class WebpackPrecompiledLoader {
+    constructor(precompiled = {}) {
+        this.precompiled = precompiled;
     }
 
-    return {
-        src: {
-            type: 'code',
-            obj: this.precompiled[name]
-        },
-        path: name
-    };
-};
+    getSource(name) {
+        if (!(name in this.precompiled)) {
+            return null;
+        }
+
+        return {
+            src: {
+                type: 'code',
+                obj: this.precompiled[name]
+            },
+            path: name
+        };
+    }
+}
+
