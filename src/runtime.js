@@ -13,8 +13,9 @@ export default function runtime(options, {
         nunjucks.installJinjaCompat();
     }
 
+    const templatesLoader = new WebpackPrecompiledLoader(precompiled);
     const env = new nunjucks.Environment(
-        new WebpackPrecompiledLoader(precompiled),
+        templatesLoader,
         options
     );
 
@@ -65,6 +66,7 @@ export default function runtime(options, {
 
         isAsync() {
             return (
+                templatesLoader.async === true ||
                 options.isAsyncTemplate === true ||
                 Object.values(filters).some(({async}) => async === true)
             );
