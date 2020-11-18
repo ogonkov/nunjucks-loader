@@ -101,7 +101,11 @@ module.exports = {
       displayName: 'es',
       globals: {
         __USE_ES__: true
-      }
+      },
+      testMatch: [
+        '**/assets.test.js',
+        '**/loader.test.js'
+      ]
     }
   ],
 
