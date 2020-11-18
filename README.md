@@ -358,6 +358,26 @@ This option will replace import of default
 [Nunjucks templates loader](https://mozilla.github.io/nunjucks/api.html#writing-a-loader)
 with a custom implementation.
 
+**webpack.config.js**
+
+```js
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.njk$/,
+                use: [{
+                    loader: 'simple-nunjucks-loader',
+                    options: {
+                        loaderClass: require.resolve('./CustomNunjucksLoader')
+                    }
+                }]
+            }
+        ]
+    }
+};
+```
+
 Custom implementation should return precompiled code, because bundle used slim
 version of Nunjucks, that didn't have compiler.
 
