@@ -137,6 +137,7 @@ All other options get passed to Nunjunks `Environment` during files loading.
 |**`trimBlocks`**|`{Boolean}`|`false`||
 |**`lstripBlocks`**|`{Boolean}`|`false`||
 |**`tags`**|`{Object.<string, string>}`|Default Jinja tags config|Override tags syntax|
+|**`dev`**|`{Boolean}`|`true` for development and `false` for production mode|Undocumented Nunjucks option, that will make stacktraces more useful|
 
 `tags` default to:
 ```
