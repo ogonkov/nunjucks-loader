@@ -1,4 +1,7 @@
+/* global __USE_ES__ */
+
 import path from 'path';
+
 import compiler from './compiler';
 
 const loaderBaseOptions = {
