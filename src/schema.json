@@ -2,6 +2,9 @@
   "title": "Simple Nunjucks Loader options",
   "type": "object",
   "properties": {
+    "dev": {
+      "type": "boolean"
+    },
     "autoescape": {
       "type": "boolean"
     },
