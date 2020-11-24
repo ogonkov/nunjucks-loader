@@ -24,7 +24,7 @@ export async function doTransform(source, loaderContext, {
         trimBlocks: options.trimBlocks,
         lstripBlocks: options.lstripBlocks,
         tags: options.tags,
-        dev: options.dev || loaderContext.mode === 'development'
+        dev: options.dev ?? loaderContext.mode === 'development'
     };
 
     const {

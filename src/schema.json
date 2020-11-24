@@ -3,8 +3,7 @@
   "type": "object",
   "properties": {
     "dev": {
-      "type": "boolean",
-      "default": false
+      "type": "boolean"
     },
     "autoescape": {
       "type": "boolean"
