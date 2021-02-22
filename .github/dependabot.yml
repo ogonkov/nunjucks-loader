@@ -16,3 +16,5 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    labels:
+      - support
