@@ -2,6 +2,8 @@ daysUntilStale: 14
 daysUntilClose: 7
 exemptLabels:
   - pinned
+  - dependencies
+  - support
 staleLabel: stale
 markComment: >
   This issue has been automatically marked as stale because it has not had
