@@ -1,7 +1,8 @@
-import {IMPORTS_PREFIX, TEMPLATE_DEPENDENCIES} from '../constants';
+import {IMPORTS_PREFIX} from '../constants';
 import {toVar} from '../utils/to-var';
 
 import {getDynamicImport} from './get-dynamic-import';
+import {getDynamicMeta} from './get-dynamic-meta';
 
 
 /**
@@ -12,7 +13,6 @@ export function getAssets(assets) {
     function imports(loaderContext, esModule) {
         return assets.map(function([assetPath, assetImport]) {
             const uuid = assetPath.getHash();
-            const isDynamicImport = assetImport.isDynamic();
             const importVar = toVar(
                 `${IMPORTS_PREFIX}_asset_${uuid}`
             );
@@ -25,17 +25,14 @@ export function getAssets(assets) {
                     importVar
                 }
             );
-
+            const importMeta = getDynamicMeta(assetPath, assetImport, {
+                metaKey: 'assets',
+                importVar
+            });
 
             return `
             ${importInvocation}
-            ${TEMPLATE_DEPENDENCIES}.assets['${uuid}'] = {
-              path: ${isDynamicImport ?
-                assetPath.toRegExp().toString() :
-                JSON.stringify(assetPath.toString())
-              },
-              module: ${importVar}
-            };
+            ${importMeta}
             `;
         }).join('');
     }
