@@ -128,3 +128,12 @@ describe('toArgs', function() {
         expect(templateImport.toArgs()).toEqual(['c']);
     });
 });
+
+describe('toRegExp', function() {
+    it('should generate RegExp for path', function() {
+        const templateImport = new ImportWrapper();
+        templateImport.addLiteral('a/').addSymbol('b').addLiteral('/c/');
+
+        expect(templateImport.toRegExp().test('a/foobar/c/')).toBe(true);
+    });
+});

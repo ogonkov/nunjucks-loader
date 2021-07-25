@@ -1,3 +1,4 @@
+import {toRegExpSource} from '../utils/to-regexp-source';
 import {unquote} from '../utils/unquote';
 
 import {ImportLiteral} from './ImportLiteral';
@@ -160,5 +161,24 @@ export class ImportWrapper {
         return this.importValue.filter(isSymbol).map(function toValue(item) {
             return item.valueOf();
         });
+    }
+
+    toRegExp() {
+        const regexpSource = this.importValue.reduce(function(regex, value) {
+            let valueRegexp;
+            if (isSymbol(value)) {
+                valueRegexp = '(.+)';
+            } else {
+                valueRegexp = toRegExpSource(value.valueOf());
+            }
+
+            if (regex === '') {
+                return valueRegexp;
+            }
+
+            return `${regex}${valueRegexp}`;
+        }, '');
+
+        return new RegExp(`${regexpSource}$`);
     }
 }
