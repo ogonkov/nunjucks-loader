@@ -111,6 +111,10 @@ export class ImportWrapper {
         return item.value.startsWith(str);
     }
 
+    isDynamic() {
+        return this.importValue.some((value) => value instanceof ImportSymbol);
+    }
+
     /**
      * @returns {string}
      */

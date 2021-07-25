@@ -77,6 +77,18 @@ describe('startsWith', function() {
     });
 });
 
+describe('isDynamic', function() {
+    it('should detect paths with symbols', function() {
+        const templateImport = new ImportWrapper();
+        templateImport.addLiteral('a');
+
+        expect(templateImport.isDynamic()).toBe(false);
+
+        templateImport.addSymbol('b');
+        expect(templateImport.isDynamic()).toBe(true);
+    });
+});
+
 describe('toString', function() {
     let templateImport;
     beforeEach(function() {
