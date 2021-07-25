@@ -117,3 +117,14 @@ describe('toString', function() {
         expect(templateImport.toString()).toBe('"b" + "c"');
     });
 });
+
+describe('toArgs', function() {
+    it('should return all symbol names', function() {
+        const templateImport = new ImportWrapper();
+        templateImport.addLiteral('a').addLiteral('b');
+        expect(templateImport.toArgs()).toEqual([]);
+
+        templateImport.addSymbol('c');
+        expect(templateImport.toArgs()).toEqual(['c']);
+    });
+});

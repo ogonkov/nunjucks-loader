@@ -3,6 +3,7 @@ import {unquote} from '../utils/unquote';
 import {ImportLiteral} from './ImportLiteral';
 import {ImportSymbol} from './ImportSymbol';
 import {getType} from './get-type';
+import {isSymbol} from './is-symbol';
 import {optimizeImportLiterals} from './optimize-import-literals';
 import {throwNotSymbolOrLiteral} from './throw-not-symbol-or-literal';
 
@@ -114,7 +115,7 @@ export class ImportWrapper {
     }
 
     isDynamic() {
-        return this.importValue.some((value) => value instanceof ImportSymbol);
+        return this.importValue.some(isSymbol);
     }
 
     /**
@@ -144,5 +145,16 @@ export class ImportWrapper {
 
             return `${glob}${item.toGlob()}`;
         }, '');
+    }
+
+    /**
+     * List of all dynamic parts values
+     *
+     * @returns {string[]}
+     */
+    toArgs() {
+        return this.importValue.filter(isSymbol).map(function toValue(item) {
+            return item.valueOf();
+        });
     }
 }
