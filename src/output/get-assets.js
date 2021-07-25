@@ -1,9 +1,7 @@
-import {stringifyRequest} from 'loader-utils';
-
 import {IMPORTS_PREFIX, TEMPLATE_DEPENDENCIES} from '../constants';
-import {stringify} from '../import-wrapper/stringify';
-import {getImportStr} from '../utils/get-import-str';
 import {toVar} from '../utils/to-var';
+
+import {getDynamicImport} from './get-dynamic-import';
 
 
 /**
@@ -14,24 +12,20 @@ export function getAssets(assets) {
     function imports(loaderContext, esModule) {
         return assets.map(function([assetPath, assetImport]) {
             const uuid = assetPath.getHash();
-            const args = assetImport.toArgs();
             const isDynamicImport = assetImport.isDynamic();
-
-            let importPath;
-            if (isDynamicImport) {
-                importPath = stringify(loaderContext, assetImport).toString();
-            } else {
-                importPath = stringifyRequest(loaderContext, assetImport.toString());
-            }
-
             const importVar = toVar(
                 `${IMPORTS_PREFIX}_asset_${uuid}`
             );
-            const importInvocation = isDynamicImport ?
-                `const ${importVar} = function(${args.join()}) {
-                    return ${getImportStr(importPath, esModule, true)()}
-                };` :
-                `${getImportStr(importPath, esModule)(importVar)}`;
+            const importInvocation = getDynamicImport(
+                loaderContext,
+                assetPath,
+                assetImport,
+                {
+                    esModule,
+                    importVar
+                }
+            );
+
 
             return `
             ${importInvocation}
