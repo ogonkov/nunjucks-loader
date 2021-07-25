@@ -8,8 +8,8 @@ it('should prepend import', function() {
     templateImport.addSymbol('b').addLiteral('c');
 
     const nextPath = resolve(path, templateImport);
-    expect(nextPath.toString()).toMatch(/a\/" \+ b \+ "c"$/);
-    expect(nextPath.toGlob()).toMatch(/a\/\*c/);
+    expect(nextPath.toString()).toMatch(/a(\/|\\\\)" \+ b \+ "c"$/);
+    expect(nextPath.toGlob()).toMatch(/a(\/|\\\\)\*c/);
 });
 
 it('should prepend to literal', function() {
@@ -18,6 +18,6 @@ it('should prepend to literal', function() {
     templateImport.addLiteral('b').addSymbol('c');
 
     const nextPath = resolve(path, templateImport);
-    expect(nextPath.toString()).toMatch(/a\/b" \+ c$/);
-    expect(nextPath.toGlob()).toMatch(/a\/b\*/);
+    expect(nextPath.toString()).toMatch(/a(\/|\\\\)b" \+ c$/);
+    expect(nextPath.toGlob()).toMatch(/a(\/|\\\\)b\*/);
 });
