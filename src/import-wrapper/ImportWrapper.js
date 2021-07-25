@@ -1,3 +1,4 @@
+import {getStringBase64Hash} from '../utils/get-string-base64-hash';
 import {toRegExpSource} from '../utils/to-regexp-source';
 import {unquote} from '../utils/unquote';
 
@@ -121,6 +122,10 @@ export class ImportWrapper {
 
     isDynamic() {
         return this.importValue.some(isSymbol);
+    }
+
+    getHash() {
+        return getStringBase64Hash(this.toString());
     }
 
     /**

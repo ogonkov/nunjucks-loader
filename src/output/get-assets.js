@@ -12,7 +12,8 @@ import {toVar} from '../utils/to-var';
  */
 export function getAssets(assets) {
     function imports(loaderContext, esModule) {
-        return assets.map(function([uuid, assetPath, assetImport]) {
+        return assets.map(function([assetPath, assetImport]) {
+            const uuid = assetPath.getHash();
             const args = assetImport.toArgs();
             const isDynamicImport = assetImport.isDynamic();
 
