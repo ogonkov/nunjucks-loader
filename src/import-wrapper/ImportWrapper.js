@@ -101,6 +101,10 @@ export class ImportWrapper {
         ]);
     }
 
+    map(callback) {
+        return new ImportWrapper(this.importValue.map(callback));
+    }
+
     /**
      * @param {string} str
      * @returns {boolean}
