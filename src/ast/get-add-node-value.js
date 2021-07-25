@@ -1,5 +1,8 @@
 import nunjucks from 'nunjucks';
 
+import {ImportWrapper} from '../import-wrapper/ImportWrapper';
+
+
 /**
  * Parse `Add` value to expression
  * @example
@@ -7,7 +10,7 @@ import nunjucks from 'nunjucks';
  *
  * @param {nunjucks.nodes.Add} node
  *
- * @returns {string}
+ * @returns {ImportWrapper}
  */
 export function getAddNodeValue(node) {
     if (!(node instanceof nunjucks.nodes.Add)) {
@@ -15,7 +18,7 @@ export function getAddNodeValue(node) {
     }
 
     const stack = [node.left, node.right];
-    const value = [];
+    const value = new ImportWrapper();
 
     while (stack.length) {
         const node = stack.shift();
@@ -25,17 +28,17 @@ export function getAddNodeValue(node) {
         }
 
         if (node instanceof nunjucks.nodes.Literal) {
-            value.push(`"${node.value}"`);
+            value.addLiteral(node.value);
             continue;
         }
 
         if (node instanceof nunjucks.nodes.Symbol) {
-            value.push(node.value);
+            value.addSymbol(node.value);
             continue;
         }
 
         throw new TypeError('Unsupported node signature');
     }
 
-    return value.join(' + ');
+    return value;
 }

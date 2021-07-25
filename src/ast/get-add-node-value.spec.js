@@ -9,7 +9,7 @@ it('should join add tag', function() {
     );
     const addNode = nodes.children[0].children[0];
 
-    expect(getAddNodeValue(addNode)).toBe(
+    expect(getAddNodeValue(addNode).toString()).toBe(
         '"a" + "b" + "c" + "d"'
     );
 });
@@ -20,7 +20,7 @@ it('should join add node with variables', function() {
     );
     const addNode = nodes.children[0].children[0];
 
-    expect(getAddNodeValue(addNode)).toBe(
+    expect(getAddNodeValue(addNode).toString()).toBe(
         '"a" + b + "c" + d'
     );
 });

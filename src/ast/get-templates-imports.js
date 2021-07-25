@@ -9,7 +9,7 @@ import {getDependenciesTemplates} from './get-dependencies-templates';
  * Find first existed path
  *
  * @param {string} path
- * @param {string[]} paths
+ * @param {ImportWrapper[]} paths
  * @returns {Promise<string[]>}
  */
 async function filterPaths([path, paths]) {
@@ -29,7 +29,7 @@ function filterUniqueTemplates(templates) {
 /**
  * @param {nunjucks.nodes.Root} nodes
  * @param {string[]}            searchPaths
- * @returns {Promise<[string, string][]>}
+ * @returns {Promise<[string, ImportWrapper][]>}
  */
 export function getTemplatesImports(nodes, searchPaths) {
     const templateDeps = getDependenciesTemplates(nodes);

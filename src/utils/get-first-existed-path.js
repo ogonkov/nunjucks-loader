@@ -2,42 +2,33 @@ import fs from 'fs';
 import {promisify} from 'util';
 
 import {getGlob} from './get-glob';
-import {unquote} from './unquote';
 
 
 const fsAccess = promisify(fs.access);
 
 /**
- * @param {string} path
+ * @param {ImportWrapper} path
  * @returns {Promise<boolean>}
  */
 async function isExists(path) {
-    if (isExpression(path)) {
+    if (path.isDynamic()) {
         const glob = await getGlob();
-        const files = await glob(getGlobExpression(path));
+        const files = await glob(path.toGlob());
 
         return files.length > 0;
     }
 
     try {
-        await fsAccess(path);
+        await fsAccess(path.toString());
         return true;
     } catch (exception) {
         return false;
     }
 }
 
-function isExpression(str) {
-    return /" \+ [^ ]+( \+ "|$)/.test(str);
-}
-
-function getGlobExpression(pathExpression) {
-    return unquote(pathExpression.replace(/" \+ [^ ]+( \+ "|$)/g, '*'));
-}
-
 /**
- * @param {string[]} paths
- * @returns {Promise<string>}
+ * @param {ImportWrapper[]} paths
+ * @returns {Promise<ImportWrapper>}
  */
 export async function getFirstExistedPath(paths) {
     for (const path of paths) {

@@ -1,8 +1,10 @@
 import nunjucks from 'nunjucks';
 
+import {ImportWrapper} from '../import-wrapper/ImportWrapper';
+
 /**
  * @param {nunjucks.nodes.Root} nodes
- * @returns {string[]|nunjucks.nodes.Node[]}
+ * @returns {ImportWrapper[]}
  */
 export function getDependenciesTemplates(nodes) {
     const extendsNodes = nodes.findAll(nunjucks.nodes.Extends);
@@ -15,5 +17,5 @@ export function getDependenciesTemplates(nodes) {
         ...includeNodes,
         ...importNodes,
         ...fromImportNodes
-    ].map((node) => node.template.value);
+    ].map((node) => new ImportWrapper().addLiteral(node.template.value));
 }
