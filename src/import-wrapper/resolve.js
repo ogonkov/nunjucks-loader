@@ -2,6 +2,7 @@ import path from 'path';
 
 import {ImportLiteral} from './ImportLiteral';
 import {ImportSymbol} from './ImportSymbol';
+import {normalizeTrailingSlash} from './normalize-trailing-slash';
 
 
 /**
@@ -18,13 +19,10 @@ export function resolve(prependPath, templateImport) {
         firstPart = '';
     }
 
-    let filePath = path.resolve(prependPath, firstPart.valueOf());
-    if (
-        (firstPart.toString() === '' || firstPart.toString().endsWith('/')) &&
-        !filePath.endsWith('/')
-    ) {
-        filePath = `${filePath}/`;
-    }
+    const filePath = normalizeTrailingSlash(
+        path.resolve(prependPath, firstPart.valueOf()),
+        firstPart
+    );
 
     _templateImport.unshift(new ImportLiteral(filePath));
 
