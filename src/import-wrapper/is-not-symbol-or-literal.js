@@ -1,5 +1,5 @@
 import {ImportLiteral} from './ImportLiteral';
-import {ImportSymbol} from './ImportSymbol';
+import {isSymbol} from './is-symbol';
 
 
 function and(...fns) {
@@ -18,10 +18,6 @@ function not(fn) {
 
 function isLiteral(value) {
     return value instanceof ImportLiteral;
-}
-
-function isSymbol(value) {
-    return value instanceof ImportSymbol;
 }
 
 export const isNotSymbolOrLiteral = and(not(isLiteral), not(isSymbol));
