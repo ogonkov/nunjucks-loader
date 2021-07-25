@@ -1,3 +1,5 @@
+import {unquote} from '../utils/unquote';
+
 import {ImportLiteral} from './ImportLiteral';
 import {ImportSymbol} from './ImportSymbol';
 import {getType} from './get-type';
@@ -119,7 +121,16 @@ export class ImportWrapper {
      * @returns {string}
      */
     toString() {
-        return this.importValue.join(' + ');
+        const string = this.importValue.join(' + ');
+        if (this.isDynamic()) {
+            return string;
+        }
+
+        if (this.importValue.length === 1) {
+            return unquote(string);
+        }
+
+        return string;
     }
 
     /**

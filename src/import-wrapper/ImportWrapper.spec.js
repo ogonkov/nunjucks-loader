@@ -105,4 +105,15 @@ describe('toString', function() {
     it('should return raw string', function() {
         expect(templateImport.toGlob()).toBe('*b');
     });
+
+    it('should return unquoted string for static paths', function() {
+        templateImport.shift();
+        expect(templateImport.toString()).toBe('b');
+    });
+
+    it('should return quoted string for multiple literals', function() {
+        templateImport.shift();
+        templateImport.addLiteral('c');
+        expect(templateImport.toString()).toBe('"b" + "c"');
+    });
 });
