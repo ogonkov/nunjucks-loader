@@ -3,6 +3,7 @@
 import path from 'path';
 
 import compiler from './compiler';
+import {statsCompiler} from './stats-compiler';
 
 const loaderBaseOptions = {
     esModule: __USE_ES__
@@ -87,6 +88,22 @@ describe('Advanced compilation', function() {
         });
 
         expect(output()).toMatchSnapshot();
+    });
+
+    test('should output warning for dynamic templates imports', async function() {
+        const {stats} = await statsCompiler('fixtures/templates/dynamic.njk', {
+            ...loaderBaseOptions,
+            assetsPaths: [
+                'test/fixtures/django_project/app_example/static'
+            ]
+        });
+
+        expect(stats.toJson().warnings).toContainEqual(expect.objectContaining({
+            message: expect.stringContaining('Skipping "test/fixtures/assets/" + name.')
+        }));
+        expect(stats.toJson().warnings).toContainEqual(expect.objectContaining({
+            message: expect.stringContaining('Skipping "test/fixtures/" + macroName + "-macro.njk".')
+        }));
     });
 
     describe('globals', function() {

@@ -1,0 +1,9 @@
+{% set name = 'base.njk' %}
+{% extends 'test/fixtures/assets/' + name %}
+
+{% block body %}
+    {% set macroName = 'simple' %}
+    {% import 'test/fixtures/' + macroName + '-macro.njk' as form %}
+
+    {{ form.field('user') }}
+{% endblock %}
