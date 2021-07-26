@@ -27,6 +27,7 @@ export function getAssets(assets) {
             );
             const importMeta = getDynamicMeta(assetPath, assetImport, {
                 metaKey: 'assets',
+                depsKey: assetPath.getHash(),
                 importVar
             });
 

@@ -3,12 +3,12 @@ import {TEMPLATE_DEPENDENCIES} from '../constants';
 
 export function getDynamicMeta(assetPath, assetImport, {
     metaKey,
-    importVar
+    importVar,
+    depsKey
 }) {
     const isDynamicImport = assetImport.isDynamic();
-    const uuid = assetPath.getHash();
 
-    return `${TEMPLATE_DEPENDENCIES}.${metaKey}['${uuid}'] = {
+    return `${TEMPLATE_DEPENDENCIES}.${metaKey}['${depsKey}'] = {
         path: ${isDynamicImport ?
             assetPath.toRegExp().toString() :
             JSON.stringify(assetPath.toString())
