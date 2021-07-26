@@ -27,12 +27,21 @@ function filterUniqueTemplates(templates) {
 }
 
 /**
+ * @param {Object} loaderContext
  * @param {nunjucks.nodes.Root} nodes
  * @param {string[]}            searchPaths
  * @returns {Promise<[string, ImportWrapper][]>}
  */
-export function getTemplatesImports(nodes, searchPaths) {
-    const templateDeps = getDependenciesTemplates(nodes);
+export function getTemplatesImports(loaderContext, nodes, searchPaths) {
+    const templateDeps = getDependenciesTemplates(nodes).filter(function(dep) {
+        if (dep instanceof Error) {
+            loaderContext.emitWarning(dep);
+
+            return false;
+        }
+
+        return true;
+    });
     const possiblePaths = getPossiblePaths(templateDeps, searchPaths);
     const resolvedTemplates = possiblePaths.map(filterPaths);
 

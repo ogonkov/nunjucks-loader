@@ -46,6 +46,7 @@ export async function doTransform(source, loaderContext, {
         extensions,
         filters
     } = await getUsedDependencies(
+        loaderContext,
         nodes,
         extensionsInstances,
         filtersInstances,

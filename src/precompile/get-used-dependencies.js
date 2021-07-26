@@ -34,6 +34,7 @@ import {getUsedGlobals} from '../ast/get-used-globals';
  */
 
 /**
+ * @param {Object} loaderContext
  * @param {nunjucks.nodes.Root} nodes
  * @param {InstancesList} extensions
  * @param {InstancesList} filters
@@ -41,6 +42,7 @@ import {getUsedGlobals} from '../ast/get-used-globals';
  * @returns {Promise<Object>}
  */
 export async function getUsedDependencies(
+    loaderContext,
     nodes,
     extensions,
     filters,
@@ -53,7 +55,7 @@ export async function getUsedDependencies(
     } = loaderOptions;
 
     const [templates, assets] = await Promise.all([
-        getTemplatesImports(nodes, searchPaths),
+        getTemplatesImports(loaderContext, nodes, searchPaths),
         getAssets(nodes, assetsPaths)
     ]);
 
