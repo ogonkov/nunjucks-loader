@@ -2,21 +2,25 @@ export class ImportPart {
     constructor(value) {
         if (typeof value !== 'string') {
             throw new TypeError(
-                `${this.constructor.name}: value should be a string`
+                `${this.className}: value should be a string`
             );
         }
 
         if (value === '') {
             throw new TypeError(
-                `${this.constructor.name}: value should not be empty`
+                `${this.className}: value should not be empty`
             );
         }
 
         this.value = value;
     }
 
-    get [Symbol.toStringTag]() {
+    get className() {
         return this.constructor.name;
+    }
+
+    get [Symbol.toStringTag]() {
+        return this.className;
     }
 
     valueOf() {
