@@ -34,7 +34,15 @@ function getNodeValue(node) {
     }
 
     const value = new ImportWrapper()
-    value.addLiteral(asset.value);
+
+    if (asset instanceof nunjucks.nodes.Symbol) {
+        value.addSymbol(asset.value);
+    }
+
+    if (asset instanceof nunjucks.nodes.Literal) {
+        value.addLiteral(asset.value);
+    }
+
     return value;
 }
 

@@ -1,0 +1,7 @@
+{% extends 'test/fixtures/assets/base.njk' %}
+
+{% block body %}
+    {% for fileName in ['foo/bar/dynamic-example-1.md', 'foo/bar/dynamic-example-2.md'] %}
+        <p>{% static fileName %}</p>
+    {% endfor %}
+{% endblock body %}
