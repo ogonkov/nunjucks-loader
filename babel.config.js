@@ -6,6 +6,8 @@ module.exports = function(api) {
     return {
         presets: [
             ['@babel/preset-env', {
+                useBuiltIns: 'usage',
+                corejs: '3',
                 modules: isESM ? false : 'auto',
                 targets: {
                     node: isESM ? '13.2.0' : nodeVersion.replace(/>=\s+/, '')
