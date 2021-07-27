@@ -54,7 +54,7 @@ async function filterPaths([path, paths]) {
 /**
  * @param {nunjucks.nodes.Root} nodes
  * @param {string|string[]}     searchAssets
- * @returns {Promise<[string, ImportWrapper][]>}
+ * @returns {Promise<[ImportWrapper, ImportWrapper][]>}
  */
 export function getAssets(nodes, searchAssets) {
     const assets = getNodesValues(
