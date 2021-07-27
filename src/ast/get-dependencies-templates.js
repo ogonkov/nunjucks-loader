@@ -20,7 +20,7 @@ export function getDependenciesTemplates(nodes) {
         ...includeNodes,
         ...importNodes,
         ...fromImportNodes
-    ].flatMap((node) => {
+    ].map((node) => {
         if (typeof node.template.value !== 'string') {
             const templateImport = getAddNodeValue(node.template);
 
