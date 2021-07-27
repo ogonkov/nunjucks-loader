@@ -1,64 +1,39 @@
-import {stringifyRequest} from 'loader-utils';
-
-import {IMPORTS_PREFIX, TEMPLATE_DEPENDENCIES} from '../constants';
-import {getImportStr} from '../utils/get-import-str';
+import {IMPORTS_PREFIX} from '../constants';
 import {toVar} from '../utils/to-var';
 
-import {getArgs} from './assets';
-import {getDynamicPathRegexp} from './get-dynamic-path-regexp';
+import {getDynamicImport} from './get-dynamic-import';
+import {getDynamicMeta} from './get-dynamic-meta';
+
 
 /**
- * @param {Array.<string[]>} assets
+ * @param {Array.<ImportWrapper[]>} assets
  * @returns {{imports: function(Object, boolean): string}}
  */
 export function getAssets(assets) {
     function imports(loaderContext, esModule) {
-        return assets.map(function([uuid, assetPath, assetImport]) {
-            const args = getArgs(assetPath);
-            const isDynamicImport = assetImport.startsWith('"');
-
-            let importPath;
-            if (isDynamicImport) {
-                importPath = assetImport.split(' + ').map(
-                    function(part) {
-                        if (part.startsWith('"')) {
-                            let nextPart = stringifyRequest(
-                                loaderContext,
-                                part.replace(/^"|"$/g, '')
-                            );
-
-                            if (!nextPart.endsWith('/"') && part.endsWith('/"')) {
-                                nextPart = nextPart.replace(/"$/, '/"');
-                            }
-
-                            return nextPart;
-                        }
-
-                        return part;
-                    }
-                ).join(' + ');
-            } else {
-                importPath = stringifyRequest(loaderContext, assetImport);
-            }
-
+        return assets.map(function([assetPath, assetImport]) {
+            const uuid = assetPath.getHash();
             const importVar = toVar(
                 `${IMPORTS_PREFIX}_asset_${uuid}`
             );
-            const importInvocation = isDynamicImport ?
-                `const ${importVar} = function(${args.join()}) {
-                    return ${getImportStr(importPath, esModule, true)()}
-                };` :
-                `${getImportStr(importPath, esModule)(importVar)}`;
+            const importInvocation = getDynamicImport(
+                loaderContext,
+                assetPath,
+                assetImport,
+                {
+                    esModule,
+                    importVar
+                }
+            );
+            const importMeta = getDynamicMeta(assetPath, assetImport, {
+                metaKey: 'assets',
+                depsKey: assetPath.getHash(),
+                importVar
+            });
 
             return `
             ${importInvocation}
-            ${TEMPLATE_DEPENDENCIES}.assets['${uuid}'] = {
-              path: ${isDynamicImport ?
-                getDynamicPathRegexp(assetPath).toString() :
-                JSON.stringify(assetPath)
-              },
-              module: ${importVar}
-            };
+            ${importMeta}
             `;
         }).join('');
     }

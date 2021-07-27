@@ -13,10 +13,10 @@ on:
       - master
       - trunk-v*
     paths:
-      - '.github/workflows/*'
+      - '.github/workflows/**'
       - '*.js'
-      - 'src/*'
-      - 'test/*'
+      - 'src/**'
+      - 'test/**'
       - 'package.json'
 
 jobs:

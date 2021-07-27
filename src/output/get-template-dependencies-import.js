@@ -38,7 +38,7 @@ function foldDependenciesToImports(
     [, fullPath],
     i
 ) {
-    const path = stringifyRequest(loaderContext, fullPath);
+    const path = stringifyRequest(loaderContext, fullPath.toString());
     const importVar = toVar(`${IMPORTS_PREFIX}_dep_${i}`);
     const join = joinAssignments.bind(null, assignment, importVar);
 

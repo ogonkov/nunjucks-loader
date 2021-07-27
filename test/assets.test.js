@@ -39,4 +39,10 @@ describe('Assets', function() {
 
         await expect(output()).resolves.toMatchSnapshot();
     });
+
+    it('should load variables', async function() {
+        const output = await compiler('fixtures/assets/dynamic-variable.njk', loaderOptions);
+
+        await expect(output()).resolves.toMatchSnapshot();
+    });
 });

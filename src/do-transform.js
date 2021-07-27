@@ -1,7 +1,6 @@
 import {hasAsyncTags} from './ast/has-async-tags';
 import {getLoaderOutput} from './output/get-loader-output';
 import {getTemplateImports} from './output/get-template-imports';
-import {toAssetsUUID} from './output/to-assets-uuid';
 import {configureEnvironment} from './precompile/configure-environment';
 import {getUsedDependencies} from './precompile/get-used-dependencies';
 import {loadDependencies} from './precompile/load-dependencies';
@@ -47,6 +46,7 @@ export async function doTransform(source, loaderContext, {
         extensions,
         filters
     } = await getUsedDependencies(
+        loaderContext,
         nodes,
         extensionsInstances,
         filtersInstances,
@@ -56,7 +56,6 @@ export async function doTransform(source, loaderContext, {
         }
     );
 
-    const assetsUUID = toAssetsUUID(assets);
     const envOptions = JSON.stringify({
         ...nunjucksOptions,
         // Loader specific options
@@ -65,7 +64,7 @@ export async function doTransform(source, loaderContext, {
     });
 
     const outputImports = getTemplateImports(loaderContext, options.esModule, {
-        assets: assetsUUID,
+        assets,
         dependencies,
         extensions,
         filters,
