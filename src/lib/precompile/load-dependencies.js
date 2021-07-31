@@ -15,13 +15,13 @@ import {getAddonsMeta} from './get-addons-meta';
  * @returns {Promise<{filters: InstancesList, extensions: InstancesList, nodes: nunjucks.nodes.Root}>}
  */
 export async function loadDependencies(extensions, filters) {
-    const [_extensions, _filters] = [
-        getAddonsMeta(extensions, 'extensions'),
-        getAddonsMeta(filters, 'filters')
-    ];
+    const _extensions = getAddonsMeta(extensions, 'extensions');
+    const _filters = getAddonsMeta(filters, 'filters');
 
-    await addonsLoader(_extensions);
-    await addonsLoader(_filters);
+    await Promise.all([
+        addonsLoader(_extensions),
+        addonsLoader(_filters)
+    ]);
 
     return {
         extensions: _extensions,
