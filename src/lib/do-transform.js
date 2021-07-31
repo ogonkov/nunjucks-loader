@@ -2,6 +2,7 @@ import {hasAsyncTags} from './ast/has-async-tags';
 import {getLoaderOutput} from './output/get-loader-output';
 import {getTemplateImports} from './output/get-template-imports';
 import {configureEnvironment} from './precompile/configure-environment';
+import {getAST} from './precompile/get-ast';
 import {getUsedDependencies} from './precompile/get-used-dependencies';
 import {loadDependencies} from './precompile/load-dependencies';
 import {precompileToLocalVar} from './precompile/precompile-to-local-var';
@@ -27,18 +28,16 @@ export async function doTransform(source, loaderContext, {
     };
 
     const {
-        nodes,
         extensions: extensionsInstances,
         filters: filtersInstances
     } = await loadDependencies(
-        source,
         {
             StaticExtension: staticExtensionPath,
             ...options.extensions
         },
-        options.filters,
-        nunjucksOptions
+        options.filters
     );
+    const nodes = await getAST(source, extensionsInstances, nunjucksOptions);
     const {
         assets,
         templates: dependencies,
