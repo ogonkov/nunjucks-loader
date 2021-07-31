@@ -1,4 +1,4 @@
-import {TEMPLATE_DEPENDENCIES} from '../lib/constants';
+import {TEMPLATE_DEPENDENCIES} from '../constants';
 
 
 export function getDynamicMeta(assetPath, assetImport, {
