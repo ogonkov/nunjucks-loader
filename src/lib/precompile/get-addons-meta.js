@@ -1,4 +1,4 @@
-import {getModule} from '../public/utils/get-module';
+import {getModule} from '../../public/utils/get-module';
 
 /**
  * @param {[string, string]} addonEntry

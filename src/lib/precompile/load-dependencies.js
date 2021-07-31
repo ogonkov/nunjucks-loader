@@ -1,4 +1,4 @@
-import {getNodes} from '../lib/ast/get-nodes';
+import {getNodes} from '../ast/get-nodes';
 
 import {getAddonsMeta} from './get-addons-meta';
 

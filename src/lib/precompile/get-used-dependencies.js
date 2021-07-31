@@ -1,8 +1,8 @@
-import {getAssets} from '../lib/ast/get-assets';
-import {getTemplatesImports} from '../lib/ast/get-templates-imports';
-import {getUsedExtensions} from '../lib/ast/get-used-extensions';
-import {getUsedFilters} from '../lib/ast/get-used-filters';
-import {getUsedGlobals} from '../lib/ast/get-used-globals';
+import {getAssets} from '../ast/get-assets';
+import {getTemplatesImports} from '../ast/get-templates-imports';
+import {getUsedExtensions} from '../ast/get-used-extensions';
+import {getUsedFilters} from '../ast/get-used-filters';
+import {getUsedGlobals} from '../ast/get-used-globals';
 
 /**
  * @typedef {Object} NunjucksOptions
