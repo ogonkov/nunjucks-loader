@@ -1,6 +1,6 @@
 import {stringifyRequest} from 'loader-utils';
 
-import {IMPORTS_PREFIX, TEMPLATE_DEPENDENCIES} from '../constants';
+import {IMPORTS_PREFIX, TEMPLATE_DEPENDENCIES} from '../lib/constants';
 import {getImportStr} from '../utils/get-import-str';
 import {toVar} from '../utils/to-var';
 

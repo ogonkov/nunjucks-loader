@@ -1,7 +1,7 @@
 import nunjucks from 'nunjucks';
 
-import {ERROR_MODULE_NOT_FOUND} from '../constants';
 import {ImportWrapper} from '../import-wrapper/ImportWrapper';
+import {ERROR_MODULE_NOT_FOUND} from '../lib/constants';
 import {StaticExtension} from '../public/static-extension/StaticExtension';
 import {getFirstExistedPath} from '../utils/get-first-existed-path';
 import {getPossiblePaths} from '../utils/get-possible-paths';

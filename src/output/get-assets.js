@@ -1,4 +1,4 @@
-import {IMPORTS_PREFIX} from '../constants';
+import {IMPORTS_PREFIX} from '../lib/constants';
 import {toVar} from '../utils/to-var';
 
 import {getDynamicImport} from './get-dynamic-import';

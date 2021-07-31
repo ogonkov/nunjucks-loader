@@ -1,4 +1,4 @@
-import {TEMPLATE_DEPENDENCIES} from '../constants';
+import {TEMPLATE_DEPENDENCIES} from '../lib/constants';
 import {ASSETS_KEY} from '../public/static-extension/contants';
 
 import {getModuleOutput} from './get-module-output';
