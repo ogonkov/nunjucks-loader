@@ -1,7 +1,7 @@
 import {stringifyRequest} from 'loader-utils';
 
-import {getImportStr} from '../../utils/get-import-str';
 import {stringify} from '../import-wrapper/stringify';
+import {getImportStr} from '../utils/get-import-str';
 
 
 export function getDynamicImport(loaderContext, assetPath, assetImport, {

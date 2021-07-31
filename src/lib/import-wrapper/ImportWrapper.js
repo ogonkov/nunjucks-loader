@@ -1,6 +1,6 @@
-import {getStringBase64Hash} from '../../utils/get-string-base64-hash';
-import {toRegExpSource} from '../../utils/to-regexp-source';
-import {unquote} from '../../utils/unquote';
+import {getStringBase64Hash} from '../utils/get-string-base64-hash';
+import {toRegExpSource} from '../utils/to-regexp-source';
+import {unquote} from '../utils/unquote';
 
 import {ImportLiteral} from './ImportLiteral';
 import {ImportSymbol} from './ImportSymbol';

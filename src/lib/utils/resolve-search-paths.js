@@ -1,6 +1,6 @@
 import path from 'path';
 
-import {resolve} from '../lib/import-wrapper/resolve';
+import {resolve} from '../import-wrapper/resolve';
 
 
 /**

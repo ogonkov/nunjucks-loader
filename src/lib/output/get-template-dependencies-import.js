@@ -1,8 +1,8 @@
 import {stringifyRequest} from 'loader-utils';
 
-import {getImportStr} from '../../utils/get-import-str';
-import {toVar} from '../../utils/to-var';
 import {IMPORTS_PREFIX, TEMPLATE_DEPENDENCIES} from '../constants';
+import {getImportStr} from '../utils/get-import-str';
+import {toVar} from '../utils/to-var';
 
 function getAssignments(assignments) {
     if (assignments === '') {

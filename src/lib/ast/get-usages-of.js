@@ -1,4 +1,4 @@
-import {toListItem} from '../../utils/to-list-item';
+import {toListItem} from '../utils/to-list-item';
 
 /**
  * Filter list of nodes

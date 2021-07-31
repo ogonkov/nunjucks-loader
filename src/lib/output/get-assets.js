@@ -1,5 +1,5 @@
-import {toVar} from '../../utils/to-var';
 import {IMPORTS_PREFIX} from '../constants';
+import {toVar} from '../utils/to-var';
 
 import {getDynamicImport} from './get-dynamic-import';
 import {getDynamicMeta} from './get-dynamic-meta';

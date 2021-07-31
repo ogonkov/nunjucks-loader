@@ -1,4 +1,4 @@
-import {unquote} from '../../utils/unquote';
+import {unquote} from '../utils/unquote';
 
 
 /**
