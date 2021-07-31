@@ -19,8 +19,8 @@ import {getAddonsMeta} from './get-addons-meta';
  */
 export async function loadDependencies(source, extensions, filters, nunjucksOptions) {
     const [_extensions, _filters] = [
-        getAddonsMeta(Object.entries(extensions)),
-        getAddonsMeta(Object.entries(filters))
+        getAddonsMeta(Object.entries(extensions), 'extensions'),
+        getAddonsMeta(Object.entries(filters), 'filters')
     ];
 
     await addonsLoader(_extensions);

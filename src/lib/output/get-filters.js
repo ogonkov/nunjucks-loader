@@ -1,15 +1,18 @@
 import {stringifyRequest} from 'loader-utils';
 
-import {IMPORTS_PREFIX, TEMPLATE_DEPENDENCIES} from '../constants';
+import {TEMPLATE_DEPENDENCIES} from '../constants';
 import {getImportStr} from '../utils/get-import-str';
-import {toVar} from '../utils/to-var';
 
 import {getModuleOutput} from './get-module-output';
 
 export function getFilters(filters) {
     function imports(loaderContext, esModule) {
-        return filters.map(({name: filterName, importPath, instance: filterInstance}) => {
-            const importVar = toVar(`${IMPORTS_PREFIX}_filter_${filterName}`);
+        return filters.map(({
+            name: filterName,
+            importPath,
+            instance: filterInstance,
+            importVar
+        }) => {
             const importStatement = getImportStr(
                 stringifyRequest(loaderContext, importPath),
                 esModule

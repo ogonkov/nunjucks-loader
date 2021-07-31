@@ -60,7 +60,8 @@ export async function getUsedDependencies(
         getAssets(nodes, assetsPaths),
         Object.entries(globals).map(([name, importPath]) => new AddonWrapper({
             name,
-            importPath
+            importPath,
+            type: 'globals'
         }))
     ]);
 
