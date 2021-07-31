@@ -1,5 +1,7 @@
 import nunjucks from 'nunjucks';
 
+import {addonsLoader} from '../addons-wrapper/addons-loader';
+
 
 /**
  * @param {Object}   options
@@ -9,7 +11,7 @@ import nunjucks from 'nunjucks';
  * @param {Array}    options.filters
  * @returns {nunjucks.Environment}
  */
-export function configureEnvironment({
+export async function configureEnvironment({
     searchPaths,
     options,
     extensions = [],
@@ -17,6 +19,10 @@ export function configureEnvironment({
 } = {}) {
     const env = nunjucks.configure(searchPaths, options);
 
+    await Promise.all([
+        addonsLoader(extensions),
+        addonsLoader(filters)
+    ]);
     extensions.forEach(function({name, instance}) {
         env.addExtension(name, instance);
     });

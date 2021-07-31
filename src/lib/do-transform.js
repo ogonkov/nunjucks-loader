@@ -30,7 +30,7 @@ export async function doTransform(source, loaderContext, {
     const {
         extensions: extensionsInstances,
         filters: filtersInstances
-    } = await loadDependencies(
+    } = loadDependencies(
         {
             StaticExtension: staticExtensionPath,
             ...options.extensions
@@ -74,7 +74,7 @@ export async function doTransform(source, loaderContext, {
         globals
     });
 
-    const env = configureEnvironment({
+    const env = await configureEnvironment({
         searchPaths: normalizedSearchPaths,
         options: nunjucksOptions,
         extensions: extensionsInstances,
