@@ -1,21 +1,13 @@
-import {getModule} from '../../public/utils/get-module';
+import {AddonWrapper} from '../addons-wrapper/AddonWrapper';
 
-/**
- * @param {[string, string]} addonEntry
- * @return {Promise<[string, string, function]>}
- */
-async function loadAddon([name, importPath]) {
-    const instance = await import(importPath);
-
-    return [name, importPath, getModule(instance)];
-}
 
 /**
  * @param {Array.<string[]>} addonEntries
- * @returns {Promise<Array[]>}
+ * @returns {AddonWrapper[]}
  */
 export function getAddonsMeta(addonEntries) {
-    const entries = addonEntries.map(loadAddon);
-
-    return Promise.all(entries);
+    return addonEntries.map(([name, importPath]) => new AddonWrapper({
+        name,
+        importPath
+    }));
 }

@@ -8,7 +8,7 @@ import {getModuleOutput} from './get-module-output';
 
 export function getFilters(filters) {
     function imports(loaderContext, esModule) {
-        return filters.map(([filterName, importPath, filterInstance]) => {
+        return filters.map(({name: filterName, importPath, instance: filterInstance}) => {
             const importVar = toVar(`${IMPORTS_PREFIX}_filter_${filterName}`);
             const importStatement = getImportStr(
                 stringifyRequest(loaderContext, importPath),
