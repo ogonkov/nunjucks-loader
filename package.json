@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "build:cjs": "NODE_ENV=cjs babel src --out-dir=. --copy-files --no-copy-ignored --ignore 'src/**/*.spec.js'",
-    "build:clean": "rm -rf lib public",
+    "build:clean": "ls src | xargs -0 rm -rf",
     "build": "npm run build:clean && npm run build:cjs",
     "lint": "eslint src",
     "pretest": "rm -rf test/.coverage && npm run lint",
