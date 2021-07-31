@@ -1,8 +1,8 @@
 import path from 'path';
 
-import {getLoaderOptions} from './get-loader-options';
 import {ERROR_MODULE_NOT_FOUND} from './lib/constants';
 import {doTransform} from './lib/do-transform';
+import {getLoaderOptions} from './lib/get-loader-options';
 import {getImportPath} from './utils/get-import-path';
 
 
