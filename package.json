@@ -2,12 +2,13 @@
   "name": "simple-nunjucks-loader",
   "version": "3.2.0",
   "description": "Webpack loader for Nunjucks",
-  "main": "lib/cjs/loader.js",
+  "main": "index.js",
   "files": [
-    "lib"
+    "lib",
+    "public"
   ],
   "scripts": {
-    "build:cjs": "NODE_ENV=cjs babel src --out-dir=lib/cjs --copy-files --no-copy-ignored --ignore 'src/**/*.spec.js'",
+    "build:cjs": "NODE_ENV=cjs babel src --out-dir=. --copy-files --no-copy-ignored --ignore 'src/**/*.spec.js'",
     "build": "rm -rf lib && npm run build:cjs",
     "lint": "eslint src",
     "pretest": "rm -rf test/.coverage && npm run lint",

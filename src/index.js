@@ -1,9 +1,9 @@
 import path from 'path';
 
-import {ERROR_MODULE_NOT_FOUND} from './constants';
-import {doTransform} from './do-transform';
-import {getLoaderOptions} from './get-loader-options';
-import {getImportPath} from './utils/get-import-path';
+import {ERROR_MODULE_NOT_FOUND} from './lib/constants';
+import {doTransform} from './lib/do-transform';
+import {getLoaderOptions} from './lib/get-loader-options';
+import {getImportPath} from './lib/utils/get-import-path';
 
 
 export default function nunjucksLoader(source) {

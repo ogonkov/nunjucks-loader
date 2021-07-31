@@ -1,4 +1,4 @@
-import schema from './schema';
+import schema from './schema.json';
 
 export function getLoaderOptions(loader, callback) {
     let loaderOptions;

@@ -22,7 +22,7 @@ export function statsCompiler(fixture, options = {}) {
             rules: [{
                 test: /\.njk$/,
                 use: {
-                    loader: path.resolve(__dirname, '../src/loader.js'),
+                    loader: path.resolve(__dirname, '../src/index.js'),
                     options: options
                 }
             }, {
