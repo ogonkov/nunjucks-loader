@@ -8,10 +8,10 @@ import {getModuleOutput} from './get-module-output';
 
 export function getGlobals(globals) {
     function imports(loaderContext, esModule) {
-        return globals.map(([globalImport, globalPath]) => {
+        return globals.map(({name: globalImport, importPath: globalPath}) => {
             const importVar = toVar(`${IMPORTS_PREFIX}_global_${globalImport}`);
             const importStatement = getImportStr(
-                stringifyRequest(loaderContext,globalPath),
+                stringifyRequest(loaderContext, globalPath),
                 esModule
             )(importVar);
 

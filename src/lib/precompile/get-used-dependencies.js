@@ -1,3 +1,4 @@
+import {AddonWrapper} from '../addons-wrapper/AddonWrapper';
 import {getAssets} from '../ast/get-assets';
 import {getTemplatesImports} from '../ast/get-templates-imports';
 import {getUsedExtensions} from '../ast/get-used-extensions';
@@ -54,14 +55,18 @@ export async function getUsedDependencies(
         globals
     } = loaderOptions;
 
-    const [templates, assets] = await Promise.all([
+    const [templates, assets, _globals] = await Promise.all([
         getTemplatesImports(loaderContext, nodes, searchPaths),
-        getAssets(nodes, assetsPaths)
+        getAssets(nodes, assetsPaths),
+        Object.entries(globals).map(([name, importPath]) => new AddonWrapper({
+            name,
+            importPath
+        }))
     ]);
 
     return {
         templates,
-        globals: getUsedGlobals(nodes, globals),
+        globals: getUsedGlobals(nodes, _globals),
         extensions: getUsedExtensions(nodes, extensions),
         filters: getUsedFilters(nodes, filters),
         assets
