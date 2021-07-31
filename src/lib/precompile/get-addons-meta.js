@@ -1,21 +1,24 @@
-import {getModule} from '../../public/utils/get-module';
+import {AddonWrapper} from '../addons-wrapper/AddonWrapper';
+import {FilterWrapper} from '../addons-wrapper/FilterWrapper';
+
 
 /**
- * @param {[string, string]} addonEntry
- * @return {Promise<[string, string, function]>}
+ * @param {Object.<string, string>} addons
+ * @param {Object} options
+ * @param {string} options.type
+ * @param {Object} options.loaderContext
+ * @param {boolean} options.es
+ * @returns {AddonWrapper[]}
  */
-async function loadAddon([name, importPath]) {
-    const instance = await import(importPath);
+export function getAddonsMeta(addons, options) {
+    let Klass = AddonWrapper;
+    if (options.type === 'filters') {
+        Klass = FilterWrapper;
+    }
 
-    return [name, importPath, getModule(instance)];
-}
-
-/**
- * @param {Array.<string[]>} addonEntries
- * @returns {Promise<Array[]>}
- */
-export function getAddonsMeta(addonEntries) {
-    const entries = addonEntries.map(loadAddon);
-
-    return Promise.all(entries);
+    return Object.entries(addons).map(([name, importPath]) => new Klass({
+        ...options,
+        name,
+        importPath
+    }));
 }

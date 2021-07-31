@@ -22,8 +22,8 @@ export function getUsagesOf(nodeType, nodes) {
             nodesOfType
                 .map(toListItem(list, callback))
                 .filter(Boolean)
-                .filter(([addonName], i, list) => (
-                    i === list.findIndex(([name]) => addonName === name)
+                .filter(({name: addonName}, i, list) => (
+                    i === list.findIndex(({name}) => addonName === name)
                 ))
         );
     }

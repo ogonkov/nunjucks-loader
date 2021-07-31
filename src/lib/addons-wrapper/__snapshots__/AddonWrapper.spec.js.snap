@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`constructor should throw w/out import path 1`] = `"AddonWrapper: import path required"`;
+
+exports[`constructor should throw w/out type 1`] = `"AddonWrapper: addon type required"`;
+
+exports[`constructor should throw with wrong es flag 1`] = `"AddonWrapper: es type should be a boolean"`;
+
+exports[`constructor should throw with wrong name 1`] = `"AddonWrapper: name should be a string"`;

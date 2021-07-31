@@ -9,7 +9,7 @@ import {getUsagesOf} from './get-usages-of';
  */
 export function getUsedGlobals(nodes, globals) {
     return getUsagesOf(nunjucks.nodes.FunCall, nodes)(
-        Object.entries(globals), ({name: globalName}) => ([name]) => (
+        globals, ({name: globalName}) => ({name}) => (
             globalName.value === name
         )
     );

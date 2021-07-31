@@ -4,6 +4,8 @@ import {getUsedExtensions} from '../ast/get-used-extensions';
 import {getUsedFilters} from '../ast/get-used-filters';
 import {getUsedGlobals} from '../ast/get-used-globals';
 
+import {getAddonsMeta} from './get-addons-meta';
+
 /**
  * @typedef {Object} NunjucksOptions
  * @property {boolean}                 [autoescape=true]
@@ -51,17 +53,23 @@ export async function getUsedDependencies(
     const {
         searchPaths,
         assetsPaths,
-        globals
+        globals,
+        esModule
     } = loaderOptions;
 
-    const [templates, assets] = await Promise.all([
+    const [templates, assets, _globals] = await Promise.all([
         getTemplatesImports(loaderContext, nodes, searchPaths),
-        getAssets(nodes, assetsPaths)
+        getAssets(nodes, assetsPaths),
+        getAddonsMeta(globals, {
+            es: esModule,
+            type: 'globals',
+            loaderContext
+        })
     ]);
 
     return {
         templates,
-        globals: getUsedGlobals(nodes, globals),
+        globals: getUsedGlobals(nodes, _globals),
         extensions: getUsedExtensions(nodes, extensions),
         filters: getUsedFilters(nodes, filters),
         assets

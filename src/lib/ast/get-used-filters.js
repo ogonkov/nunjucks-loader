@@ -11,7 +11,7 @@ import {getUsagesOf} from './get-usages-of';
 export function getUsedFilters(nodes, instances) {
     return getUsagesOf(nunjucks.nodes.Filter, nodes)(
         instances, ({name}) => (
-            ([filterName]) => filterName === name.value
+            ({name: filterName}) => filterName === name.value
         )
     );
 }

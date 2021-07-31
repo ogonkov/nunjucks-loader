@@ -5,7 +5,7 @@ import {getGlobals} from './get-globals';
 import {getRuntimeImport} from './get-runtime-import';
 import {getTemplateDependenciesImport} from './get-template-dependencies-import';
 
-export function getTemplateImports(loader, esModule, {
+export async function getTemplateImports(loader, esModule, {
     assets,
     dependencies,
     extensions,
@@ -15,9 +15,9 @@ export function getTemplateImports(loader, esModule, {
     return `
     ${getRuntimeImport(loader, esModule)}
     ${getTemplateDependenciesImport(loader, esModule, dependencies)}
-    ${getGlobals(globals).imports(loader, esModule)}
+    ${getGlobals(globals).imports()}
     ${getAssets(assets).imports(loader, esModule)}
-    ${getExtensions(extensions).imports(loader, esModule)}
-    ${getFilters(filters).imports(loader, esModule)}
+    ${getExtensions(extensions).imports()}
+    ${await getFilters(filters).imports()}
     `;
 }

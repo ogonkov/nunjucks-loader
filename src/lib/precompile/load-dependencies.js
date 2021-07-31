@@ -1,5 +1,3 @@
-import {getNodes} from '../ast/get-nodes';
-
 import {getAddonsMeta} from './get-addons-meta';
 
 
@@ -10,27 +8,25 @@ import {getAddonsMeta} from './get-addons-meta';
 /**
  * Load filters and extensions modules
  *
- * @param {string} source
  * @param {Object.<string, string>} extensions
  * @param {Object.<string, string>} filters
- * @param {NunjucksOptions} nunjucksOptions
+ * @param {Object} options
+ * @param {Object} options.loaderContext
+ * @param {boolean} options.es
  * @returns {Promise<{filters: InstancesList, extensions: InstancesList, nodes: nunjucks.nodes.Root}>}
  */
-export async function loadDependencies(source, extensions, filters, nunjucksOptions) {
-    const [extensionsInstances, filtersInstances] = await Promise.all([
-        getAddonsMeta(Object.entries(extensions)),
-        getAddonsMeta(Object.entries(filters))
-    ]);
-
-    const nodes = getNodes(
-        source,
-        extensionsInstances.map(([,, ext]) => ext),
-        nunjucksOptions
-    );
+export function loadDependencies(extensions, filters, options) {
+    const _extensions = getAddonsMeta(extensions, {
+        ...options,
+        type: 'extensions',
+    });
+    const _filters = getAddonsMeta(filters, {
+        ...options,
+        type: 'filters'
+    });
 
     return {
-        nodes,
-        extensions: extensionsInstances,
-        filters: filtersInstances
+        extensions: _extensions,
+        filters: _filters
     };
 }
