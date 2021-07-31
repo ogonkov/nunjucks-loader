@@ -1,9 +1,10 @@
-import {AddonWrapper} from '../addons-wrapper/AddonWrapper';
 import {getAssets} from '../ast/get-assets';
 import {getTemplatesImports} from '../ast/get-templates-imports';
 import {getUsedExtensions} from '../ast/get-used-extensions';
 import {getUsedFilters} from '../ast/get-used-filters';
 import {getUsedGlobals} from '../ast/get-used-globals';
+
+import {getAddonsMeta} from './get-addons-meta';
 
 /**
  * @typedef {Object} NunjucksOptions
@@ -58,11 +59,7 @@ export async function getUsedDependencies(
     const [templates, assets, _globals] = await Promise.all([
         getTemplatesImports(loaderContext, nodes, searchPaths),
         getAssets(nodes, assetsPaths),
-        Object.entries(globals).map(([name, importPath]) => new AddonWrapper({
-            name,
-            importPath,
-            type: 'globals'
-        }))
+        getAddonsMeta(Object.entries(globals), 'globals')
     ]);
 
     return {
