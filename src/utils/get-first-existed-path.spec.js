@@ -1,4 +1,4 @@
-import {ImportWrapper} from '../import-wrapper/ImportWrapper';
+import {ImportWrapper} from '../lib/import-wrapper/ImportWrapper';
 
 import {getFirstExistedPath} from './get-first-existed-path';
 

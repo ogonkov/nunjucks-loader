@@ -1,6 +1,6 @@
 import nunjucks from 'nunjucks';
 
-import {ImportWrapper} from '../../import-wrapper/ImportWrapper';
+import {ImportWrapper} from '../import-wrapper/ImportWrapper';
 
 
 /**

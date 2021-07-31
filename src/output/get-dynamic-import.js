@@ -1,6 +1,6 @@
 import {stringifyRequest} from 'loader-utils';
 
-import {stringify} from '../import-wrapper/stringify';
+import {stringify} from '../lib/import-wrapper/stringify';
 import {getImportStr} from '../utils/get-import-str';
 
 
