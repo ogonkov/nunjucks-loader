@@ -2,53 +2,56 @@ import {getModule} from '../../public/utils/get-module';
 import {IMPORTS_PREFIX} from '../constants';
 import {toVar} from '../utils/to-var';
 
-const instance = Symbol('instance')
 
 export class AddonWrapper {
+    #name = null;
+    #importPath = null;
+    #instance = null;
+    #type = null;
+
     constructor({name, importPath, type}) {
         if (typeof name !== 'string') {
             throw new TypeError('AddonWrapper: name should be a string');
         }
-        Object.defineProperty(this, 'name', {
-            value: name,
-            enumerable: true
-        });
+        this.#name = name;
 
         if (!importPath) {
             throw new TypeError('AddonWrapper: import path required');
         }
-        Object.defineProperty(this, 'importPath', {
-            value: importPath,
-            enumerable: true
-        });
+        this.#importPath = importPath;
 
         if (typeof type !== 'string') {
             throw new TypeError('AddonWrapper: addon type required');
         }
-        Object.defineProperty(this, 'importVar', {
-            enumerable: true,
-            get() {
-                return toVar(`${IMPORTS_PREFIX}_${type}_${name}`);
-            }
-        });
+        this.#type = type;
+    }
 
-        this[instance] = null;
+    get name() {
+        return this.#name;
+    }
+
+    get importPath() {
+        return this.#importPath;
     }
 
     get instance() {
-        if (this[instance] !== null) {
-            return this[instance];
+        if (this.#instance !== null) {
+            return this.#instance;
         }
 
         return new Promise((resolve, reject) => {
-            import(this.importPath)
+            import(this.#importPath)
                 .then((instance) => getModule(instance))
                 .then((_instance) => {
-                    this[instance] = _instance;
+                    this.#instance = _instance;
                     return _instance;
                 })
                 .then(resolve)
                 .catch(reject);
         });
+    }
+
+    get importVar() {
+        return toVar(`${IMPORTS_PREFIX}_${this.#type}_${this.#name}`);
     }
 }
