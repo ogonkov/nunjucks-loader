@@ -16,8 +16,8 @@ import {getAddonsMeta} from './get-addons-meta';
  */
 export async function loadDependencies(extensions, filters) {
     const [_extensions, _filters] = [
-        getAddonsMeta(Object.entries(extensions), 'extensions'),
-        getAddonsMeta(Object.entries(filters), 'filters')
+        getAddonsMeta(extensions, 'extensions'),
+        getAddonsMeta(filters, 'filters')
     ];
 
     await addonsLoader(_extensions);

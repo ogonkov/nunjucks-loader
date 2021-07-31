@@ -59,7 +59,7 @@ export async function getUsedDependencies(
     const [templates, assets, _globals] = await Promise.all([
         getTemplatesImports(loaderContext, nodes, searchPaths),
         getAssets(nodes, assetsPaths),
-        getAddonsMeta(Object.entries(globals), 'globals')
+        getAddonsMeta(globals, 'globals')
     ]);
 
     return {
