@@ -8,7 +8,7 @@ import {precompileToLocalVar} from './precompile/precompile-to-local-var';
 
 
 const staticExtensionPath = require.resolve(
-    './static-extension/get-static-extension'
+    './public/static-extension/get-static-extension'
 );
 
 export async function doTransform(source, loaderContext, {

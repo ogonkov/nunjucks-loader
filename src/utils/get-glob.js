@@ -1,6 +1,6 @@
 import {promisify} from 'util';
 
-import {getModule} from './get-module';
+import {getModule} from '../public/utils/get-module';
 
 export async function getGlob() {
     const glob = await import('glob');

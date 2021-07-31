@@ -1,6 +1,6 @@
 import nunjucks from 'nunjucks';
 
-import {getModule} from '../utils/get-module';
+import {getModule} from '../public/utils/get-module';
 
 /**
  * @param {Object}   options
