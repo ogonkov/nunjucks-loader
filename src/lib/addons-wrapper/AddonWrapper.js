@@ -43,10 +43,6 @@ export class AddonWrapper {
         return this.#name;
     }
 
-    get importPath() {
-        return this.#importPath;
-    }
-
     get instance() {
         if (this.#instance !== null) {
             return this.#instance;
