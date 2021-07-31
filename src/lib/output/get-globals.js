@@ -1,22 +1,14 @@
-import {stringifyRequest} from 'loader-utils';
-
 import {TEMPLATE_DEPENDENCIES} from '../constants';
-import {getImportStr} from '../utils/get-import-str';
 
 import {getModuleOutput} from './get-module-output';
 
 export function getGlobals(globals) {
-    function imports(loaderContext, esModule) {
+    function imports() {
         return globals.map(({
             name: globalImport,
-            importPath: globalPath,
-            importVar
+            importVar,
+            importStatement
         }) => {
-            const importStatement = getImportStr(
-                stringifyRequest(loaderContext, globalPath),
-                esModule
-            )(importVar);
-
             return `
             ${importStatement}
             ${TEMPLATE_DEPENDENCIES}.globals['${globalImport}'] = {

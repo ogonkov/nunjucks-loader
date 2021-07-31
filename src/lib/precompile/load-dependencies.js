@@ -12,11 +12,20 @@ import {getAddonsMeta} from './get-addons-meta';
  *
  * @param {Object.<string, string>} extensions
  * @param {Object.<string, string>} filters
+ * @param {Object} options
+ * @param {Object} options.loaderContext
+ * @param {boolean} options.es
  * @returns {Promise<{filters: InstancesList, extensions: InstancesList, nodes: nunjucks.nodes.Root}>}
  */
-export async function loadDependencies(extensions, filters) {
-    const _extensions = getAddonsMeta(extensions, 'extensions');
-    const _filters = getAddonsMeta(filters, 'filters');
+export async function loadDependencies(extensions, filters, options) {
+    const _extensions = getAddonsMeta(extensions, {
+        ...options,
+        type: 'extensions',
+    });
+    const _filters = getAddonsMeta(filters, {
+        ...options,
+        type: 'filters'
+    });
 
     await Promise.all([
         addonsLoader(_extensions),

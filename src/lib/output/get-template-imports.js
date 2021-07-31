@@ -15,9 +15,9 @@ export function getTemplateImports(loader, esModule, {
     return `
     ${getRuntimeImport(loader, esModule)}
     ${getTemplateDependenciesImport(loader, esModule, dependencies)}
-    ${getGlobals(globals).imports(loader, esModule)}
+    ${getGlobals(globals).imports()}
     ${getAssets(assets).imports(loader, esModule)}
-    ${getExtensions(extensions).imports(loader, esModule)}
-    ${getFilters(filters).imports(loader, esModule)}
+    ${getExtensions(extensions).imports()}
+    ${getFilters(filters).imports()}
     `;
 }

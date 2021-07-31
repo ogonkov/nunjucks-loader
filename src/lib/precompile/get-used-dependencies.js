@@ -53,13 +53,18 @@ export async function getUsedDependencies(
     const {
         searchPaths,
         assetsPaths,
-        globals
+        globals,
+        esModule
     } = loaderOptions;
 
     const [templates, assets, _globals] = await Promise.all([
         getTemplatesImports(loaderContext, nodes, searchPaths),
         getAssets(nodes, assetsPaths),
-        getAddonsMeta(globals, 'globals')
+        getAddonsMeta(globals, {
+            es: esModule,
+            type: 'globals',
+            loaderContext
+        })
     ]);
 
     return {

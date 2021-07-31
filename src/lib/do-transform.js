@@ -35,7 +35,11 @@ export async function doTransform(source, loaderContext, {
             StaticExtension: staticExtensionPath,
             ...options.extensions
         },
-        options.filters
+        options.filters,
+        {
+            loaderContext,
+            es: options.esModule
+        }
     );
     const nodes = await getAST(source, extensionsInstances, nunjucksOptions);
     const {
