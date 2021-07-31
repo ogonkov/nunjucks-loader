@@ -1,22 +1,15 @@
-import {TEMPLATE_DEPENDENCIES} from '../constants';
-
-import {getModuleOutput} from './get-module-output';
-
 export function getFilters(filters) {
-    function imports() {
-        return filters.map(({
-            name: filterName,
-            instance: filterInstance,
-            importVar,
-            importStatement
-        }) => {
+    async function imports() {
+        const imports = await Promise.all(filters.map(({
+            importStatement,
+            dependencyInject
+        }) => dependencyInject.then((dependencyInject) => {
             return `
             ${importStatement}
-            ${TEMPLATE_DEPENDENCIES}.filters['${filterName}'] = {
-                module: ${getModuleOutput(importVar)},
-                async: ${JSON.stringify(filterInstance.async === true)}
-            };`;
-        }).join('');
+            ${dependencyInject}`;
+        })));
+
+        return imports.join('');
     }
 
     return {

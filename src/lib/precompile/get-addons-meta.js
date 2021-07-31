@@ -1,4 +1,5 @@
 import {AddonWrapper} from '../addons-wrapper/AddonWrapper';
+import {FilterWrapper} from '../addons-wrapper/FilterWrapper';
 
 
 /**
@@ -10,7 +11,12 @@ import {AddonWrapper} from '../addons-wrapper/AddonWrapper';
  * @returns {AddonWrapper[]}
  */
 export function getAddonsMeta(addons, options) {
-    return Object.entries(addons).map(([name, importPath]) => new AddonWrapper({
+    let Klass = AddonWrapper;
+    if (options.type === 'filters') {
+        Klass = FilterWrapper;
+    }
+
+    return Object.entries(addons).map(([name, importPath]) => new Klass({
         ...options,
         name,
         importPath

@@ -1,7 +1,8 @@
 import {stringifyRequest} from 'loader-utils';
 
 import {getModule} from '../../public/utils/get-module';
-import {IMPORTS_PREFIX} from '../constants';
+import {IMPORTS_PREFIX, TEMPLATE_DEPENDENCIES} from '../constants';
+import {getModuleOutput} from '../output/get-module-output';
 import {getImportStr} from '../utils/get-import-str';
 import {toVar} from '../utils/to-var';
 
@@ -72,5 +73,11 @@ export class AddonWrapper {
             stringifyRequest(this.#loaderContext, this.#importPath),
             this.#es
         )(this.importVar);
+    }
+
+    get dependencyInject() {
+        return `${TEMPLATE_DEPENDENCIES}.${this.#type}['${this.#name}'] = {
+            module: ${getModuleOutput(this.importVar)}
+        };`;
     }
 }

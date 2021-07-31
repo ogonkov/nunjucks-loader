@@ -66,7 +66,7 @@ export async function doTransform(source, loaderContext, {
         isAsyncTemplate: hasAsyncTags(nodes)
     });
 
-    const outputImports = getTemplateImports(loaderContext, options.esModule, {
+    const outputImports = await getTemplateImports(loaderContext, options.esModule, {
         assets,
         dependencies,
         extensions,
