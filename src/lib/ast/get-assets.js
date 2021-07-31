@@ -1,11 +1,11 @@
 import nunjucks from 'nunjucks';
 
-import {ImportWrapper} from '../import-wrapper/ImportWrapper';
-import {ERROR_MODULE_NOT_FOUND} from '../lib/constants';
-import {StaticExtension} from '../public/static-extension/StaticExtension';
-import {getFirstExistedPath} from '../utils/get-first-existed-path';
-import {getPossiblePaths} from '../utils/get-possible-paths';
-import {isUniqueAsset} from '../utils/is-unique-asset';
+import {ImportWrapper} from '../../import-wrapper/ImportWrapper';
+import {StaticExtension} from '../../public/static-extension/StaticExtension';
+import {getFirstExistedPath} from '../../utils/get-first-existed-path';
+import {getPossiblePaths} from '../../utils/get-possible-paths';
+import {isUniqueAsset} from '../../utils/is-unique-asset';
+import {ERROR_MODULE_NOT_FOUND} from '../constants';
 
 import {getAddNodeValue} from './get-add-node-value';
 import {getNodesValues} from './get-nodes-values';

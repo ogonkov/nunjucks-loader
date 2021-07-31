@@ -1,6 +1,6 @@
-import {getFirstExistedPath} from '../utils/get-first-existed-path';
-import {getPossiblePaths} from '../utils/get-possible-paths';
-import {isUniqueTemplate} from '../utils/is-unique-template';
+import {getFirstExistedPath} from '../../utils/get-first-existed-path';
+import {getPossiblePaths} from '../../utils/get-possible-paths';
+import {isUniqueTemplate} from '../../utils/is-unique-template';
 
 import {getDependenciesTemplates} from './get-dependencies-templates';
 
