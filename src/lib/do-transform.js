@@ -27,21 +27,23 @@ export async function doTransform(source, loaderContext, {
         dev: options.dev ?? loaderContext.mode === 'development'
     };
 
-    const {
-        extensions: extensionsInstances,
-        filters: filtersInstances
-    } = wrapAddons(
+    const wrappedAddons = wrapAddons(
         {
             StaticExtension: staticExtensionPath,
             ...options.extensions
         },
         options.filters,
+        options.globals,
         {
             loaderContext,
             es: options.esModule
         }
     );
-    const nodes = await getAST(source, extensionsInstances, nunjucksOptions);
+    const nodes = await getAST(
+        source,
+        wrappedAddons.extensions,
+        nunjucksOptions
+    );
     const {
         assets,
         templates: dependencies,
@@ -51,8 +53,9 @@ export async function doTransform(source, loaderContext, {
     } = await getUsedDependencies(
         loaderContext,
         nodes,
-        extensionsInstances,
-        filtersInstances,
+        wrappedAddons.extensions,
+        wrappedAddons.filters,
+        wrappedAddons.globals,
         {
             ...options,
             searchPaths: normalizedSearchPaths
@@ -77,8 +80,8 @@ export async function doTransform(source, loaderContext, {
     const env = await configureEnvironment({
         searchPaths: normalizedSearchPaths,
         options: nunjucksOptions,
-        extensions: extensionsInstances,
-        filters: filtersInstances
+        extensions: wrappedAddons.extensions,
+        filters: wrappedAddons.filters
     });
     const outputPrecompiled = precompileToLocalVar(source, resourcePathImport, env);
 

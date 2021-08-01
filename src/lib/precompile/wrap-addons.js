@@ -2,7 +2,7 @@ import {getAddonsMeta} from './get-addons-meta';
 
 
 /**
- * @typedef {((string | Function)[])[]} InstancesList
+ * @typedef {AddonWrapper[]} InstancesList
  */
 
 /**
@@ -10,12 +10,13 @@ import {getAddonsMeta} from './get-addons-meta';
  *
  * @param {Object.<string, string>} extensions
  * @param {Object.<string, string>} filters
+ * @param {Object.<string, string>} globals
  * @param {Object} options
  * @param {Object} options.loaderContext
  * @param {boolean} options.es
- * @returns {Promise<{filters: InstancesList, extensions: InstancesList}>}
+ * @returns {Object.<string, InstancesList>}
  */
-export function wrapAddons(extensions, filters, options) {
+export function wrapAddons(extensions, filters, globals, options) {
     const _extensions = getAddonsMeta(extensions, {
         ...options,
         type: 'extensions',
@@ -24,9 +25,14 @@ export function wrapAddons(extensions, filters, options) {
         ...options,
         type: 'filters'
     });
+    const _globals = getAddonsMeta(globals, {
+        ...options,
+        type: 'globals'
+    });
 
     return {
         extensions: _extensions,
-        filters: _filters
+        filters: _filters,
+        globals: _globals
     };
 }
