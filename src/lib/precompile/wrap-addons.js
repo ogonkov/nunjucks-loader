@@ -1,4 +1,4 @@
-import {getAddonsMeta} from './get-addons-meta';
+import {getWrappedAddons} from './get-wrapped-addons';
 
 
 /**
@@ -17,15 +17,15 @@ import {getAddonsMeta} from './get-addons-meta';
  * @returns {Object.<string, InstancesList>}
  */
 export function wrapAddons(extensions, filters, globals, options) {
-    const _extensions = getAddonsMeta(extensions, {
+    const _extensions = getWrappedAddons(extensions, {
         ...options,
         type: 'extensions',
     });
-    const _filters = getAddonsMeta(filters, {
+    const _filters = getWrappedAddons(filters, {
         ...options,
         type: 'filters'
     });
-    const _globals = getAddonsMeta(globals, {
+    const _globals = getWrappedAddons(globals, {
         ...options,
         type: 'globals'
     });
