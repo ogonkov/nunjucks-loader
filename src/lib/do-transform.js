@@ -44,13 +44,7 @@ export async function doTransform(source, loaderContext, {
         wrappedAddons.extensions,
         nunjucksOptions
     );
-    const {
-        assets,
-        templates: dependencies,
-        globals,
-        extensions,
-        filters
-    } = await getUsedDependencies(
+    const usedDependencies = await getUsedDependencies(
         loaderContext,
         nodes,
         wrappedAddons.extensions,
@@ -70,11 +64,11 @@ export async function doTransform(source, loaderContext, {
     });
 
     const outputImports = await getTemplateImports(loaderContext, options.esModule, {
-        assets,
-        dependencies,
-        extensions,
-        filters,
-        globals
+        assets: usedDependencies.assets,
+        dependencies: usedDependencies.templates,
+        extensions: usedDependencies.extensions,
+        filters: usedDependencies.filters,
+        globals: usedDependencies.globals
     });
 
     const env = await configureEnvironment({
