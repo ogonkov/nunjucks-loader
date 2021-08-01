@@ -6,7 +6,7 @@ import {getAddonsMeta} from './get-addons-meta';
  */
 
 /**
- * Load filters and extensions modules
+ * Wraps addons (extensions, filters, globals) to manage their imports
  *
  * @param {Object.<string, string>} extensions
  * @param {Object.<string, string>} filters
