@@ -13,9 +13,9 @@ import {getAddonsMeta} from './get-addons-meta';
  * @param {Object} options
  * @param {Object} options.loaderContext
  * @param {boolean} options.es
- * @returns {Promise<{filters: InstancesList, extensions: InstancesList, nodes: nunjucks.nodes.Root}>}
+ * @returns {Promise<{filters: InstancesList, extensions: InstancesList}>}
  */
-export function loadDependencies(extensions, filters, options) {
+export function wrapAddons(extensions, filters, options) {
     const _extensions = getAddonsMeta(extensions, {
         ...options,
         type: 'extensions',

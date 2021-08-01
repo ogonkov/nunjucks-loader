@@ -4,8 +4,8 @@ import {getTemplateImports} from './output/get-template-imports';
 import {configureEnvironment} from './precompile/configure-environment';
 import {getAST} from './precompile/get-ast';
 import {getUsedDependencies} from './precompile/get-used-dependencies';
-import {loadDependencies} from './precompile/load-dependencies';
 import {precompileToLocalVar} from './precompile/precompile-to-local-var';
+import {wrapAddons} from './precompile/wrap-addons';
 
 
 const staticExtensionPath = require.resolve(
@@ -30,7 +30,7 @@ export async function doTransform(source, loaderContext, {
     const {
         extensions: extensionsInstances,
         filters: filtersInstances
-    } = loadDependencies(
+    } = wrapAddons(
         {
             StaticExtension: staticExtensionPath,
             ...options.extensions
