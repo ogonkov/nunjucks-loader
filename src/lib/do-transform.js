@@ -56,13 +56,6 @@ export async function doTransform(source, loaderContext, {
         }
     );
 
-    const envOptions = JSON.stringify({
-        ...nunjucksOptions,
-        // Loader specific options
-        jinjaCompat: options.jinjaCompat,
-        isAsyncTemplate: hasAsyncTags(nodes)
-    });
-
     const outputImports = await getTemplateImports(loaderContext, options.esModule, {
         assets: usedDependencies.assets,
         dependencies: usedDependencies.templates,
@@ -82,6 +75,13 @@ export async function doTransform(source, loaderContext, {
     const outputExport = options.esModule ?
         'export default' :
         'exports = module.exports =';
+
+    const envOptions = JSON.stringify({
+        ...nunjucksOptions,
+        // Loader specific options
+        jinjaCompat: options.jinjaCompat,
+        isAsyncTemplate: hasAsyncTags(nodes)
+    });
 
     return getLoaderOutput({
         templateImport: JSON.stringify(resourcePathImport),
