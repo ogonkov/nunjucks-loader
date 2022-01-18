@@ -17,6 +17,7 @@ export function statsCompiler(fixture, options = {}) {
             libraryTarget: 'commonjs2',
             path: path.join(__dirname, 'bundles'),
             filename: `${bundleName}.js`,
+            assetModuleFilename: 'bundles/[path][name][ext]'
         },
         module: {
             rules: [{
@@ -27,13 +28,7 @@ export function statsCompiler(fixture, options = {}) {
                 }
             }, {
                 test: /\.(css|txt|md)$/,
-                use: {
-                    loader: 'file-loader',
-                    options: {
-                        outputPath: 'bundles',
-                        name: '[path][name].[ext]'
-                    }
-                }
+                type: 'asset/resource'
             }]
         }
     });
