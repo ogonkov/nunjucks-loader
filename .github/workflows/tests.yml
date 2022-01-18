@@ -22,6 +22,9 @@ on:
 jobs:
   tests:
 
+    env:
+      NODE_OPTIONS: "--trace-warnings"
+
     runs-on: ${{ matrix.os }}
 
     strategy:
