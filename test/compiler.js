@@ -1,21 +1,21 @@
 import {statsCompiler} from './stats-compiler';
 
 
-export default (fixture, options = {}) => {
-    return statsCompiler(fixture, options).then(function({stats, bundleName}) {
-        if (stats.hasErrors()) {
-            const [error] = stats.toJson().errors;
-            const errorCopy = new Error(error.message);
+export default async (fixture, options = {}) => {
+    const {stats, bundleName} = await statsCompiler(fixture, options);
 
-            Object.entries(error).forEach(([k, v]) => {
-                errorCopy[k] = v;
-            });
+    if (stats.hasErrors()) {
+        const [error] = stats.toJson().errors;
+        const errorCopy = new Error(error.message);
 
-            throw errorCopy;
-        }
-
-        return import(`./bundles/${bundleName}.js`).then(function(module) {
-            return module.default || module;
+        Object.entries(error).forEach(([k, v]) => {
+            errorCopy[k] = v;
         });
-    });
+
+        throw errorCopy;
+    }
+
+    const module = await import(`./bundles/${bundleName}.js`);
+
+    return module.default || module;
 }
