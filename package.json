@@ -52,7 +52,6 @@
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "babel-eslint": "^10.0.3",
-    "coveralls": "^3.0.9",
     "eslint": "^7.0.0",
     "eslint-plugin-import": "^2.22.0",
     "jest": "^26.0.0",
