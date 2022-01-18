@@ -1,11 +1,11 @@
 import path from 'path';
 
-import {v4 as uuidv4} from 'uuid';
+import {nanoid} from 'nanoid';
 import webpack from 'webpack';
 
 
 export function statsCompiler(fixture, options = {}) {
-    const bundleName = uuidv4();
+    const bundleName = nanoid();
 
     const compiler = webpack({
         mode: 'development',
