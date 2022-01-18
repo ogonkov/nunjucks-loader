@@ -17,7 +17,7 @@ describe('Simple compilation', function() {
             title: 'App',
             href: 'https://example.com'
         })).toMatchSnapshot();
-    });
+    }, /* TODO Find out why it is so slow for first run */ 20000);
 
     test('should compile templates with inheritance', async function() {
         const output = await compiler('fixtures/child.njk', loaderBaseOptions);
