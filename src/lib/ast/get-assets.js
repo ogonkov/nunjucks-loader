@@ -9,18 +9,8 @@ import {isUniqueAsset} from '../utils/is-unique-asset';
 
 import {getAddNodeValue} from './get-add-node-value';
 import {getNodesValues} from './get-nodes-values';
+import {isExtension} from './is-extension';
 
-/**
- * @param {nunjucks.nodes.Node} node
- * @param {Function}            ExtensionClass
- * @return {boolean}
- */
-function isExtension(node, ExtensionClass) {
-    return (
-        node.extName instanceof ExtensionClass ||
-        node.extName === ExtensionClass.name
-    );
-}
 
 function getNodeValue(node) {
     if (!isExtension(node, StaticExtension)) {
