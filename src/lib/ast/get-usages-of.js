@@ -1,4 +1,18 @@
+import {isUniqueObject} from '../utils/is-unique-object';
 import {toListItem} from '../utils/to-list-item';
+
+const isUniqueNode = isUniqueObject(getNodeIndex);
+
+/**
+ * @param {nunjucks.nodes.Node[]} list
+ * @param {nunjucks.nodes.Node} item
+ * @returns {number}
+ */
+function getNodeIndex(list, item) {
+    return list.findIndex(function(anotherItem) {
+        return item.name === anotherItem.name;
+    });
+}
 
 /**
  * Filter list of nodes
@@ -22,9 +36,7 @@ export function getUsagesOf(nodeType, nodes) {
             nodesOfType
                 .map(toListItem(list, callback))
                 .filter(Boolean)
-                .filter(({name: addonName}, i, list) => (
-                    i === list.findIndex(({name}) => addonName === name)
-                ))
+                .filter(isUniqueNode)
         );
     }
 
