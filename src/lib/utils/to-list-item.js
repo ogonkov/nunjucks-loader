@@ -1,7 +1,7 @@
 /**
  * @template TNode
- * @param {TNode[]}                   list
- * @param {function(TNode): function} callback
+ * @param {TNode[]}                                           list
+ * @param {function(Object<TNode>): function(TNode): boolean} callback
  * @returns {function(Object<TNode>): ?TNode}
  */
 export function toListItem(list, callback) {

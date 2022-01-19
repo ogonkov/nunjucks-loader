@@ -14,7 +14,7 @@ export function getUsagesOf(nodeType, nodes) {
     /**
      * @template TNode
      * @param {TNode[]} list
-     * @param {function(TNode): function} callback
+     * @param {function(Object<TNode>): function(TNode): boolean} callback
      * @returns {TNode[]}
      */
     function filterNodes(list, callback) {
