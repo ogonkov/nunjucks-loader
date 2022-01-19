@@ -2,6 +2,7 @@ import nunjucks from 'nunjucks';
 
 import {getUsagesOf} from './get-usages-of';
 
+
 function getFilterNodeMatcher(filterNode) {
     /**
      * @param {AddonWrapper} addon
