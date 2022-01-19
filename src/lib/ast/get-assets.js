@@ -51,7 +51,7 @@ async function filterPaths([path, paths]) {
 
 /**
  * @param {nunjucks.nodes.Root} nodes
- * @param {string|string[]}     searchAssets
+ * @param {string[]}            searchAssets
  * @returns {Promise<[ImportWrapper, ImportWrapper][]>}
  */
 export function getAssets(nodes, searchAssets) {
@@ -60,7 +60,7 @@ export function getAssets(nodes, searchAssets) {
         nunjucks.nodes.CallExtensionAsync,
         getNodeValue
     ).filter(isUniqueAsset);
-    const possiblePaths = getPossiblePaths(assets, [].concat(searchAssets));
+    const possiblePaths = getPossiblePaths(assets, searchAssets);
     const resolvedAssets = possiblePaths.map(filterPaths);
 
     return Promise.all(resolvedAssets);

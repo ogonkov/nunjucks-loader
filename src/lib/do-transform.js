@@ -52,6 +52,7 @@ export async function doTransform(source, loaderContext, {
         wrappedAddons.globals,
         {
             ...options,
+            assetsPaths: [].concat(options.assetsPaths),
             searchPaths: normalizedSearchPaths
         }
     );
