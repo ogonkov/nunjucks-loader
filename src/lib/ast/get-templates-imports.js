@@ -1,8 +1,11 @@
+import nunjucks from 'nunjucks';
+
 import {getFirstExistedPath} from '../utils/get-first-existed-path';
 import {getPossiblePaths} from '../utils/get-possible-paths';
 import {isUniqueAsset} from '../utils/is-unique-asset';
 
-import {getDependenciesTemplates} from './get-dependencies-templates';
+import {getNodesValues} from './get-nodes-values';
+import {getTemplatePath} from './get-template-path';
 
 
 /**
@@ -21,6 +24,13 @@ async function filterPaths([path, paths]) {
     }
 }
 
+const nodeTypes = [
+    nunjucks.nodes.Extends,
+    nunjucks.nodes.Include,
+    nunjucks.nodes.Import,
+    nunjucks.nodes.FromImport
+];
+
 /**
  * @param {Object} loaderContext
  * @param {nunjucks.nodes.Root} nodes
@@ -28,7 +38,7 @@ async function filterPaths([path, paths]) {
  * @returns {Promise<[string, ImportWrapper][]>}
  */
 export function getTemplatesImports(loaderContext, nodes, searchPaths) {
-    const templateDeps = getDependenciesTemplates(nodes).filter(function(dep) {
+    const templateDeps = getNodesValues(nodes, nodeTypes, getTemplatePath).filter(function(dep) {
         if (dep instanceof Error) {
             loaderContext.emitWarning(dep);
 
