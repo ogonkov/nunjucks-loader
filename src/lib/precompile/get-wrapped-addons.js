@@ -10,7 +10,7 @@ import {FilterWrapper} from '../addons-wrapper/FilterWrapper';
  * @param {boolean} options.es
  * @returns {AddonWrapper[]}
  */
-export function getAddonsMeta(addons, options) {
+export function getWrappedAddons(addons, options) {
     let Klass = AddonWrapper;
     if (options.type === 'filters') {
         Klass = FilterWrapper;

@@ -1,8 +1,11 @@
+import nunjucks from 'nunjucks';
+
 import {getFirstExistedPath} from '../utils/get-first-existed-path';
 import {getPossiblePaths} from '../utils/get-possible-paths';
-import {isUniqueTemplate} from '../utils/is-unique-template';
+import {isUniqueAsset} from '../utils/is-unique-asset';
 
-import {getDependenciesTemplates} from './get-dependencies-templates';
+import {getNodesValues} from './get-nodes-values';
+import {getTemplatePath} from './get-template-path';
 
 
 /**
@@ -21,10 +24,12 @@ async function filterPaths([path, paths]) {
     }
 }
 
-
-function filterUniqueTemplates(templates) {
-    return templates.filter(isUniqueTemplate);
-}
+const nodeTypes = [
+    nunjucks.nodes.Extends,
+    nunjucks.nodes.Include,
+    nunjucks.nodes.Import,
+    nunjucks.nodes.FromImport
+];
 
 /**
  * @param {Object} loaderContext
@@ -33,7 +38,7 @@ function filterUniqueTemplates(templates) {
  * @returns {Promise<[string, ImportWrapper][]>}
  */
 export function getTemplatesImports(loaderContext, nodes, searchPaths) {
-    const templateDeps = getDependenciesTemplates(nodes).filter(function(dep) {
+    const templateDeps = getNodesValues(nodes, nodeTypes, getTemplatePath).filter(function(dep) {
         if (dep instanceof Error) {
             loaderContext.emitWarning(dep);
 
@@ -41,9 +46,9 @@ export function getTemplatesImports(loaderContext, nodes, searchPaths) {
         }
 
         return true;
-    });
+    }).filter(isUniqueAsset);
     const possiblePaths = getPossiblePaths(templateDeps, searchPaths);
     const resolvedTemplates = possiblePaths.map(filterPaths);
 
-    return Promise.all(resolvedTemplates).then(filterUniqueTemplates);
+    return Promise.all(resolvedTemplates);
 }
