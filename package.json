@@ -41,7 +41,7 @@
     "loader-utils": "^2.0.0"
   },
   "optionalDependencies": {
-    "glob": "^7.1.6"
+    "glob": "^9.3.1"
   },
   "peerDependencies": {
     "nunjucks": "^3.0.0",
