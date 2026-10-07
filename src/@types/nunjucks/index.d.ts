@@ -120,7 +120,7 @@ declare module 'nunjucks' {
             /** `results` is mutated if passed */
             findAll<T extends Node<any, any>>(type: new (...args: any[]) => T, results?: T[]): T[];
 
-            iterFields(func: (value: this[T], name: T) => void);
+            iterFields(func: (value: this[T & keyof this], name: T) => void): void;
         }
 
         export class Value<TypeName extends string = 'Value', ValueType extends LiteralValue = LiteralValue> extends Node<TypeName, 'value'> {
