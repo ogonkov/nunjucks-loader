@@ -81,6 +81,33 @@ declare module 'nunjucks' {
         | nodes.CallExtension
         | nodes.CallExtensionAsync;
 
+    export type ExpressionNode =
+        | nodes.Literal
+        | nodes.Symbol
+        | nodes.Group
+        | nodes.Array
+        | nodes.Dict
+        | nodes.FunCall
+        | nodes.LookupVal
+        | nodes.Filter
+        | nodes.InlineIf
+        | nodes.In
+        | nodes.Is
+        | nodes.Or
+        | nodes.And
+        | nodes.Not
+        | nodes.Compare
+        | nodes.Concat
+        | nodes.Add
+        | nodes.Sub
+        | nodes.Mul
+        | nodes.Div
+        | nodes.FloorDiv
+        | nodes.Mod
+        | nodes.Pow
+        | nodes.Neg
+        | nodes.Pos;
+
     export namespace nodes {
         export type LiteralValue = string | number | boolean | RegExp | null;
 
@@ -400,31 +427,31 @@ declare module 'nunjucks' {
 
             parseRaw(tagName: string): nodes.Output<nodes.TemplateData>;
 
-            parsePostfix(node: NodeType): nodes.FunCall | nodes.LookupVal;
+            parsePostfix<T extends NodeType>(node: T): T | nodes.FunCall | nodes.LookupVal;
 
-            parseExpression(): nodes.InlineIf;
+            parseExpression(): ExpressionNode;
 
-            parseInlineIf(): nodes.InlineIf;
+            parseInlineIf(): ExpressionNode;
 
-            parseOr(): nodes.Or;
-            parseAnd(): nodes.And;
-            parseNot(): nodes.In | nodes.Not;
-            parseIn(): nodes.In | nodes.Not;
-            parseIs(): nodes.Is | nodes.Not;
-            parseCompare(): nodes.Compare | nodes.Concat;
-            parseConcat(): nodes.Concat;
-            parseAdd(): nodes.Add;
-            parseSub(): nodes.Sub;
-            parseMul(): nodes.Mul;
-            parseDiv(): nodes.Div;
-            parseFloorDiv(): nodes.FloorDiv;
-            parseMod(): nodes.Mod;
-            parsePow(): nodes.Pow;
-            parseUnary(noFilters?: boolean): nodes.Neg | nodes.Pos | nodes.Literal | nodes.Symbol | nodes.Group | nodes.Array | nodes.Dict | nodes.FunCall | nodes.LookupVal | unknown;
+            parseOr(): ExpressionNode;
+            parseAnd(): ExpressionNode;
+            parseNot(): ExpressionNode;
+            parseIn(): ExpressionNode;
+            parseIs(): ExpressionNode;
+            parseCompare(): ExpressionNode;
+            parseConcat(): ExpressionNode;
+            parseAdd(): ExpressionNode;
+            parseSub(): ExpressionNode;
+            parseMul(): ExpressionNode;
+            parseDiv(): ExpressionNode;
+            parseFloorDiv(): ExpressionNode;
+            parseMod(): ExpressionNode;
+            parsePow(): ExpressionNode;
+            parseUnary(noFilters?: boolean): ExpressionNode;
             parsePrimary(noPostfix?: boolean): nodes.Literal | nodes.Symbol | nodes.Group | nodes.Array | nodes.Dict | nodes.FunCall | nodes.LookupVal;
             parseFilterName(): nodes.Symbol;
             parseFilterArgs(node: NodeType): NodeType[];
-            parseFilter(node): nodes.Filter;
+            parseFilter<T extends NodeType>(node: T): T | nodes.Filter;
             parseFilterStatement(): nodes.Output<nodes.Filter>;
             parseAggregate(): nodes.Group | nodes.Array | nodes.Dict | null;
             parseSignature(tolerant?: boolean, noParens?: boolean): nodes.NodeList | null;
