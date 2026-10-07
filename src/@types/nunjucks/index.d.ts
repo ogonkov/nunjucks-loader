@@ -89,7 +89,7 @@ declare module 'nunjucks' {
             colno: number | undefined;
 
             /** `results` is mutated if passed */
-            findAll<T extends (typeof Node | typeof CallExtension)>(type: T, results?: T[]): T[];
+            findAll<T extends Node<any, any>>(type: new (...args: any[]) => T, results?: T[]): T[];
 
             iterFields(func: (value: this[T], name: T) => void);
         }
