@@ -497,7 +497,7 @@ declare module 'nunjucks' {
 
         isFinished(): boolean;
         nextToken(): Token | null;
-        curent(): string;
+        current(): string;
         /** returns what's left of the unparsed string */
         currentStr(): string;
         previous(): string;
