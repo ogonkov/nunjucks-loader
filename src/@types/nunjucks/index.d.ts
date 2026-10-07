@@ -350,8 +350,8 @@ declare module 'nunjucks' {
             type: unknown;
         }
 
-        export class CallExtension<TypeName extends string = 'CallExtension'> extends Node<TypeName, 'extName' | 'prop' | 'args' | 'contentArgs'> {
-            constructor<T, P extends keyof T>(ext: T, prop: P, args?: nodes.NodeList | null, contentArgs?: unknown[] | null);
+        export class CallExtension<TypeName extends string = 'CallExtension', T = Record<string, unknown>, P extends keyof T = keyof T> extends Node<TypeName, 'extName' | 'prop' | 'args' | 'contentArgs'> {
+            constructor(ext: T, prop: P, args?: nodes.NodeList | null, contentArgs?: unknown[] | null);
 
             extName: string | Extension;
             prop: P;
@@ -360,7 +360,7 @@ declare module 'nunjucks' {
             autoescape: unknown;
         }
 
-        export class CallExtensionAsync<T = unknown, P extends keyof T = string> extends CallExtension<'CallExtensionAsync'> {
+        export class CallExtensionAsync<T = Record<string, unknown>, P extends keyof T = keyof T> extends CallExtension<'CallExtensionAsync', T, P> {
             constructor(ext: T, prop: P, args?: nodes.NodeList | null, contentArgs?: unknown[] | null);
         }
     }
