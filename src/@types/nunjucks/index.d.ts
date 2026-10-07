@@ -228,7 +228,7 @@ declare module 'nunjucks' {
             name: nodes.Symbol | null;
             args: nodes.NodeList | null;
         }
-        export class FilterAsync extends FunCall<'FilterAsync', 'name' | 'args' | 'symbol'> {
+        export class FilterAsync extends Filter<'FilterAsync', 'name' | 'args' | 'symbol'> {
             constructor(lineno?: number, colno?: number, name?: nodes.Symbol | null, args?: nodes.NodeList | null, symbol?: nodes.Symbol | null);
 
             name: nodes.Symbol | null;
@@ -366,7 +366,7 @@ declare module 'nunjucks' {
     }
 
     export namespace parser {
-        export function parse(src: string, extensions?: Extension[], opts?: TokenizerOptions): unknown;
+        export function parse(src: string, extensions?: Extension[], opts?: TokenizerOptions): nodes.Root;
 
         export class Parser {
             private tokens: Tokenizer;
@@ -395,7 +395,7 @@ declare module 'nunjucks' {
 
             skipSymbol(val: string): boolean;
 
-            advanceAfterBlockEnd(name: string): Token;
+            advanceAfterBlockEnd(name?: string): Token;
 
             advanceAfterVariableEnd(): void;
 
@@ -425,7 +425,7 @@ declare module 'nunjucks' {
 
             parseStatement(): NodeType | null;
 
-            parseRaw(tagName: string): nodes.Output<nodes.TemplateData>;
+            parseRaw(tagName?: string): nodes.Output<nodes.TemplateData>;
 
             parsePostfix<T extends NodeType>(node: T): T | nodes.FunCall | nodes.LookupVal;
 
@@ -558,7 +558,7 @@ declare module 'nunjucks' {
     }
 
     export namespace lexer {
-        export function lex(src: string, opts: TokenizerOptions): Tokenizer;
+        export function lex(src: string, opts?: TokenizerOptions): Tokenizer;
 
         export const TOKEN_STRING: TOKEN_STRING;
         export const TOKEN_WHITESPACE: TOKEN_WHITESPACE;
