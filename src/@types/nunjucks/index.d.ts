@@ -431,23 +431,23 @@ declare module 'nunjucks' {
 
             parseExpression(): ExpressionNode;
 
-            parseInlineIf(): ExpressionNode;
+            parseInlineIf(): nodes.InlineIf | ReturnType<Parser['parseOr']>;
 
-            parseOr(): ExpressionNode;
-            parseAnd(): ExpressionNode;
-            parseNot(): ExpressionNode;
-            parseIn(): ExpressionNode;
-            parseIs(): ExpressionNode;
-            parseCompare(): ExpressionNode;
-            parseConcat(): ExpressionNode;
-            parseAdd(): ExpressionNode;
-            parseSub(): ExpressionNode;
-            parseMul(): ExpressionNode;
-            parseDiv(): ExpressionNode;
-            parseFloorDiv(): ExpressionNode;
-            parseMod(): ExpressionNode;
-            parsePow(): ExpressionNode;
-            parseUnary(noFilters?: boolean): ExpressionNode;
+            parseOr(): nodes.Or | ReturnType<Parser['parseAnd']>;
+            parseAnd(): nodes.And | ReturnType<Parser['parseNot']>;
+            parseNot(): nodes.Not | ReturnType<Parser['parseIn']>;
+            parseIn(): nodes.In | nodes.Not | ReturnType<Parser['parseIs']>;
+            parseIs(): nodes.Is | nodes.Not | ReturnType<Parser['parseCompare']>;
+            parseCompare(): nodes.Compare | ReturnType<Parser['parseConcat']>;
+            parseConcat(): nodes.Concat | ReturnType<Parser['parseAdd']>;
+            parseAdd(): nodes.Add | ReturnType<Parser['parseSub']>;
+            parseSub(): nodes.Sub | ReturnType<Parser['parseMul']>;
+            parseMul(): nodes.Mul | ReturnType<Parser['parseDiv']>;
+            parseDiv(): nodes.Div | ReturnType<Parser['parseFloorDiv']>;
+            parseFloorDiv(): nodes.FloorDiv | ReturnType<Parser['parseMod']>;
+            parseMod(): nodes.Mod | ReturnType<Parser['parsePow']>;
+            parsePow(): nodes.Pow | ReturnType<Parser['parseUnary']>;
+            parseUnary(noFilters?: boolean): nodes.Neg | nodes.Pos | nodes.Filter | ReturnType<Parser['parsePrimary']>;
             parsePrimary(noPostfix?: boolean): nodes.Literal | nodes.Symbol | nodes.Group | nodes.Array | nodes.Dict | nodes.FunCall | nodes.LookupVal;
             parseFilterName(): nodes.Symbol;
             parseFilterArgs(node: NodeType): NodeType[];
