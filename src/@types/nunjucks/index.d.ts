@@ -1,9 +1,6 @@
 import 'nunjucks';
 
 declare module 'nunjucks' {
-    /** TypeScript 4.7 compatibility: prevent contextual inference of node names. */
-    type NoInfer<T> = [T][T extends any ? 0 : never];
-
     export interface ConfigureOptionsTags {
         blockStart: string;
         blockEnd: string;
