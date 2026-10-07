@@ -207,11 +207,12 @@ declare module 'nunjucks' {
             symbol: unknown;
         }
 
-        export class TemplateRef<TypeName = 'TemplateRef'> extends Node<TypeName, 'template'> {
+        export interface TemplateRef<TypeName = 'TemplateRef'> extends Node<TypeName, 'template'> {
             template: unknown;
         }
 
-        export class Extends extends TemplateRef<'Extends'> {}
+        export interface Extends extends TemplateRef<'Extends'> {}
+        export class Extends extends Node<'Extends', 'template'> {}
 
         export class Include extends Node<'Include', 'template' | 'ignoreMissing'> {
             template: unknown;
@@ -242,9 +243,7 @@ declare module 'nunjucks' {
 
         export class TemplateData extends Literal<'TemplateData'> {}
 
-        export class UnaryOp<TypeName = 'UnaryOp', T extends NodeType = NodeType> extends Node<TypeName, 'target'> {
-            constructor(lineno?: number, colno?: number, target?: T);
-
+        export interface UnaryOp<TypeName = 'UnaryOp', T extends NodeType = NodeType> extends Node<TypeName, 'target'> {
             target: T;
         }
 
@@ -259,7 +258,10 @@ declare module 'nunjucks' {
         export class Is extends BinOp<'Is'> {}
         export class Or extends BinOp<'Or', nodes.And, nodes.And> {}
         export class And extends BinOp<'And', nodes.In | nodes.Not, nodes.In | nodes.Not> {}
-        export class Not extends UnaryOp<'Not'> {}
+        export interface Not extends UnaryOp<'Not'> {}
+        export class Not extends Node<'Not', 'target'> {
+            constructor(lineno?: number, colno?: number, target?: NodeType);
+        }
         export class Add extends BinOp<'Add'> {}
         export class Concat extends BinOp<'Concat'> {}
         export class Sub extends BinOp<'Sub'> {}
@@ -268,8 +270,14 @@ declare module 'nunjucks' {
         export class FloorDiv extends BinOp<'FloorDiv'> {}
         export class Mod extends BinOp<'Mod'> {}
         export class Pow extends BinOp<'Pow'> {}
-        export class Neg extends UnaryOp<'Neg'> {}
-        export class Pos extends UnaryOp<'Pos'> {}
+        export interface Neg extends UnaryOp<'Neg'> {}
+        export class Neg extends Node<'Neg', 'target'> {
+            constructor(lineno?: number, colno?: number, target?: NodeType);
+        }
+        export interface Pos extends UnaryOp<'Pos'> {}
+        export class Pos extends Node<'Pos', 'target'> {
+            constructor(lineno?: number, colno?: number, target?: NodeType);
+        }
 
         export class Compare extends Node<'Compare', 'expr' | 'ops'> {
             expr: unknown;
@@ -475,26 +483,7 @@ declare module 'nunjucks' {
         lstripBlocks?: boolean;
     }
 
-    export class Tokenizer {
-        constructor(src: string, opts?: TokenizerOptions);
-
-        private str: string;
-        private index: number;
-        private len: number;
-        private lineno: number;
-        private colno: number;
-        private in_code: boolean;
-        private tags: ConfigureOptionsTags;
-        private trimBlocks: boolean;
-        private lstripBlocks: boolean;
-        private _parseString(delimiter: string): string;
-        private _extractMatching(breakOnMatch: boolean, charString: string): string | null;
-        private _extract(): string | null;
-        private _extractString(str: string): string | null;
-        private _extractUntil(charString: string): string | null;
-        private _matches(str: string): boolean | null;
-        private _extractRegex(regex: RegExp): RegExpMatchArray | null;
-
+    export interface Tokenizer {
         isFinished(): boolean;
         nextToken(): Token | null;
         current(): string;
