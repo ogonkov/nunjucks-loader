@@ -111,7 +111,7 @@ declare module 'nunjucks' {
     export namespace nodes {
         export type LiteralValue = string | number | boolean | RegExp | null;
 
-        export class Node<TypeName = 'Node', T extends string = string> extends Obj<TypeName> {
+        export class Node<TypeName extends string = 'Node', T extends string = string> extends Obj<TypeName> {
             constructor(lineno?: number, colno?: number);
 
             lineno: number | undefined;
@@ -123,13 +123,13 @@ declare module 'nunjucks' {
             iterFields(func: (value: this[T], name: T) => void);
         }
 
-        export class Value<TypeName = 'Value', ValueType extends LiteralValue = LiteralValue> extends Node<TypeName, 'value'> {
+        export class Value<TypeName extends string = 'Value', ValueType extends LiteralValue = LiteralValue> extends Node<TypeName, 'value'> {
             constructor(lineno?: number, colno?: number, value?: ValueType | null);
 
             value: ValueType | null;
         }
 
-        export class NodeList<TypeName = 'NodeList', Child extends NodeType = NodeType> extends Node<TypeName, 'children'> {
+        export class NodeList<TypeName extends string = 'NodeList', Child extends NodeType = NodeType> extends Node<TypeName, 'children'> {
             constructor(lineno?: number, colno?: number, children?: Child[] | null);
 
             children: Child[];
@@ -139,7 +139,7 @@ declare module 'nunjucks' {
 
         export class Root extends NodeList<'Root'> {}
 
-        export class Literal<TypeName = 'Literal', ValueType extends LiteralValue = LiteralValue> extends Value<TypeName, ValueType> {}
+        export class Literal<TypeName extends string = 'Literal', ValueType extends LiteralValue = LiteralValue> extends Value<TypeName, ValueType> {}
         export class Symbol extends Value<'Symbol', string> {}
 
         export class Group extends NodeList<'Group'> {}
@@ -152,7 +152,7 @@ declare module 'nunjucks' {
             value: NodeType | null;
         }
 
-        export class Dict<TypeName = 'Dict', T extends NodeType = nodes.Pair> extends NodeList<TypeName, T> {}
+        export class Dict<TypeName extends string = 'Dict', T extends NodeType = nodes.Pair> extends NodeList<TypeName, T> {}
 
         export class LookupVal extends Node<'LookupVal', 'target' | 'val'> {
             constructor(lineno?: number, colno?: number, target?: NodeType | null, val?: NodeType | null);
@@ -161,7 +161,7 @@ declare module 'nunjucks' {
             val: NodeType | null;
         }
 
-        export class If<TypeName = 'If'> extends Node<TypeName, 'cond' | 'body' | 'else_'> {
+        export class If<TypeName extends string = 'If'> extends Node<TypeName, 'cond' | 'body' | 'else_'> {
             constructor(lineno?: number, colno?: number, cond?: unknown, body?: unknown, else_?: unknown);
 
             cond: unknown;
@@ -179,7 +179,7 @@ declare module 'nunjucks' {
             else_: NodeType | null;
         }
 
-        export class For<TypeName = 'For'> extends Node<TypeName, 'arr' | 'name' | 'body' | 'else_'> {
+        export class For<TypeName extends string = 'For'> extends Node<TypeName, 'arr' | 'name' | 'body' | 'else_'> {
             constructor(lineno?: number, colno?: number, arr?: unknown, name?: unknown, body?: unknown, else_?: unknown);
             arr: unknown;
             name: unknown;
@@ -190,7 +190,7 @@ declare module 'nunjucks' {
         export class AsyncEach extends For<'AsyncEach'> {}
         export class AsyncAll extends For<'AsyncAll'> {}
 
-        export class Macro<TypeName = 'Macro'> extends Node<TypeName, 'name' | 'args' | 'body'> {
+        export class Macro<TypeName extends string = 'Macro'> extends Node<TypeName, 'name' | 'args' | 'body'> {
             constructor(lineno?: number, colno?: number, name?: unknown, args?: unknown, body?: unknown);
 
             name: unknown;
@@ -216,13 +216,13 @@ declare module 'nunjucks' {
             withContext: unknown;
         }
 
-        export class FunCall<TypeName = 'FunCall', T = 'name' | 'args'> extends Node<TypeName, T> {
+        export class FunCall<TypeName extends string = 'FunCall', T extends string = 'name' | 'args'> extends Node<TypeName, T> {
             constructor(lineno?: number, colno?: number, name?: NodeType | null, args?: nodes.NodeList | null);
 
             name: NodeType | null;
             args: nodes.NodeList | null;
         }
-        export class Filter<TypeName = 'Filter', T = 'name' | 'args'> extends FunCall<TypeName, T> {
+        export class Filter<TypeName extends string = 'Filter', T extends string = 'name' | 'args'> extends FunCall<TypeName, T> {
             constructor(lineno?: number, colno?: number, name?: nodes.Symbol | null, args?: nodes.NodeList | null);
 
             name: nodes.Symbol | null;
@@ -252,7 +252,7 @@ declare module 'nunjucks' {
             symbol: unknown;
         }
 
-        export interface TemplateRef<TypeName = 'TemplateRef'> extends Node<TypeName, 'template'> {
+        export interface TemplateRef<TypeName extends string = 'TemplateRef'> extends Node<TypeName, 'template'> {
             template: unknown;
         }
 
@@ -300,11 +300,11 @@ declare module 'nunjucks' {
 
         export class TemplateData extends Literal<'TemplateData', string> {}
 
-        export interface UnaryOp<TypeName = 'UnaryOp', T extends NodeType = NodeType> extends Node<TypeName, 'target'> {
+        export interface UnaryOp<TypeName extends string = 'UnaryOp', T extends NodeType = NodeType> extends Node<TypeName, 'target'> {
             target: T | null;
         }
 
-        export class BinOp<TypeName = 'BinOp', Left extends NodeType = NodeType, Right extends NodeType = NodeType> extends Node<TypeName, 'left' | 'right'> {
+        export class BinOp<TypeName extends string = 'BinOp', Left extends NodeType = NodeType, Right extends NodeType = NodeType> extends Node<TypeName, 'left' | 'right'> {
             constructor(lineno?: number, colno?: number, left?: Left | null, right?: Right | null);
 
             left: Left | null;
@@ -350,7 +350,7 @@ declare module 'nunjucks' {
             type: unknown;
         }
 
-        export class CallExtension<TypeName = 'CallExtension'> extends Node<TypeName, 'extName' | 'prop' | 'args' | 'contentArgs'> {
+        export class CallExtension<TypeName extends string = 'CallExtension'> extends Node<TypeName, 'extName' | 'prop' | 'args' | 'contentArgs'> {
             constructor<T, P extends keyof T>(ext: T, prop: P, args?: nodes.NodeList | null, contentArgs?: unknown[] | null);
 
             extName: string | Extension;
