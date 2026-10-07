@@ -531,12 +531,12 @@ declare module 'nunjucks' {
     }
 
     /** Tokens with string as value */
-    interface TokenString<T extends TOKEN_WHITESPACE | TOKEN_BLOCK_END | TOKEN_VARIABLE_END | TOKEN_STRING | TOKEN_LEFT_PAREN | TOKEN_RIGHT_PAREN | TOKEN_LEFT_BRACKET | TOKEN_RIGHT_BRACKET | TOKEN_LEFT_CURLY | TOKEN_RIGHT_CURLY | TOKEN_COMMA | TOKEN_COLON | TOKEN_TILDE | TOKEN_PIPE | TOKEN_OPERATOR | TOKEN_FLOAT | TOKEN_INT | TOKEN_BOOLEAN | TOKEN_NONE | TOKEN_SYMBOL | TOKEN_BLOCK_START | TOKEN_VARIABLE_START | TOKEN_COMMENT | TOKEN_DATA> extends BaseToken {
+    interface TokenString<T extends Exclude<TokenType, TOKEN_REGEX>> extends BaseToken {
         type: T;
         value: string;
     }
 
-    type Token<T extends TokenType = TokenType> = T extends TOKEN_REGEX ? TokenRegex : TokenString<T>;
+    type Token<T extends TokenType = TokenType> = T extends TOKEN_REGEX ? TokenRegex : TokenString<Exclude<T, TOKEN_REGEX>>;
 
     export interface TokenizerOptions {
         tags?: Partial<ConfigureOptionsTags>;
