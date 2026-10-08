@@ -1,9 +1,5 @@
 const reSafeSymbols = /([.*+?^=!:${}()|[\]/\\])/g;
 
-/**
- * @param {string} str
- * @returns {string}
- */
-export function toRegExpSource(str) {
+export function toRegExpSource(str: string) {
     return str.replace(reSafeSymbols, '\\$1');
 }
