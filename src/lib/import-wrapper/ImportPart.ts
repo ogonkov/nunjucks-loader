@@ -1,5 +1,7 @@
 export class ImportPart {
-    constructor(value) {
+    value: string;
+
+    constructor(value: unknown) {
         if (typeof value !== 'string') {
             throw new TypeError(
                 `${this.className}: value should be a string`

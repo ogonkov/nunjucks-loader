@@ -1,16 +1,14 @@
 import fs from 'fs';
 import {promisify} from 'util';
 
+import {ImportWrapper} from '../import-wrapper/ImportWrapper';
+
 import {getGlob} from './get-glob';
 
 
 const fsAccess = promisify(fs.access);
 
-/**
- * @param {ImportWrapper} path
- * @returns {Promise<boolean>}
- */
-async function isExists(path) {
+async function isExists(path: ImportWrapper) {
     if (path.isDynamic()) {
         const glob = await getGlob();
         const files = await glob(path.toGlob(), {windowsPathsNoEscape: process.platform === 'win32'});
@@ -26,11 +24,7 @@ async function isExists(path) {
     }
 }
 
-/**
- * @param {ImportWrapper[]} paths
- * @returns {Promise<ImportWrapper>}
- */
-export async function getFirstExistedPath(paths) {
+export async function getFirstExistedPath(paths: ImportWrapper[]) {
     for (const path of paths) {
         const exist = await isExists(path);
         if (exist) {

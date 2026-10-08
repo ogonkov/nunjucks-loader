@@ -1,9 +1,7 @@
 /**
  * @link https://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
- * @param {string} str
- * @returns {*}
  */
-function getStringHash(str) {
+function getStringHash(str: string) {
     let hash = 0;
 
     if (str.length === 0) {
@@ -19,6 +17,6 @@ function getStringHash(str) {
     return hash;
 }
 
-export function getStringBase64Hash(str) {
+export function getStringBase64Hash(str: string) {
     return Buffer.from(String(getStringHash(str))).toString('base64');
 }

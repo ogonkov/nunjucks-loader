@@ -1,3 +1,7 @@
+type ModuleValue<T> = T extends {default: infer Value}
+    ? Value | (Extract<false | 0 | 0n | '' | null | undefined, Value> extends never ? never : T)
+    : T;
+
 /**
  * Unwrap a truthy default export, otherwise return the imported value itself.
  *
@@ -11,6 +15,6 @@
  * @returns {*}
  *     The default export when truthy, otherwise the original imported value.
  */
-export function getModule(importedSymbol) {
-    return importedSymbol?.default || importedSymbol;
+export function getModule<T>(importedSymbol: T): ModuleValue<T> {
+    return ((importedSymbol as {default?: unknown} | null | undefined)?.default || importedSymbol) as ModuleValue<T>;
 }

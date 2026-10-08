@@ -2,17 +2,14 @@ import nunjucks from 'nunjucks';
 
 import {ImportWrapper} from '../import-wrapper/ImportWrapper';
 
+import {isLiteral} from './is-literal';
 
 /**
  * Parse `Add` value to expression
  * @example
  *   'foo' + bar + 'qux'
- *
- * @param {nunjucks.nodes.Add} node
- *
- * @returns {ImportWrapper}
  */
-export function getAddNodeValue(node) {
+export function getAddNodeValue(node: nunjucks.nodes.Add) {
     if (!(node instanceof nunjucks.nodes.Add)) {
         throw new TypeError('Wrong node type');
     }
@@ -27,12 +24,12 @@ export function getAddNodeValue(node) {
             continue;
         }
 
-        if (node instanceof nunjucks.nodes.Literal) {
+        if (isLiteral(node) && typeof node.value === 'string') {
             value.addLiteral(node.value);
             continue;
         }
 
-        if (node instanceof nunjucks.nodes.Symbol) {
+        if (node instanceof nunjucks.nodes.Symbol && typeof node.value === 'string') {
             value.addSymbol(node.value);
             continue;
         }

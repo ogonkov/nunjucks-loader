@@ -1,20 +1,12 @@
 import path from 'path';
 
-
 /**
  * Returns a function that removes path from given one
- *
- * @param {string} targetPath
- * @returns {function(string): string}
  */
-export function getPathRemover(targetPath) {
+export function getPathRemover(targetPath: string) {
     const normalizedTargetPath = path.resolve(targetPath);
 
-    /**
-     * @param {string} pathToRemove
-     * @returns {string}
-     */
-    function removePath(pathToRemove) {
+    function removePath(pathToRemove: string) {
         return normalizedTargetPath
             .replace(path.resolve(pathToRemove), '')
             .replace(/^[\\/]/, '');

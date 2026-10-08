@@ -1,18 +1,7 @@
-/**
- * @param {string} path
- * @param {boolean} [esModule]
- * @param {boolean} [isDynamic]
- * @returns {function(string, string): string}
- */
-export function getImportStr(path, esModule, isDynamic) {
+export function getImportStr(path: string, esModule?: boolean, isDynamic?: boolean): (name: string, sym: string) => string {
     const isES = esModule === true;
 
-    /**
-     * @param {string} [name] Variable name to be used
-     * @param {string} [sym]  Module symbol to be imported
-     * @returns {string}
-     */
-    function getImportInvocationString(name, sym) {
+    function getImportInvocationString(name: string, sym: string): string {
         if (isDynamic && isES) {
             return `import(${path});`;
         }

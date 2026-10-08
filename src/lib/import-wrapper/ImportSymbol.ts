@@ -2,7 +2,7 @@ import {ImportPart} from './ImportPart';
 
 
 export class ImportSymbol extends ImportPart {
-    get className() {
+    get className(): 'ImportSymbol' {
         return 'ImportSymbol';
     }
 

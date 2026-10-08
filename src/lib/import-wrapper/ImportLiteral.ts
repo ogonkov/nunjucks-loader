@@ -2,7 +2,7 @@ import {ImportPart} from './ImportPart';
 
 
 export class ImportLiteral extends ImportPart {
-    get className() {
+    get className(): 'ImportLiteral' {
         return 'ImportLiteral';
     }
 

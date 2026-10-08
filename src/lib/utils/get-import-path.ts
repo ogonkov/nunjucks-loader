@@ -5,12 +5,7 @@ import {sortBy} from './sort-by';
 const isWindows = process.platform === 'win32';
 const sortByLength = sortBy('length');
 
-/**
- * @param {string}   resourcePath
- * @param {string[]} searchPaths
- * @returns {string}
- */
-export function getImportPath(resourcePath, searchPaths) {
+export function getImportPath(resourcePath: string, searchPaths: string[]) {
     const removeSearchPath = getPathRemover(resourcePath);
     let [importPath] = searchPaths.map(removeSearchPath).sort(sortByLength);
 

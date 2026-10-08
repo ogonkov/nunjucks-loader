@@ -1,3 +1,5 @@
+import nunjucks from 'nunjucks';
+
 /**
  * Find nodes of the requested type and extract a value from each matching node.
  *
@@ -15,8 +17,12 @@
  * @returns {Result[]}
  *     Truthy mapped values, preserving the order of their matching nodes.
  */
-export function getNodesValues(nodes, nodeType, getValue) {
+export function getNodesValues<T extends nunjucks.nodes.Node<any, any>, Result>(
+    nodes: nunjucks.nodes.Root,
+    nodeType: new (...args: any[]) => T,
+    getValue: (value: T) => Result
+) {
     const nodesOfType = nodes.findAll(nodeType);
 
-    return nodesOfType.map(getValue).filter(Boolean);
+    return nodesOfType.map(getValue).filter((value): value is Exclude<Result, undefined> => !!value);
 }
