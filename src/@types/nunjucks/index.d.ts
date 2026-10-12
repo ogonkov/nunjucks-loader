@@ -19,6 +19,32 @@ declare module 'nunjucks' {
         parse(parser: parser.Parser, nodes: any, lexer: any): any;
     }
 
+    export type ContextBlock = (
+        env: Environment,
+        context: Context,
+        frame: unknown,
+        runtime: unknown,
+        callback: (error: unknown, value?: unknown) => void
+    ) => void;
+
+    // Internal rendering context; Nunjucks does not export its constructor.
+    export interface Context {
+        env: Environment;
+        ctx: Record<string, unknown>;
+        blocks: Record<string, ContextBlock[]>;
+        exported: string[];
+
+        init(ctx: Record<string, unknown>, blocks: Record<string, ContextBlock>, env?: Environment): void;
+        lookup(name: string): unknown;
+        setVariable(name: string, value: unknown): void;
+        getVariables(): Record<string, unknown>;
+        addBlock(name: string, block: ContextBlock): this;
+        getBlock(name: string): ContextBlock;
+        getSuper(env: Environment, name: string, block: ContextBlock, frame: unknown, runtime: unknown, callback: (error: unknown, value?: unknown) => void): void;
+        addExport(name: string): void;
+        getExported(): Record<string, unknown>;
+    }
+
     export type NodeType =
         | nodes.Node
         | nodes.Root
