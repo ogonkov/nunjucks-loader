@@ -9,34 +9,32 @@ import {isSymbol} from './is-symbol';
 import {optimizeImportLiterals} from './optimize-import-literals';
 import {throwNotSymbolOrLiteral} from './throw-not-symbol-or-literal';
 
-
-function setImportValue(instance, importValue) {
+function setImportValue(instance: ImportWrapper, importValue: ImportLiteralOrSymbol[]) {
     instance.importValue = importValue;
     instance._optimizedImportValue = optimizeImportLiterals(importValue);
 }
 
-/**
- * @typedef {(ImportLiteral | ImportSymbol)} ImportLiteralOrSymbol
- */
+export type ImportLiteralOrSymbol = ImportLiteral | ImportSymbol;
+
+type MapCallback = (value: ImportLiteralOrSymbol) => unknown;
 
 /**
  * Wrapper for manage import strings
  */
 export class ImportWrapper {
-    constructor(importValue = []) {
-        const value = [].concat(importValue);
-        throwNotSymbolOrLiteral('ImportWrapper', value);
+    importValue!: ImportLiteralOrSymbol[];
+    _optimizedImportValue!: ImportLiteralOrSymbol[];
 
-        this.importValue = null;
-        this._optimizedImportValue = null;
+    constructor(importValue: unknown | ImportLiteralOrSymbol[] = []) {
+        throwNotSymbolOrLiteral('ImportWrapper', importValue);
+
+        let value: ImportLiteralOrSymbol[] = [];
+        value = value.concat(importValue);
+
         setImportValue(this, value);
     }
 
-    /**
-     * @param {ImportLiteralOrSymbol[]} value
-     * @returns {ImportWrapper}
-     */
-    push(...value) {
+    push(...value: ImportLiteralOrSymbol[]) {
         throwNotSymbolOrLiteral('ImportWrapper#push', value);
 
         setImportValue(this, [
@@ -47,25 +45,14 @@ export class ImportWrapper {
         return this;
     }
 
-    /**
-     * @param {...string} value
-     * @returns {ImportWrapper}
-     */
-    addSymbol(...value) {
+    addSymbol(...value: string[]) {
         return this.push(...value.map((value) => new ImportSymbol(value)));
     }
 
-    /**
-     * @param {...string} value
-     * @returns {ImportWrapper}
-     */
-    addLiteral(...value) {
+    addLiteral(...value: string[]) {
         return this.push(...value.map((value) => new ImportLiteral(value)));
     }
 
-    /**
-     * @returns {ImportLiteralOrSymbol}
-     */
     shift() {
         const [item, ...importValue] = this.importValue;
         setImportValue(this, importValue);
@@ -73,11 +60,7 @@ export class ImportWrapper {
         return item;
     }
 
-    /**
-     * @param {...ImportLiteralOrSymbol} value
-     * @returns {ImportWrapper}
-     */
-    unshift(...value) {
+    unshift(...value: ImportLiteralOrSymbol[]) {
         if (value.length === 0) {
             return this;
         }
@@ -92,26 +75,18 @@ export class ImportWrapper {
         return this;
     }
 
-    /**
-     * @param {...ImportLiteralOrSymbol} value
-     * @returns {ImportWrapper}
-     */
-    concat(...value) {
+    concat(...value: ImportLiteralOrSymbol[]) {
         return new ImportWrapper([
             ...this.importValue,
             ...value
         ]);
     }
 
-    map(callback) {
+    map(callback: MapCallback) {
         return new ImportWrapper(this.importValue.map(callback));
     }
 
-    /**
-     * @param {string} str
-     * @returns {boolean}
-     */
-    startsWith(str) {
+    startsWith(str: string) {
         const [item] = this._optimizedImportValue;
         if (getType(item) !== 'ImportLiteral' || item === void 0) {
             return false;
@@ -128,9 +103,6 @@ export class ImportWrapper {
         return getStringBase64Hash(this.toString());
     }
 
-    /**
-     * @returns {string}
-     */
     toString() {
         const string = this.importValue.join(' + ');
         if (this.isDynamic()) {
@@ -144,9 +116,6 @@ export class ImportWrapper {
         return string;
     }
 
-    /**
-     * @returns {string}
-     */
     toGlob() {
         return this.importValue.reduce(function toGlob(glob, item) {
             if (!glob) {
@@ -157,11 +126,6 @@ export class ImportWrapper {
         }, '');
     }
 
-    /**
-     * List of all dynamic parts values
-     *
-     * @returns {string[]}
-     */
     toArgs() {
         return this.importValue.filter(isSymbol).map(function toValue(item) {
             return item.valueOf();
