@@ -8,9 +8,11 @@
  * @returns {number}
  *     Their difference: negative when a is smaller, positive when larger.
  */
-function numericalComparison(a, b) {
+function numericalComparison(a: number, b: number): number {
     return a - b;
 }
+
+type ComparisonFunction<T> = (a: T, b: T) => number;
 
 /**
  * Create a comparator that orders objects by the selected property.
@@ -26,8 +28,10 @@ function numericalComparison(a, b) {
  * @returns {function(*, *): number}
  *     Comparator suitable for Array.prototype.sort.
  */
-export function sortBy(attribute, comparison = numericalComparison) {
+export function sortBy<K extends PropertyKey>(attribute: K): ComparisonFunction<Record<K, number>>;
+export function sortBy<K extends PropertyKey, V>(attribute: K, comparison: ComparisonFunction<V>): ComparisonFunction<Record<K, V>>;
+export function sortBy<K extends PropertyKey, V>(attribute: K, comparison?: ComparisonFunction<V>): ComparisonFunction<Record<K, V>> {
     return function compare(a, b) {
-        return comparison(a?.[attribute], b?.[attribute]);
+        return comparison ? comparison(a?.[attribute], b?.[attribute]) : numericalComparison(a?.[attribute] as number, b?.[attribute] as number);
     };
 }

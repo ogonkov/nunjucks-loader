@@ -1,15 +1,11 @@
 import path from 'path';
 
+import {ImportWrapper} from '../import-wrapper/ImportWrapper';
 import {resolve} from '../import-wrapper/resolve';
 
 
-/**
- * @param {ImportWrapper} possiblePath
- * @param {string[]}      searchPaths
- * @returns {ImportWrapper[]}
- */
-export function resolveSearchPaths(possiblePath, searchPaths) {
-    return searchPaths.map((searchPath) => [
+export function resolveSearchPaths(possiblePath: ImportWrapper, searchPaths: string[]) {
+    return searchPaths.map<[string, ImportWrapper]>((searchPath) => [
         path.resolve(searchPath),
         resolve(searchPath, possiblePath)
     ]).filter(function([basePath, filePath]) {

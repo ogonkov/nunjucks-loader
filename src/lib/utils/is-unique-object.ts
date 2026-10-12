@@ -12,8 +12,8 @@
  * @returns {function(Item, number, List): boolean}
  *     Filter callback receiving the current item, its index, and the list.
  */
-export function isUniqueObject(getIndex) {
-    return function compareIndexes(item, index, list) {
+export function isUniqueObject<T, L>(getIndex: (list: L, item: T) => number) {
+    return function compareIndexes(item: T, index: number, list: L) {
         return getIndex(list, item) === index;
     }
 }

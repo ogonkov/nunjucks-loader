@@ -1,14 +1,12 @@
 import {ImportLiteral} from './ImportLiteral';
+import {ImportLiteralOrSymbol} from './ImportWrapper';
 import {getType} from './get-type';
 
 /**
  * Squash literals and symbols
- *
- * @param {ImportLiteralOrSymbol[]} importValue
- * @returns {ImportLiteralOrSymbol[]}
  */
-export function optimizeImportLiterals(importValue) {
-    return importValue.reduce(function(importValue, item) {
+export function optimizeImportLiterals(importValue: ImportLiteralOrSymbol[]): ImportLiteralOrSymbol[] {
+    return importValue.reduce<ImportLiteralOrSymbol[]>(function(importValue, item) {
         const previousItem = importValue.pop();
 
         if (previousItem === void 0) {

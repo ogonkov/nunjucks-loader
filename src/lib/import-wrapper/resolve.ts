@@ -2,18 +2,15 @@ import path from 'path';
 
 import {ImportLiteral} from './ImportLiteral';
 import {ImportSymbol} from './ImportSymbol';
+import {ImportLiteralOrSymbol, ImportWrapper} from './ImportWrapper';
 import {normalizeTrailingSlash} from './normalize-trailing-slash';
-
 
 /**
  * Joins template import with another path
- *
- * @param {string} prependPath
- * @param {ImportWrapper} templateImport
  */
-export function resolve(prependPath, templateImport) {
+export function resolve(prependPath: string, templateImport: ImportWrapper) {
     let _templateImport = templateImport.concat();
-    let firstPart = _templateImport.shift();
+    let firstPart: string | ImportLiteralOrSymbol = _templateImport.shift();
     if (firstPart instanceof ImportSymbol) {
         _templateImport.unshift(firstPart);
         firstPart = '';
