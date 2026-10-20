@@ -13,7 +13,7 @@ const fsAccess = promisify(fs.access);
 async function isExists(path) {
     if (path.isDynamic()) {
         const glob = await getGlob();
-        const files = await glob(path.toGlob());
+        const files = await glob(path.toGlob(), {windowsPathsNoEscape: process.platform === 'win32'});
 
         return files.length > 0;
     }
@@ -21,7 +21,7 @@ async function isExists(path) {
     try {
         await fsAccess(path.toString());
         return true;
-    } catch (exception) {
+    } catch {
         return false;
     }
 }

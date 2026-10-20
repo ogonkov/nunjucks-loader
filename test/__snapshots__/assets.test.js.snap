@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Assets should load dynamic assets 1`] = `
 "<!DOCTYPE html>
-<html lang=\\"en\\">
+<html lang="en">
   <head>
-    <meta charset=\\"utf-8\\">
+    <meta charset="utf-8">
     <title></title>
-    <link rel=\\"stylesheet\\" href=\\"bundles/fixtures/django_project/app_example/static/foo/bar/style.css\\"/>
+    <link rel="stylesheet" href="bundles/fixtures/django_project/app_example/static/foo/bar/style.css"/>
   </head>
   <body>
     
@@ -40,11 +40,11 @@ exports[`Assets should load dynamic assets with trailing slashes 1`] = `
 
 exports[`Assets should load exported dynamic assets 1`] = `
 "<!DOCTYPE html>
-<html lang=\\"en\\">
+<html lang="en">
   <head>
-    <meta charset=\\"utf-8\\">
+    <meta charset="utf-8">
     <title></title>
-    <link rel=\\"stylesheet\\" href=\\"bundles/fixtures/django_project/app_example/static/foo/bar/style.css\\"/>
+    <link rel="stylesheet" href="bundles/fixtures/django_project/app_example/static/foo/bar/style.css"/>
   </head>
   <body>
     
@@ -69,15 +69,15 @@ exports[`Assets should load exported dynamic assets 1`] = `
 
 exports[`Assets should load exported static assets 1`] = `
 "<!DOCTYPE html>
-<html lang=\\"en\\">
+<html lang="en">
   <head>
-    <meta charset=\\"utf-8\\">
+    <meta charset="utf-8">
     <title></title>
-    <link rel=\\"stylesheet\\" href=\\"bundles/fixtures/django_project/app_example/static/foo/bar/style.css\\"/>
+    <link rel="stylesheet" href="bundles/fixtures/django_project/app_example/static/foo/bar/style.css"/>
   </head>
   <body>
     
-    <p><a href=\\"bundles/fixtures/django_project/app_example/static/foo/bar/test.txt\\">Click here</a></p>
+    <p><a href="bundles/fixtures/django_project/app_example/static/foo/bar/test.txt">Click here</a></p>
 
   </body>
 </html>
@@ -86,15 +86,15 @@ exports[`Assets should load exported static assets 1`] = `
 
 exports[`Assets should load static assets 1`] = `
 "<!DOCTYPE html>
-<html lang=\\"en\\">
+<html lang="en">
   <head>
-    <meta charset=\\"utf-8\\">
+    <meta charset="utf-8">
     <title></title>
-    <link rel=\\"stylesheet\\" href=\\"bundles/fixtures/django_project/app_example/static/foo/bar/style.css\\"/>
+    <link rel="stylesheet" href="bundles/fixtures/django_project/app_example/static/foo/bar/style.css"/>
   </head>
   <body>
     
-    <p><a href=\\"bundles/fixtures/django_project/app_example/static/foo/bar/test.txt\\">Click here</a></p>
+    <p><a href="bundles/fixtures/django_project/app_example/static/foo/bar/test.txt">Click here</a></p>
 
   </body>
 </html>
@@ -103,11 +103,11 @@ exports[`Assets should load static assets 1`] = `
 
 exports[`Assets should load variables 1`] = `
 "<!DOCTYPE html>
-<html lang=\\"en\\">
+<html lang="en">
   <head>
-    <meta charset=\\"utf-8\\">
+    <meta charset="utf-8">
     <title></title>
-    <link rel=\\"stylesheet\\" href=\\"bundles/fixtures/django_project/app_example/static/foo/bar/style.css\\"/>
+    <link rel="stylesheet" href="bundles/fixtures/django_project/app_example/static/foo/bar/style.css"/>
   </head>
   <body>
     

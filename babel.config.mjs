@@ -1,18 +1,21 @@
-const nodeVersion = require('./package.json').engines.node;
+import coreJs from 'core-js/package.json' with {type: 'json'};
 
-module.exports = function(api) {
+import packageJson from './package.json' with {type: 'json'};
+
+const nodeVersion = packageJson.engines.node;
+
+export default function(api) {
     const isESM = api.env('esm');
+    const isTest = api.env('test');
 
     return {
+        targets: {node: nodeVersion.split(' || ')[0].replace(/^[^\d]*/, '')},
         presets: [
-            ['@babel/preset-env', {
-                useBuiltIns: 'usage',
-                corejs: '3',
-                modules: isESM ? false : 'auto',
-                targets: {
-                    node: isESM ? '13.2.0' : nodeVersion.replace(/>=\s+/, '')
-                }
-            }]
+            ['@babel/preset-env', {modules: isESM ? false : 'commonjs'}]
+        ],
+        plugins: [
+            ['babel-plugin-polyfill-corejs3', {method: 'usage-global', version: coreJs.version}],
+            ...(isTest ? ['@babel/plugin-transform-dynamic-import'] : [])
         ]
-    }
+    };
 };

@@ -1,50 +1,48 @@
-{
-  "plugins": [
-    "import"
-  ],
-  "extends": [
-    "eslint:recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings"
-  ],
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaVersion": 9,
-    "sourceType": "module"
-  },
-  "env": {
-    "node": true,
-    "es6": true
-  },
-  "rules": {
-    "quotes": [
-      "error",
-      "single",
-      {
-        "avoidEscape": true
-      }
-    ],
+import js from '@eslint/js';
+import importPlugin from 'eslint-plugin-import';
+import globals from 'globals';
 
-    "import/order": [
-      "error",
-      {
-        "newlines-between": "always",
-        "alphabetize": {
-          "order": "asc",
-          "caseInsensitive": false
-        }
-      }
-    ]
-  },
-  "overrides": [
+export default [
     {
-      "files": [
-        "*.spec.js",
-        "test/**/*.js"
-      ],
-      "env": {
-        "jest": true
-      }
+        ignores: ['lib/**', 'public/**', 'index.js', 'test/.coverage/**', 'test/bundles/**']
+    },
+    js.configs.recommended,
+    importPlugin.flatConfigs.recommended,
+    {
+        files: ['**/*.{js,mjs,cjs}'],
+        languageOptions: {
+            ecmaVersion: 'latest',
+            sourceType: 'module',
+            globals: globals.node
+        },
+        rules: {
+            quotes: [
+                'error',
+                'single',
+                {
+                    avoidEscape: true
+                }
+            ],
+
+            'import/order': [
+                'error',
+                {
+                    'newlines-between': 'always',
+                    alphabetize: {
+                        order: 'asc',
+                        caseInsensitive: false
+                    }
+                }
+            ]
+        }
+    },
+    {
+        files: [
+            '**/*.spec.js',
+            'test/**/*.js'
+        ],
+        languageOptions: {
+            globals: globals.jest
+        }
     }
-  ]
-}
+];

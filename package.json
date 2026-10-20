@@ -8,13 +8,13 @@
     "public"
   ],
   "scripts": {
-    "build:cjs": "NODE_ENV=cjs babel src --out-dir=. --copy-files --no-copy-ignored --ignore 'src/**/*.spec.js'",
-    "build:clean": "ls src | xargs -0 rm -rf",
+    "build:cjs": "babel src --env-name cjs --out-dir=. --copy-files --no-copy-ignored --ignore \"src/**/*.spec.js\"",
+    "build:clean": "node contrib/clean-build.mjs",
     "build": "npm run build:clean && npm run build:cjs",
-    "lint": "eslint src",
-    "pretest": "rm -rf test/.coverage && npm run lint",
+    "lint": "eslint .",
+    "pretest": "node contrib/clean-build.mjs test/.coverage && npm run lint",
     "test": "jest",
-    "posttest": "rm -rf ./test/bundles/",
+    "posttest": "node contrib/clean-build.mjs test/bundles",
     "preversion": "./contrib/good-to-go.sh && npm test",
     "postversion": "git push && git push --tags",
     "prepack": "npm run build"
@@ -37,29 +37,32 @@
   },
   "homepage": "https://ogonkov.github.io/nunjucks-loader/",
   "dependencies": {
-    "core-js": "^3.15.2",
-    "loader-utils": "^2.0.0"
+    "core-js": "^3.50.0"
   },
   "optionalDependencies": {
-    "glob": "^7.1.6"
+    "glob": "^13.0.6"
   },
   "peerDependencies": {
     "nunjucks": "^3.0.0",
     "webpack": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "@babel/preset-env": "^7.12.1",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^7.0.0",
-    "eslint-plugin-import": "^2.22.0",
-    "jest": "^26.0.0",
-    "nanoid": "^3.2.0",
-    "nunjucks": "^3.2.0",
-    "webpack": "^5.0.0"
+    "@babel/cli": "^8.0.6",
+    "@babel/core": "^8.0.7",
+    "@babel/plugin-transform-dynamic-import": "^8.0.1",
+    "@babel/preset-env": "^8.0.7",
+    "@eslint/js": "^9.39.5",
+    "babel-jest": "^30.5.2",
+    "babel-plugin-polyfill-corejs3": "^1.0.0",
+    "eslint": "^9.39.5",
+    "eslint-import-resolver-node": "^0.3.10",
+    "eslint-plugin-import": "^2.32.0",
+    "globals": "^17.13.0",
+    "jest": "^30.5.2",
+    "nunjucks": "^3.2.4",
+    "webpack": "^5.111.1"
   },
   "engines": {
-    "node": ">= 10.13.0"
+    "node": ">=22.0.0"
   }
 }

@@ -12,6 +12,8 @@ This Webpack loader compiles [Nunjucks][nunjucks-github] templates.
 > For Webpack 4 support use loader 2.x version
 
 ## Install
+
+Requires Node.js 22 or later. Development requires Node.js 22.18+ (22.x), or Node.js 24.11 or later.
 ```bash
 npm install --save-dev simple-nunjucks-loader
 ```

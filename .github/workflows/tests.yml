@@ -15,9 +15,12 @@ on:
     paths:
       - '.github/workflows/**'
       - '*.js'
+      - '*.mjs'
+      - 'contrib/**'
       - 'src/**'
       - 'test/**'
       - 'package.json'
+      - '.nvmrc'
 
 jobs:
   tests:
@@ -30,15 +33,15 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest]
-        node-version: [10.13.x, 12.x, 14.15.x]
+        node-version: [22.x, 24.x]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v7
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v7
       with:
         node-version: ${{ matrix.node-version }}
-    - uses: actions/cache@v3.0.6
+    - uses: actions/cache@v6
       id: cache-node-modules
       with:
         path: node_modules
@@ -52,7 +55,8 @@ jobs:
         CI: true
     - name: Report coverage
       if: success()
-      uses: coverallsapp/github-action@master
+      uses: coverallsapp/github-action@v2
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: ./test/.coverage/lcov.info
+        file: ./test/.coverage/lcov.info
+        format: lcov
