@@ -1,6 +1,5 @@
-import {stringifyRequest} from 'loader-utils';
-
 import {getImportStr} from '../utils/get-import-str';
+import {stringifyRequest} from '../utils/stringify-request';
 
 
 const runtimeFilePath = require.resolve('../../public/runtime.js');

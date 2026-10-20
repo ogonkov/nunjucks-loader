@@ -1,9 +1,8 @@
-import {stringifyRequest} from 'loader-utils';
-
 import {getModule} from '../../public/utils/get-module';
 import {IMPORTS_PREFIX, TEMPLATE_DEPENDENCIES} from '../constants';
 import {getModuleOutput} from '../output/get-module-output';
 import {getImportStr} from '../utils/get-import-str';
+import {stringifyRequest} from '../utils/stringify-request';
 import {toVar} from '../utils/to-var';
 
 

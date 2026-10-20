@@ -36,7 +36,7 @@ module.exports = {
 
   // A list of reporter names that Jest uses when writing coverage reports
   coverageReporters: [
-    "lcov",
+    'lcov',
   ],
 
   // An object that configures minimum threshold enforcement for coverage results
@@ -94,12 +94,14 @@ module.exports = {
   projects: [
     {
       displayName: 'cjs',
+      roots: ['<rootDir>/src', '<rootDir>/test'],
       globals: {
         __USE_ES__: false
       }
     },
     {
       displayName: 'es',
+      roots: ['<rootDir>/test'],
       globals: {
         __USE_ES__: true
       },
@@ -130,8 +132,8 @@ module.exports = {
 
   // A list of paths to directories that Jest should use to search for files in
   roots: [
-    "src",
-    "test"
+    'src',
+    'test'
   ],
 
   // Allows you to use a custom runner instead of Jest's default test runner
@@ -147,7 +149,7 @@ module.exports = {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  testEnvironment: "node",
+  testEnvironment: 'node',
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},

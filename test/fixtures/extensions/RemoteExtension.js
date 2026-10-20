@@ -27,7 +27,7 @@ function RemoteExtension() {
         return new nodes.CallExtension(this, 'run', args, [body, errorBody]);
     };
 
-    this.run = function(context, url, body, errorBody) {
+    this.run = function(context, url, body) {
         var id = 'el' + 100500;
         var ret = new nunjucks.runtime.SafeString('<div id="' + id + '">' + body() + '</div>');
 

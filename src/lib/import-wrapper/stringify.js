@@ -1,4 +1,4 @@
-import {stringifyRequest} from 'loader-utils';
+import {stringifyRequest} from '../utils/stringify-request';
 
 import {ImportLiteral} from './ImportLiteral';
 import {isSymbol} from './is-symbol';

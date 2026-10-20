@@ -7,7 +7,7 @@ function getInstance(value) {
 }
 
 it('should throw with wrong value', function() {
-    expect(() => getInstance()).toThrowError(
+    expect(() => getInstance()).toThrow(
         'Foobar: value should be a string'
     );
 });

@@ -8,7 +8,7 @@ describe('constructor', function() {
         expect(() => new ImportWrapper([
             new ImportLiteral('a'),
             new ImportSymbol('b')
-        ])).not.toThrowError();
+        ])).not.toThrow();
     });
 
     it('should throw for wrong args', function() {
@@ -16,7 +16,7 @@ describe('constructor', function() {
             new ImportLiteral('a'),
             new ImportSymbol('b'),
             'c'
-        ])).toThrowError('ImportWrapper: all parts should be a symbol or literal instances');
+        ])).toThrow('ImportWrapper: all parts should be a symbol or literal instances');
     });
 });
 

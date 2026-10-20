@@ -52,7 +52,7 @@ async function filterPaths([path, paths]) {
         return [path, importPath];
     } catch (error) {
         if (error.code !== ERROR_MODULE_NOT_FOUND) {
-            throw new Error(`Asset "${path}" not found`);
+            throw new Error(`Asset "${path}" not found`, {cause: error});
         }
 
         throw error;

@@ -1,19 +1,19 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Advanced compilation extensions should compile async extensions 1`] = `
-"<div id=\\"el100500\\">(async): 
+"<div id="el100500">(async): 
   This content will be replaced with the content from /stuff
 </div>
 
 
     <div>
-        <div id=\\"el100500\\">(async): 
+        <div id="el100500">(async): 
           Content 1
         </div>
     </div>
 
     <div>
-        <div id=\\"el100500\\">(async): 
+        <div id="el100500">(async): 
           Content 2
         </div>
     </div>
@@ -22,7 +22,7 @@ exports[`Advanced compilation extensions should compile async extensions 1`] = `
 `;
 
 exports[`Advanced compilation extensions should compile custom tags 1`] = `
-"<div id=\\"el100500\\">
+"<div id="el100500">
   This content will be replaced with the content from /stuff
 </div>
 
@@ -31,7 +31,7 @@ exports[`Advanced compilation extensions should compile custom tags 1`] = `
 `;
 
 exports[`Advanced compilation extensions should compile custom tags from parent template 1`] = `
-"<div id=\\"el100500\\">
+"<div id="el100500">
   This content will be replaced with the content from /stuff
 </div>
 
@@ -42,19 +42,19 @@ exports[`Advanced compilation extensions should compile custom tags from parent 
 `;
 
 exports[`Advanced compilation extensions should compile multiple instances of same tag 1`] = `
-"<div id=\\"el100500\\">
+"<div id="el100500">
   This content will be replaced with the content from /stuff
 </div>
 
 
     <div>
-        <div id=\\"el100500\\">
+        <div id="el100500">
           Content 1
         </div>
     </div>
 
     <div>
-        <div id=\\"el100500\\">
+        <div id="el100500">
           Content 2
         </div>
     </div>
@@ -64,9 +64,9 @@ exports[`Advanced compilation extensions should compile multiple instances of sa
 
 exports[`Advanced compilation filters should compile async filters 1`] = `
 "<!DOCTYPE html>
-<html lang=\\"en\\">
+<html lang="en">
   <head>
-    <meta charset=\\"utf-8\\">
+    <meta charset="utf-8">
     <title>Foobar 100510</title>
   </head>
   <body>
@@ -80,9 +80,9 @@ exports[`Advanced compilation filters should compile async filters 1`] = `
 
 exports[`Advanced compilation filters should compile filters in inherited templates 1`] = `
 "<!DOCTYPE html>
-<html lang=\\"en\\">
+<html lang="en">
   <head>
-    <meta charset=\\"utf-8\\">
+    <meta charset="utf-8">
     <title>Foobar 52</title>
   </head>
   <body>
@@ -150,9 +150,9 @@ globals returned value
 
 exports[`Advanced compilation should compile templates with non-relative paths 1`] = `
 "<!DOCTYPE html>
-<html lang=\\"en\\">
+<html lang="en">
 <head>
-    <meta charset=\\"UTF-8\\">
+    <meta charset="UTF-8">
     <title></title>
 </head>
 <body>
@@ -176,7 +176,7 @@ exports[`Advanced compilation should compile templates with non-relative paths 1
 
 exports[`Simple compilation should compile builtin tags 1`] = `
 "<main>
-    <h1><a href=\\"\\">Parent</a></h1>
+    <h1><a href="">Parent</a></h1>
 
     
     
@@ -189,19 +189,19 @@ exports[`Simple compilation should compile builtin tags 1`] = `
 
 exports[`Simple compilation should compile macro 1`] = `
 "<main>
-    <h1><a href=\\"\\">Parent</a></h1>
+    <h1><a href="">Parent</a></h1>
 
     
     
-<div class=\\"field\\">
-  <input type=\\"text\\" name=\\"user\\"
-         value=\\"\\" />
+<div class="field">
+  <input type="text" name="user"
+         value="" />
 </div>
 
     
-<div class=\\"field\\">
-  <input type=\\"password\\" name=\\"pass\\"
-         value=\\"\\" />
+<div class="field">
+  <input type="password" name="pass"
+         value="" />
 </div>
 
 
@@ -211,14 +211,14 @@ exports[`Simple compilation should compile macro 1`] = `
 
 exports[`Simple compilation should compile single files 1`] = `
 "<!DOCTYPE html>
-<html lang=\\"en\\">
+<html lang="en">
 <head>
-    <meta charset=\\"UTF-8\\">
+    <meta charset="UTF-8">
     <title>App</title>
 </head>
 <body>
 
-    <a href=\\"https://example.com\\">Link</a>
+    <a href="https://example.com">Link</a>
 
 </body>
 </html>
@@ -227,7 +227,7 @@ exports[`Simple compilation should compile single files 1`] = `
 
 exports[`Simple compilation should compile templates with filters 1`] = `
 "<main>
-    <h1><a href=\\"\\">Parent</a></h1>
+    <h1><a href="">Parent</a></h1>
 
     
     Nunjucks barlter
@@ -238,11 +238,11 @@ exports[`Simple compilation should compile templates with filters 1`] = `
 
 exports[`Simple compilation should compile templates with inheritance 1`] = `
 "<main>
-    <h1><a href=\\"https://example.com/1\\">Parent</a></h1>
+    <h1><a href="https://example.com/1">Parent</a></h1>
 
     
     <p>Child template</p>
-    <a href=\\"https://example.com/2\\">Link</a>
+    <a href="https://example.com/2">Link</a>
 
 </main>
 "
@@ -250,7 +250,7 @@ exports[`Simple compilation should compile templates with inheritance 1`] = `
 
 exports[`Simple compilation should compile templates with multiple includes 1`] = `
 "<main>
-    <h1><a href=\\"https://example.com/parent\\">Parent</a></h1>
+    <h1><a href="https://example.com/parent">Parent</a></h1>
 
     
     <p>
@@ -267,7 +267,7 @@ exports[`Simple compilation should compile templates with multiple includes 1`] 
 
 exports[`Simple compilation should inherit from parent with super 1`] = `
 "<main>
-    <h1><a href=\\"\\">Parent</a></h1>
+    <h1><a href="">Parent</a></h1>
 
     
     Super babe

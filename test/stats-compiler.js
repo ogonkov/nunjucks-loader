@@ -1,11 +1,11 @@
+import {randomUUID} from 'crypto';
 import path from 'path';
 
-import {nanoid} from 'nanoid';
 import webpack from 'webpack';
 
 
 export function statsCompiler(fixture, options = {}) {
-    const bundleName = nanoid();
+    const bundleName = randomUUID();
 
     const compiler = webpack({
         mode: 'development',
