@@ -1,5 +1,6 @@
-import {stringifyRequest} from '../utils/stringify-request';
 import type {LoaderContext} from 'webpack';
+
+import {stringifyRequest} from '../utils/stringify-request';
 
 import {ImportLiteral} from './ImportLiteral';
 import {ImportLiteralOrSymbol, ImportWrapper} from './ImportWrapper';
