@@ -27,9 +27,16 @@ export function statsCompiler(fixture, options = {}) {
                     options: options
                 }
             }, {
+                test: /\.ts$/,
+                exclude: /node_modules/,
+                use: 'babel-loader'
+            }, {
                 test: /\.(css|txt|md)$/,
                 type: 'asset/resource'
             }]
+        },
+        resolve: {
+            extensions: ['.ts', '...']
         }
     });
 
