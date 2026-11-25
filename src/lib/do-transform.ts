@@ -1,3 +1,5 @@
+import type {LoaderContext} from 'webpack';
+
 import {hasAsyncTags} from './ast/has-async-tags';
 import {getLoaderOutput} from './output/get-loader-output';
 import {getTemplateImports} from './output/get-template-imports';
@@ -6,17 +8,18 @@ import {getAST} from './precompile/get-ast';
 import {getUsedDependencies} from './precompile/get-used-dependencies';
 import {loadDependencies} from './precompile/load-dependencies';
 import {precompileToLocalVar} from './precompile/precompile-to-local-var';
+import type {TransformOptions} from './types';
 
 
 const staticExtensionPath = require.resolve(
     '../public/static-extension/get-static-extension'
 );
 
-export async function doTransform(source, loaderContext, {
+export async function doTransform(source: string, loaderContext: LoaderContext<unknown>, {
     resourcePathImport,
     options,
     normalizedSearchPaths
-}) {
+}: TransformOptions) {
     const nunjucksOptions = {
         // https://mozilla.github.io/nunjucks/api.html#configure
         autoescape: options.autoescape,

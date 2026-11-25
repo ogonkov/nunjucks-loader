@@ -60,6 +60,7 @@
     "@types/nunjucks": "^3.2.6",
     "@typescript-eslint/eslint-plugin": "^8.73.0",
     "@typescript-eslint/parser": "^8.73.0",
+    "ajv": "^8.20.0",
     "babel-jest": "^30.5.2",
     "babel-loader": "^10.1.1",
     "babel-plugin-polyfill-corejs3": "^1.0.0",
