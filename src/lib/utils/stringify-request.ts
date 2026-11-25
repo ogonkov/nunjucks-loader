@@ -1,3 +1,5 @@
+import type {LoaderContext} from 'webpack';
+
 /**
  * Convert a module request into a context-relative JavaScript string literal.
  *
@@ -12,6 +14,6 @@
  * @returns {string}
  *     JSON-quoted request ready to embed as a source-code string literal.
  */
-export function stringifyRequest(loaderContext, request) {
+export function stringifyRequest(loaderContext: LoaderContext<unknown>, request: string) {
     return JSON.stringify(loaderContext.utils.contextify(loaderContext.context, request));
 }
