@@ -1,4 +1,4 @@
-import type {ConfigureOptions} from 'nunjucks';
+import type {ConfigureOptions, Extension} from 'nunjucks';
 import type {LoaderContext} from 'webpack';
 
 import type {AddonWrapper} from '../addons-wrapper/AddonWrapper';
@@ -11,19 +11,25 @@ export interface DependencyOptions {
     es: boolean;
 }
 
-export interface AddonMetaOptions extends DependencyOptions {
-    type: 'extensions' | 'globals';
+export interface ExtensionMetaOptions extends DependencyOptions {
+    type: 'extensions';
+}
+
+export interface GlobalMetaOptions extends DependencyOptions {
+    type: 'globals';
 }
 
 export interface FilterMetaOptions extends DependencyOptions {
     type: 'filters';
 }
 
+export type AddonMetaOptions = ExtensionMetaOptions | GlobalMetaOptions | FilterMetaOptions;
+
 export interface ConfigureEnvironmentOptions {
     searchPaths?: string | string[];
     /** Autoescaping defaults to true; undefined-value errors and whitespace trimming default to false. */
     options?: ConfigureOptions;
-    extensions?: AddonWrapper[];
+    extensions?: AddonWrapper<Extension>[];
     filters?: FilterWrapper[];
 }
 

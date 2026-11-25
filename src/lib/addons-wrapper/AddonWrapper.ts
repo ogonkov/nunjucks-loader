@@ -1,3 +1,5 @@
+import type {LoaderContext} from 'webpack';
+
 import {getModule} from '../../public/utils/get-module';
 import {IMPORTS_PREFIX, TEMPLATE_DEPENDENCIES} from '../constants';
 import {getModuleOutput} from '../output/get-module-output';
@@ -5,16 +7,18 @@ import {getImportStr} from '../utils/get-import-str';
 import {stringifyRequest} from '../utils/stringify-request';
 import {toVar} from '../utils/to-var';
 
+import type {AddonWrapperOptions} from './types';
 
-export class AddonWrapper {
-    #name = null;
-    #importPath = null;
-    #instance = null;
-    #type = null;
-    #loaderContext = null;
+
+export class AddonWrapper<T = unknown> {
+    #name: string;
+    #importPath: string;
+    #instance: T | null = null;
+    #type: string;
+    #loaderContext: LoaderContext<unknown>;
     #es = false;
 
-    constructor({name, importPath, type, es, loaderContext}) {
+    constructor({name, importPath, type, es, loaderContext}: AddonWrapperOptions) {
         if (typeof name !== 'string') {
             throw new TypeError('AddonWrapper: name should be a string');
         }
@@ -38,20 +42,19 @@ export class AddonWrapper {
         this.#es = es === true;
     }
 
-    /** @returns {string} */
     get name() {
         return this.#name;
     }
 
-    /** @returns {*} Loaded addon module, or its pending import promise. */
-    get instance() {
+    /** Loaded addon module, or its pending import promise. */
+    get instance(): T | Promise<T> {
         if (this.#instance !== null) {
             return this.#instance;
         }
 
-        return new Promise((resolve, reject) => {
+        return new Promise<T>((resolve, reject) => {
             import(this.#importPath)
-                .then((instance) => getModule(instance))
+                .then((instance) => getModule(instance) as T)
                 .then((_instance) => {
                     this.#instance = _instance;
                     return _instance;
@@ -72,7 +75,7 @@ export class AddonWrapper {
         )(this.importVar);
     }
 
-    get dependencyInject() {
+    get dependencyInject(): string | Promise<string> {
         return `${TEMPLATE_DEPENDENCIES}.${this.#type}['${this.#name}'] = {
             module: ${getModuleOutput(this.importVar)}
         };`;

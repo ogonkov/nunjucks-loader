@@ -1,3 +1,6 @@
+import type {AddonWrapper} from './AddonWrapper';
+import type {LoadedAddon} from './types';
+
 /**
  * Resolve addon instances and return their wrappers in the original order.
  *
@@ -10,8 +13,8 @@
  * @returns {Promise<Addon[]>}
  *     The same wrappers, in input order, after all instance values resolve.
  */
-export function addonsLoader(list) {
+export function addonsLoader<T extends AddonWrapper>(list: T[]) {
     return Promise.all(list.map(
-        (item) => Promise.resolve(item.instance).then(() => item)
+        (item) => Promise.resolve(item.instance).then(() => item as LoadedAddon<T>)
     ));
 }

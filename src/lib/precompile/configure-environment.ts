@@ -13,15 +13,15 @@ export async function configureEnvironment({
 }: ConfigureEnvironmentOptions = {}) {
     const env = nunjucks.configure(searchPaths, options);
 
-    await Promise.all([
+    const [loadedExtensions, loadedFilters] = await Promise.all([
         addonsLoader(extensions),
         addonsLoader(filters)
     ]);
-    extensions.forEach(function({name, instance}) {
+    loadedExtensions.forEach(function({name, instance}) {
         env.addExtension(name, instance);
     });
 
-    filters.forEach(function({name, instance}) {
+    loadedFilters.forEach(function({name, instance}) {
         env.addFilter(name, instance, instance.async === true);
     });
 
