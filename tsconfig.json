@@ -1,6 +1,6 @@
 {
   "extends": "@tsconfig/recommended/tsconfig.json",
-  "include": ["src/**/*.ts","src/**/*.js"],
+  "include": ["src/**/*.ts","src/**/*.js","test/**/*.ts"],
   "compilerOptions": {
     "target": "ES2022",
     "module": "preserve",

@@ -60,14 +60,5 @@ export default [
     {
         files: ['src/@types/**/*.ts'],
         rules: {'@typescript-eslint/no-unused-vars': 'off'}
-    },
-    {
-        files: [
-            '**/*.spec.js',
-            'test/**/*.js'
-        ],
-        languageOptions: {
-            globals: globals.jest
-        }
     }
 ];

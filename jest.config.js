@@ -23,7 +23,7 @@ module.exports = {
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   collectCoverageFrom: [
     'src/**/*.{js,ts}',
-    '!**/*.{spec,test}.js',
+    '!**/*.{spec,test}.ts',
     '!**/*.d.ts'
   ],
 
@@ -107,8 +107,8 @@ module.exports = {
         __USE_ES__: true
       },
       testMatch: [
-        '**/assets.test.js',
-        '**/loader.test.js'
+        '**/assets.test.ts',
+        '**/loader.test.ts'
       ]
     }
   ],

@@ -1,7 +1,9 @@
+import {expect, it} from '@jest/globals';
+
 import {ImportPart} from './ImportPart';
 
 
-function getInstance(value) {
+function getInstance(value?: unknown) {
     class Foobar extends ImportPart {}
     return new Foobar(value);
 }

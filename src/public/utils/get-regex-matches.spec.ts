@@ -1,3 +1,5 @@
+import {expect, it} from '@jest/globals';
+
 import {getRegexMatches} from './get-regex-matches';
 
 it('should return matches', function() {

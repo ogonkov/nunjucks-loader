@@ -1,10 +1,13 @@
+import {describe, expect, jest, test} from '@jest/globals';
+import type {ContextBlock} from 'nunjucks';
+
 import runtime from './runtime';
 
 describe('render', function() {
     test('should render template', function() {
         const contextSpy = jest.fn();
 
-        const precompiled = {
+        const precompiled: {root: ContextBlock} = {
             root(env, context, frame, runtime, cb) {
                 contextSpy(context.ctx);
 
@@ -12,6 +15,9 @@ describe('render', function() {
             }
         };
         const tpl = runtime({}, {
+            globals: undefined,
+            extensions: undefined,
+            filters: undefined,
             templates: {
                 'foo.njk': precompiled
             }
@@ -31,6 +37,9 @@ describe('render', function() {
 describe('isAsync', function() {
     test('should return true with async filters', function() {
         const tpl = runtime({}, {
+            globals: undefined,
+            extensions: undefined,
+            templates: undefined,
             filters: {
                 foo: {
                     async: true,

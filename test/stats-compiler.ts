@@ -1,10 +1,10 @@
 import {randomUUID} from 'crypto';
 import path from 'path';
 
-import webpack from 'webpack';
+import webpack, {type Stats} from 'webpack';
 
 
-export function statsCompiler(fixture, options = {}) {
+export function statsCompiler(fixture: string, options: Record<string, unknown> = {}) {
     const bundleName = randomUUID();
 
     const compiler = webpack({
@@ -40,10 +40,14 @@ export function statsCompiler(fixture, options = {}) {
         }
     });
 
-    return new Promise(function(resolve, reject) {
+    return new Promise<{bundleName: string; stats: Stats}>(function(resolve, reject) {
         compiler.run(function(error, stats) {
             if (error) {
                 return reject(error);
+            }
+
+            if (!stats) {
+                return reject(new Error('Webpack did not return compilation stats'));
             }
 
             resolve({

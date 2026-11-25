@@ -1,3 +1,5 @@
+import {beforeEach, describe, expect, it} from '@jest/globals';
+
 import {ImportLiteral} from './ImportLiteral';
 import {ImportSymbol} from './ImportSymbol';
 import {ImportWrapper} from './ImportWrapper';
@@ -90,7 +92,7 @@ describe('isDynamic', function() {
 });
 
 describe('toString', function() {
-    let templateImport;
+    let templateImport: ImportWrapper;
     beforeEach(function() {
         templateImport = new ImportWrapper();
         templateImport.addSymbol('a').addLiteral('b');

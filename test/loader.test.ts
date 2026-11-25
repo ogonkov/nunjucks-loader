@@ -1,9 +1,12 @@
-/* global __USE_ES__ */
-
 import path from 'path';
+
+import {describe, expect, jest, test} from '@jest/globals';
+
 
 import compiler from './compiler';
 import {statsCompiler} from './stats-compiler';
+
+declare const __USE_ES__: boolean;
 
 const loaderBaseOptions = {
     esModule: __USE_ES__

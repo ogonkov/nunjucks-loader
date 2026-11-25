@@ -1,5 +1,8 @@
 import path from 'path';
 
+import {expect, test} from '@jest/globals';
+
+
 import {ImportWrapper} from '../import-wrapper/ImportWrapper';
 
 import {getFirstExistedPath} from './get-first-existed-path';

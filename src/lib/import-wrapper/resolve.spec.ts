@@ -1,3 +1,5 @@
+import {expect, it} from '@jest/globals';
+
 import {ImportWrapper} from './ImportWrapper';
 import {resolve} from './resolve';
 

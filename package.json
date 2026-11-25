@@ -8,7 +8,7 @@
     "public"
   ],
   "scripts": {
-    "build:cjs": "babel src --env-name cjs --extensions .js,.ts --out-dir=. --copy-files --no-copy-ignored --ignore \"src/**/*.spec.js,src/**/*.d.ts\"",
+    "build:cjs": "babel src --env-name cjs --extensions .js,.ts --out-dir=. --copy-files --no-copy-ignored --ignore \"src/**/*.spec.ts,src/**/*.d.ts\"",
     "build:clean": "node contrib/clean-build.mjs",
     "build": "npm run build:clean && npm run build:cjs",
     "lint": "eslint .",
@@ -53,6 +53,7 @@
     "@babel/plugin-transform-dynamic-import": "^8.0.1",
     "@babel/preset-env": "^8.0.7",
     "@babel/preset-typescript": "^8.0.7",
+    "@jest/globals": "^30.5.2",
     "@eslint/js": "^9.39.5",
     "@tsconfig/recommended": "^1.0.14",
     "@types/node": "^22.20.5",

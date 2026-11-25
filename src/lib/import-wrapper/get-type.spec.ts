@@ -1,3 +1,5 @@
+import {expect, it} from '@jest/globals';
+
 import {ImportLiteral} from './ImportLiteral';
 import {ImportSymbol} from './ImportSymbol';
 import {getType} from './get-type';

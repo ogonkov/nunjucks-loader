@@ -1,3 +1,5 @@
+import {expect, it} from '@jest/globals';
+
 import {getImportPath} from './get-import-path';
 
 

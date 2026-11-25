@@ -1,6 +1,8 @@
-/* globals __USE_ES__ */
+import {describe, expect, it, test} from '@jest/globals';
 
 import compiler from './compiler';
+
+declare const __USE_ES__: boolean;
 
 const loaderOptions = {
     esModule: __USE_ES__,
