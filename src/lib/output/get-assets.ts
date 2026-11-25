@@ -1,16 +1,15 @@
+import type {LoaderContext} from 'webpack';
+
 import {IMPORTS_PREFIX} from '../constants';
 import {toVar} from '../utils/to-var';
 
 import {getDynamicImport} from './get-dynamic-import';
 import {getDynamicMeta} from './get-dynamic-meta';
+import type {ImportPair} from './types';
 
 
-/**
- * @param {Array.<ImportWrapper[]>} assets
- * @returns {{imports: function(Object, boolean): string}}
- */
-export function getAssets(assets) {
-    function imports(loaderContext, esModule) {
+export function getAssets(assets: ImportPair[]) {
+    function imports(loaderContext: LoaderContext<unknown>, esModule: boolean) {
         return assets.map(function([assetPath, assetImport]) {
             const uuid = assetPath.getHash();
             const importVar = toVar(

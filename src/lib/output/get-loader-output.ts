@@ -2,6 +2,7 @@ import {ASSETS_KEY} from '../../public/static-extension/contants';
 import {TEMPLATE_DEPENDENCIES} from '../constants';
 
 import {getModuleOutput} from './get-module-output';
+import type {LoaderOutputOptions} from './types';
 
 
 export function getLoaderOutput({
@@ -10,7 +11,7 @@ export function getLoaderOutput({
     defaultExport,
     precompiled,
     envOptions
-}) {
+}: LoaderOutputOptions) {
     return `
         ${imports}
         ${precompiled}

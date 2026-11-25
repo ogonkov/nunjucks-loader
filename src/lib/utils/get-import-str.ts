@@ -1,7 +1,7 @@
-export function getImportStr(path: string, esModule?: boolean, isDynamic?: boolean): (name: string, sym: string) => string {
+export function getImportStr(path: string, esModule?: boolean, isDynamic?: boolean): (name?: string, sym?: string) => string {
     const isES = esModule === true;
 
-    function getImportInvocationString(name: string, sym: string): string {
+    function getImportInvocationString(name?: string, sym?: string): string {
         if (isDynamic && isES) {
             return `import(${path});`;
         }
