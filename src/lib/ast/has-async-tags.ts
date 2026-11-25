@@ -1,10 +1,6 @@
 import nunjucks from 'nunjucks';
 
-/**
- * @param {nunjucks.nodes.Root} nodes
- * @returns {boolean}
- */
-export function hasAsyncTags(nodes) {
+export function hasAsyncTags(nodes: nunjucks.nodes.Root) {
     return [
         nunjucks.nodes.IfAsync,
         nunjucks.nodes.AsyncEach,
@@ -12,6 +8,6 @@ export function hasAsyncTags(nodes) {
         nunjucks.nodes.FilterAsync,
         nunjucks.nodes.CallExtensionAsync
     ].some(function examineNodes(nodeType) {
-        return nodes.findAll(nodeType).length > 0;
+        return nodes.findAll<nunjucks.NodeType>(nodeType).length > 0;
     });
 }

@@ -1,14 +1,9 @@
 import nunjucks from 'nunjucks';
 
 import {getUsagesOf} from './get-usages-of';
+import type {ExtensionAddon} from './types';
 
-/**
- * @template TNode
- * @param {nunjucks.nodes.Root} nodes
- * @param {Array[]}             instances
- * @returns {TNode[]}
- */
-export function getUsedExtensions(nodes, instances) {
+export function getUsedExtensions<T extends ExtensionAddon>(nodes: nunjucks.nodes.Root, instances: T[]) {
     return getUsagesOf(nunjucks.nodes.CallExtension, nodes)(
         instances, ({extName}) => (({name, instance}) => {
             // Sometime `extName` is instance of custom tag

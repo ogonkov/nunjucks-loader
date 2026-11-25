@@ -5,11 +5,7 @@ import {ImportWrapper} from '../import-wrapper/ImportWrapper';
 import {getAddNodeValue} from './get-add-node-value';
 
 
-/**
- * @param {nunjucks.nodes.Root} nodes
- * @returns {ImportWrapper[]}
- */
-export function getDependenciesTemplates(nodes) {
+export function getDependenciesTemplates(nodes: nunjucks.nodes.Root) {
     const extendsNodes = nodes.findAll(nunjucks.nodes.Extends);
     const includeNodes = nodes.findAll(nunjucks.nodes.Include);
     const importNodes = nodes.findAll(nunjucks.nodes.Import);
@@ -21,8 +17,12 @@ export function getDependenciesTemplates(nodes) {
         ...importNodes,
         ...fromImportNodes
     ].map((node) => {
-        if (typeof node.template.value !== 'string') {
-            const templateImport = getAddNodeValue(node.template);
+        const template = node.template;
+        if (template === null) {
+            throw new TypeError('Template node has no template expression');
+        }
+        if (!('value' in template) || typeof template.value !== 'string') {
+            const templateImport = getAddNodeValue(template);
 
             return new Error(
                 `Dynamic templates expressions is not yet supported. Skipping ${
@@ -31,6 +31,6 @@ export function getDependenciesTemplates(nodes) {
             );
         }
 
-        return new ImportWrapper().addLiteral(node.template.value);
+        return new ImportWrapper().addLiteral(template.value);
     });
 }

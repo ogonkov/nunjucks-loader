@@ -9,7 +9,7 @@ import {isLiteral} from './is-literal';
  * @example
  *   'foo' + bar + 'qux'
  */
-export function getAddNodeValue(node: nunjucks.nodes.Add) {
+export function getAddNodeValue(node: unknown) {
     if (!(node instanceof nunjucks.nodes.Add)) {
         throw new TypeError('Wrong node type');
     }
