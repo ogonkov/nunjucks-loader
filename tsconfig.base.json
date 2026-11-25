@@ -4,13 +4,13 @@
     "target": "ES2022",
     "module": "preserve",
     "moduleResolution": "bundler",
-    "types": [
-      "node"
-    ],
     "allowJs": true,
     "typeRoots": [
       "./src/@types",
       "./node_modules/@types"
+    ],
+    "lib": [
+      "ES2022"
     ]
   }
 }

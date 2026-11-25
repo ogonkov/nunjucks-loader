@@ -1,0 +1,25 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "rootDir": "src/public",
+    "outDir": "node_modules/.tmp/tsbuild/public",
+    "tsBuildInfoFile": "node_modules/.tmp/tsbuild/public.tsbuildinfo",
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "types": [
+      "nunjucks"
+    ]
+  },
+  "include": [
+    "src/public/**/*.ts",
+    "src/public/**/*.js"
+  ],
+  "exclude": [
+    "src/public/**/*.spec.ts"
+  ]
+}
