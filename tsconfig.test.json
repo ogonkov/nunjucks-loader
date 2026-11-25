@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "noEmit": true,
+    "tsBuildInfoFile": "node_modules/.tmp/tsbuild/test.tsbuildinfo",
+    "types": [
+      "node",
+      "nunjucks"
+    ]
+  },
+  "include": [
+    "src/**/*.spec.ts",
+    "test/**/*.ts"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    }
+  ]
+}
