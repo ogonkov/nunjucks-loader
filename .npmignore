@@ -3,7 +3,7 @@
 /src/
 /test/
 /babel.config.js
-/jest.config.js
+/jest.config.ts
 /.eslintrc
 /.travis.yml
 .DS_Store
