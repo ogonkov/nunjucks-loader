@@ -1,14 +1,10 @@
+import type {TokenizerOptions} from 'nunjucks';
+
+import type {AddonWrapper} from '../addons-wrapper/AddonWrapper';
 import {addonsLoader} from '../addons-wrapper/addons-loader';
 import {getNodes} from '../ast/get-nodes';
 
-/**
- *
- * @param {string} source
- * @param {AddonWrapper[]} extensions
- * @param {NunjucksOptions} options
- * @returns {Promise<nunjucks.nodes.Root>}
- */
-export async function getAST(source, extensions, options) {
+export async function getAST(source: string, extensions: AddonWrapper[], options?: TokenizerOptions) {
     await addonsLoader(extensions);
 
     return getNodes(

@@ -2,21 +2,15 @@ import nunjucks from 'nunjucks';
 
 import {addonsLoader} from '../addons-wrapper/addons-loader';
 
+import type {ConfigureEnvironmentOptions} from './types';
 
-/**
- * @param {Object}   options
- * @param {string[]} options.searchPaths
- * @param {Object}   options.options
- * @param {Array}    options.extensions
- * @param {Array}    options.filters
- * @returns {nunjucks.Environment}
- */
+
 export async function configureEnvironment({
     searchPaths,
     options,
     extensions = [],
     filters = []
-} = {}) {
+}: ConfigureEnvironmentOptions = {}) {
     const env = nunjucks.configure(searchPaths, options);
 
     await Promise.all([

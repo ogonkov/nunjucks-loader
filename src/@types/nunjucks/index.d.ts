@@ -1,6 +1,19 @@
 import 'nunjucks';
 
 declare module 'nunjucks' {
+    export interface PrecompiledTemplate {
+        name: string;
+        template: string;
+    }
+
+    // The runtime passes an array to custom precompile wrappers.
+    export interface PrecompileStringOptions extends Omit<PrecompileOptions, 'wrapper'> {
+        wrapper?(templates: PrecompiledTemplate[], options: PrecompileOptions): string;
+    }
+
+    export function precompileString(src: string, options: PrecompileStringOptions): string;
+    export function configure(path: string | string[] | undefined, options?: ConfigureOptions): Environment;
+
     export interface ConfigureOptionsTags {
         blockStart: string;
         blockEnd: string;

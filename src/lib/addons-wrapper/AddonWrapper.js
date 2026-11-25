@@ -38,10 +38,12 @@ export class AddonWrapper {
         this.#es = es === true;
     }
 
+    /** @returns {string} */
     get name() {
         return this.#name;
     }
 
+    /** @returns {*} Loaded addon module, or its pending import promise. */
     get instance() {
         if (this.#instance !== null) {
             return this.#instance;
