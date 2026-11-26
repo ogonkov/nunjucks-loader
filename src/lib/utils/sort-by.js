@@ -1,4 +1,6 @@
 /**
+ * Compare numeric property values in ascending order.
+ *
  * @param {number} a
  * @param {number} b
  * @returns {number}
@@ -8,6 +10,8 @@ function numericalComparison(a, b) {
 }
 
 /**
+ * Create a comparator that orders objects by the selected property.
+ *
  * @param {string} attribute
  * @param {function(*, *): number} [comparison]
  * @returns {function(*, *): number}

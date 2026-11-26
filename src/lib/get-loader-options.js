@@ -1,5 +1,12 @@
 import schema from './schema.json';
 
+/**
+ * Read and validate loader options, then apply missing schema defaults.
+ *
+ * @param {Object} loader Webpack loader context used to obtain the options.
+ * @param {function(Error): void} callback Receives an option validation error.
+ * @returns {?Object} Validated options, or null when validation fails.
+ */
 export function getLoaderOptions(loader, callback) {
     let loaderOptions;
 
