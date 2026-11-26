@@ -4,7 +4,7 @@ import {getImportStr} from '../utils/get-import-str';
 import {stringifyRequest} from '../utils/stringify-request';
 
 
-const runtimeFilePath = require.resolve('../../public/runtime.js');
+const runtimeFilePath = require.resolve('../../public/runtime');
 
 export function getRuntimeImport(loaderContext: LoaderContext<unknown>, esModule: boolean) {
     const runtimePath = stringifyRequest(loaderContext, `${runtimeFilePath}`);

@@ -1,4 +1,5 @@
 import 'nunjucks';
+import './browser';
 
 declare module 'nunjucks' {
     export interface PrecompiledTemplate {

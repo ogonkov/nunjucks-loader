@@ -1,14 +1,15 @@
 import nunjucks from 'nunjucks/browser/nunjucks-slim';
 
 import {WebpackPrecompiledLoader} from './WebpackPrecompiledLoader';
+import type {RenderContext, RuntimeDependencies, RuntimeOptions} from './types';
 
 
-export default function runtime(options, {
+export default function runtime(options: RuntimeOptions, {
     globals,
     extensions,
     filters,
     templates: precompiled
-}) {
+}: RuntimeDependencies) {
     if (options.jinjaCompat === true) {
         nunjucks.installJinjaCompat();
     }
@@ -47,12 +48,12 @@ export default function runtime(options, {
     }
 
     return {
-        render(name, ctx) {
+        render(name: string, ctx?: RenderContext) {
             return env.render(name, ctx);
         },
 
-        renderAsync(name, ctx) {
-            return new Promise(function renderCallback(resolve, reject) {
+        renderAsync(name: string, ctx?: RenderContext) {
+            return new Promise<string | null>(function renderCallback(resolve, reject) {
                 env.render(name, ctx, function(error, response) {
                     if (error) {
                         return reject(error);
@@ -66,7 +67,7 @@ export default function runtime(options, {
         isAsync() {
             return (
                 options.isAsyncTemplate === true ||
-                Object.values(filters).some(({async}) => async === true)
+                Object.values(filters ?? {}).some(({async}) => async === true)
             );
         }
     };

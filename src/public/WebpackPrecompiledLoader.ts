@@ -1,3 +1,10 @@
+import type {PrecompiledLoader} from 'nunjucks/browser/nunjucks-slim';
+
+import type {PrecompiledSource, PrecompiledTemplates} from './types';
+
+export class WebpackPrecompiledLoader implements PrecompiledLoader {
+    precompiled: PrecompiledTemplates;
+
 /**
  * Provide precompiled templates to the Nunjucks runtime by template name.
  *
@@ -7,9 +14,9 @@
  * @param {Object.<string, Object>} [precompiled={}]
  *     Precompiled template objects indexed by the names used in templates.
  */
-export function WebpackPrecompiledLoader(precompiled = {}) {
-    this.precompiled = precompiled;
-}
+    constructor(precompiled: PrecompiledTemplates = {}) {
+        this.precompiled = precompiled;
+    }
 
 /**
  * Look up a precompiled template and return its source descriptor.
@@ -23,16 +30,17 @@ export function WebpackPrecompiledLoader(precompiled = {}) {
  *     Descriptor containing src.type, src.obj, and path, or null when the
  *     requested name is absent from the template map.
  */
-WebpackPrecompiledLoader.prototype.getSource = function getSource(name) {
-    if (!(name in this.precompiled)) {
-        return null;
-    }
+    getSource(name: string): PrecompiledSource | null {
+        if (!(name in this.precompiled)) {
+            return null;
+        }
 
-    return {
-        src: {
-            type: 'code',
-            obj: this.precompiled[name]
-        },
-        path: name
-    };
-};
+        return {
+            src: {
+                type: 'code',
+                obj: this.precompiled[name]
+            },
+            path: name
+        };
+    }
+}

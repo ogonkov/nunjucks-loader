@@ -4,7 +4,7 @@ import type {ContextBlock} from 'nunjucks';
 import runtime from './runtime';
 
 describe('render', function() {
-    test('should render template', function() {
+    test('should render template', async function() {
         const contextSpy = jest.fn();
 
         const precompiled: {root: ContextBlock} = {
@@ -26,6 +26,9 @@ describe('render', function() {
         expect(tpl.render('foo.njk', {
             username: 'Joe Doe'
         })).toBe('Foo');
+        expect(tpl.isAsync()).toBe(false);
+        await expect(tpl.renderAsync('foo.njk', {username: 'Joe Doe'})).resolves.toBe('Foo');
+        await expect(tpl.renderAsync('missing.njk')).rejects.toThrow('template not found');
         expect(contextSpy).toHaveBeenCalledWith(
             expect.objectContaining({
                 username: 'Joe Doe'
@@ -43,7 +46,7 @@ describe('isAsync', function() {
             filters: {
                 foo: {
                     async: true,
-                    module: ''
+                    module: (value: unknown) => value
                 }
             }
         });
