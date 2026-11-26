@@ -53,6 +53,7 @@ jobs:
     - run: npm test -- --coverage
       env:
         CI: true
+    - run: npm run test:package
     - name: Report coverage
       if: success()
       uses: coverallsapp/github-action@v2
