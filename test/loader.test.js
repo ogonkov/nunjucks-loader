@@ -98,6 +98,8 @@ describe('Advanced compilation', function() {
             ]
         });
 
+        expect(stats.toJson().errors).toEqual([]);
+
         expect(stats.toJson().warnings).toContainEqual(expect.objectContaining({
             message: expect.stringContaining('Skipping "test/fixtures/assets/" + name.')
         }));
