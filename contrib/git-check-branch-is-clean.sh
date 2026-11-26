@@ -8,7 +8,7 @@ SCRIPT_DIR="$(dirname -- "$0")"
 
 is_git_repo
 
-if ! git diff-index --quiet HEAD --; then
+if ! git diff --quiet -- || ! git diff --cached --quiet HEAD --; then
   echo "You have uncommitted changes"
   exit 1;
 fi
