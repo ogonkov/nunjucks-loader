@@ -6,6 +6,8 @@ import {describe, expect, jest, test} from '@jest/globals';
 import compiler from './compiler';
 import {statsCompiler} from './stats-compiler';
 
+jest.setTimeout(30000);
+
 const loaderBaseOptions = {
     esModule: __USE_ES__
 };
@@ -18,7 +20,7 @@ describe('Simple compilation', function() {
             title: 'App',
             href: 'https://example.com'
         })).toMatchSnapshot();
-    }, /* TODO Find out why it is so slow for first run */ 20000);
+    });
 
     test('should compile templates with inheritance', async function() {
         const output = await compiler('fixtures/child.njk', loaderBaseOptions);

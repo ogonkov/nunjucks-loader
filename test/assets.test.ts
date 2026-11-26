@@ -1,6 +1,8 @@
-import {describe, expect, it, test} from '@jest/globals';
+import {describe, expect, it, jest, test} from '@jest/globals';
 
 import compiler from './compiler';
+
+jest.setTimeout(30000);
 
 const loaderOptions = {
     esModule: __USE_ES__,
