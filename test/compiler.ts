@@ -1,8 +1,8 @@
 import {statsCompiler} from './stats-compiler';
-import type {CompiledTemplate} from './types';
+import type {CompiledTemplate, CompilerOptions} from './types';
 
 
-export default async (fixture: string, options: Parameters<typeof statsCompiler>[1] = {}): Promise<CompiledTemplate> => {
+export default async (fixture: string, options: CompilerOptions = {}): Promise<CompiledTemplate> => {
     const {stats, bundleName} = await statsCompiler(fixture, options);
 
     if (stats.hasErrors()) {
