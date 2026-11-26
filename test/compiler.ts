@@ -1,15 +1,17 @@
 import {statsCompiler} from './stats-compiler';
-import type {CompiledTemplate, CompilerOptions} from './types';
+import type {T, O} from './types';
 
 
-export default async (fixture: string, options: CompilerOptions = {}): Promise<CompiledTemplate> => {
+export default async (fixture: string, options: O = {}): Promise<T> => {
     const {stats, bundleName} = await statsCompiler(fixture, options);
 
     if (stats.hasErrors()) {
         const [error] = stats.toJson().errors ?? [];
-        const errorCopy = new Error(error?.message);
+        const errorCopy = new Error(error?.message) as Error & Record<string, unknown>;
 
-        Object.assign(errorCopy, error);
+        Object.entries(error ?? {}).forEach(([k, v]) => {
+            errorCopy[k] = v;
+        });
 
         throw errorCopy;
     }

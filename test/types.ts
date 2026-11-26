@@ -1,5 +1,5 @@
 import type {statsCompiler} from './stats-compiler';
 
-export type CompiledTemplate = (context?: Record<string, unknown>) => string | Promise<string>;
+export type T = (context?: Record<string, unknown>) => string | Promise<string>;
 
-export type CompilerOptions = Parameters<typeof statsCompiler>[1];
+export type O = Parameters<typeof statsCompiler>[1];
