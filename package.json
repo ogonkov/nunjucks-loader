@@ -12,9 +12,8 @@
     "build:clean": "node contrib/clean-build.mjs",
     "build": "npm run build:clean && npm run build:cjs",
     "lint": "eslint .",
-    "pretest": "node contrib/clean-build.mjs test/.coverage && npm run lint",
+    "pretest": "node contrib/clean-build.mjs test/bundles && node contrib/clean-build.mjs test/.coverage && npm run lint",
     "test": "jest",
-    "posttest": "node contrib/clean-build.mjs test/bundles",
     "preversion": "./contrib/good-to-go.sh && npm test",
     "postversion": "git push && git push --tags",
     "prepack": "npm run build"
