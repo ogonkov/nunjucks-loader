@@ -3,14 +3,14 @@ import {isSymbol} from './is-symbol';
 import type {Predicate, UnknownFunction} from './types';
 
 
-function and(...fns: Predicate[]) {
-    return function(...args: unknown[]) {
+function and(...fns: Predicate[]): Predicate {
+    return function(...args) {
         return fns.every(fn => fn(...args));
     }
 }
 
-function not(fn: UnknownFunction) {
-    return function isNot(...args: unknown[]) {
+function not(fn: UnknownFunction): Predicate {
+    return function isNot(...args) {
         return !(fn(...args));
     }
 }
