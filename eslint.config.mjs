@@ -58,6 +58,10 @@ export default [
         }
     },
     {
+        files: ['src/lib/schema.ts'],
+        rules: {quotes: 'off'}
+    },
+    {
         files: ['src/@types/**/*.ts'],
         rules: {'@typescript-eslint/no-unused-vars': 'off'}
     }
