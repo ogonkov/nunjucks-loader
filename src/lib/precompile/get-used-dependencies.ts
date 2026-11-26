@@ -44,8 +44,8 @@ import type {UsedDependenciesOptions} from './types';
 /**
  * @param {Object} loaderContext
  * @param {nunjucks.nodes.Root} nodes
- * @param {AddonWrapper[]} extensions
- * @param {FilterWrapper[]} filters
+ * @param {InstancesList} extensions
+ * @param {InstancesList} filters
  * @param {Object} loaderOptions
  * @returns {Promise<Object>}
  */

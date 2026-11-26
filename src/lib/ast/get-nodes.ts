@@ -1,9 +1,9 @@
 import nunjucks from 'nunjucks';
 
 /**
- * @param {string}                    source
- * @param {nunjucks.Extension[]}      [extensions]
- * @param {nunjucks.TokenizerOptions} [options]
+ * @param {string}          source
+ * @param {function[]}      extensions
+ * @param {NunjucksOptions} options
  *
  * @returns {nunjucks.nodes.Root}
  */

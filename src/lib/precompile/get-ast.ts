@@ -7,8 +7,8 @@ import {getNodes} from '../ast/get-nodes';
 /**
  *
  * @param {string} source
- * @param {AddonWrapper<Extension>[]} extensions
- * @param {TokenizerOptions} [options]
+ * @param {AddonWrapper[]} extensions
+ * @param {NunjucksOptions} options
  * @returns {Promise<nunjucks.nodes.Root>}
  */
 export async function getAST(source: string, extensions: AddonWrapper<Extension>[], options?: TokenizerOptions) {

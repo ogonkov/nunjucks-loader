@@ -4,10 +4,10 @@ import {getUsagesOf} from './get-usages-of';
 import type {NamedAddon} from './types';
 
 /**
- * @template T
+ * @template TNode
  * @param {nunjucks.nodes.Root} nodes
- * @param {T[]}                     instances
- * @returns {T[]}
+ * @param {Array[]}             instances
+ * @returns {TNode[]}
  */
 export function getUsedFilters<T extends NamedAddon>(nodes: nunjucks.nodes.Root, instances: T[]) {
     return getUsagesOf(nunjucks.nodes.Filter, nodes)(

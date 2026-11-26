@@ -3,7 +3,7 @@ import type {AddonPaths, DependencyOptions} from './types';
 
 
 /**
- * @typedef {(AddonWrapper | FilterWrapper)[]} InstancesList
+ * @typedef {((string | Function)[])[]} InstancesList
  */
 
 /**
@@ -14,7 +14,7 @@ import type {AddonPaths, DependencyOptions} from './types';
  * @param {Object} options
  * @param {Object} options.loaderContext
  * @param {boolean} options.es
- * @returns {{filters: FilterWrapper[], extensions: AddonWrapper<Extension>[]}}
+ * @returns {Promise<{filters: InstancesList, extensions: InstancesList, nodes: nunjucks.nodes.Root}>}
  */
 export function loadDependencies(extensions: AddonPaths, filters: AddonPaths, options: DependencyOptions) {
     const _extensions = getAddonsMeta(extensions, {

@@ -3,7 +3,7 @@ import {isSymbolOrLiteral} from './is-symbol-or-literal';
 
 /**
  * @param {string} methodName
- * @param {unknown} value
+ * @param {(ImportLiteralOrSymbol | ImportLiteralOrSymbol[])} value
  */
 export function throwNotSymbolOrLiteral(
     methodName: string,

@@ -8,19 +8,19 @@ import type {NamedAddon, NodeConstructor, UsageMatcher} from './types';
 /**
  * Filter list of nodes
  *
- * @template TNode, TAddon
- * @param {NodeConstructor<TNode>} nodeType
- * @param {nodes.Root}             nodes
- * @returns {function(TAddon[], UsageMatcher<TNode, TAddon>): TAddon[]}
+ * @template TNode
+ * @param {nunjucks.nodes.Node} nodeType
+ * @param {nunjucks.nodes.Root} nodes
+ * @returns {function(TNode[], function(TNode): Function): TNode[]}
  */
 export function getUsagesOf<TNode extends NodeType>(nodeType: NodeConstructor<TNode>, nodes: nodes.Root) {
     const nodesOfType = nodes.findAll(nodeType);
 
     /**
-     * @template TAddon
-     * @param {TAddon[]} list
-     * @param {UsageMatcher<TNode, TAddon>} callback
-     * @returns {TAddon[]}
+     * @template TNode
+     * @param {TNode[]} list
+     * @param {function(TNode): function} callback
+     * @returns {TNode[]}
      */
     function filterNodes<TAddon extends NamedAddon>(list: TAddon[], callback: UsageMatcher<TNode, TAddon>) {
         return (
