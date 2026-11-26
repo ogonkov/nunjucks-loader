@@ -4,8 +4,8 @@ import {getTemplateImports} from './output/get-template-imports';
 import {configureEnvironment} from './precompile/configure-environment';
 import {getAST} from './precompile/get-ast';
 import {getUsedDependencies} from './precompile/get-used-dependencies';
-import {loadDependencies} from './precompile/load-dependencies';
 import {precompileToLocalVar} from './precompile/precompile-to-local-var';
+import {wrapAddons} from './precompile/wrap-addons';
 
 
 const staticExtensionPath = require.resolve(
@@ -27,37 +27,55 @@ export async function doTransform(source, loaderContext, {
         dev: options.dev ?? loaderContext.mode === 'development'
     };
 
-    const {
-        extensions: extensionsInstances,
-        filters: filtersInstances
-    } = loadDependencies(
+    const wrappedAddons = wrapAddons(
         {
             StaticExtension: staticExtensionPath,
             ...options.extensions
         },
         options.filters,
+        options.globals,
         {
             loaderContext,
             es: options.esModule
         }
     );
-    const nodes = await getAST(source, extensionsInstances, nunjucksOptions);
-    const {
-        assets,
-        templates: dependencies,
-        globals,
-        extensions,
-        filters
-    } = await getUsedDependencies(
+    const nodes = await getAST(
+        source,
+        wrappedAddons.extensions,
+        nunjucksOptions
+    );
+    const usedDependencies = await getUsedDependencies(
         loaderContext,
         nodes,
-        extensionsInstances,
-        filtersInstances,
+        wrappedAddons.extensions,
+        wrappedAddons.filters,
+        wrappedAddons.globals,
         {
             ...options,
+            assetsPaths: [].concat(options.assetsPaths),
             searchPaths: normalizedSearchPaths
         }
     );
+
+    const outputImports = await getTemplateImports(loaderContext, options.esModule, {
+        assets: usedDependencies.assets,
+        dependencies: usedDependencies.templates,
+        extensions: usedDependencies.extensions,
+        filters: usedDependencies.filters,
+        globals: usedDependencies.globals
+    });
+
+    const env = await configureEnvironment({
+        searchPaths: normalizedSearchPaths,
+        options: nunjucksOptions,
+        extensions: wrappedAddons.extensions,
+        filters: wrappedAddons.filters
+    });
+    const outputPrecompiled = precompileToLocalVar(source, resourcePathImport, env);
+
+    const outputExport = options.esModule ?
+        'export default' :
+        'exports = module.exports =';
 
     const envOptions = JSON.stringify({
         ...nunjucksOptions,
@@ -65,26 +83,6 @@ export async function doTransform(source, loaderContext, {
         jinjaCompat: options.jinjaCompat,
         isAsyncTemplate: hasAsyncTags(nodes)
     });
-
-    const outputImports = await getTemplateImports(loaderContext, options.esModule, {
-        assets,
-        dependencies,
-        extensions,
-        filters,
-        globals
-    });
-
-    const env = await configureEnvironment({
-        searchPaths: normalizedSearchPaths,
-        options: nunjucksOptions,
-        extensions: extensionsInstances,
-        filters: filtersInstances
-    });
-    const outputPrecompiled = precompileToLocalVar(source, resourcePathImport, env);
-
-    const outputExport = options.esModule ?
-        'export default' :
-        'exports = module.exports =';
 
     return getLoaderOutput({
         templateImport: JSON.stringify(resourcePathImport),

@@ -9,18 +9,8 @@ import {isUniqueAsset} from '../utils/is-unique-asset';
 
 import {getAddNodeValue} from './get-add-node-value';
 import {getNodesValues} from './get-nodes-values';
+import {isExtension} from './is-extension';
 
-/**
- * @param {nunjucks.nodes.Node} node
- * @param {Function}            ExtensionClass
- * @return {boolean}
- */
-function isExtension(node, ExtensionClass) {
-    return (
-        node.extName instanceof ExtensionClass ||
-        node.extName === ExtensionClass.name
-    );
-}
 
 function getNodeValue(node) {
     if (!isExtension(node, StaticExtension)) {
@@ -61,7 +51,7 @@ async function filterPaths([path, paths]) {
 
 /**
  * @param {nunjucks.nodes.Root} nodes
- * @param {string|string[]}     searchAssets
+ * @param {string[]}            searchAssets
  * @returns {Promise<[ImportWrapper, ImportWrapper][]>}
  */
 export function getAssets(nodes, searchAssets) {
@@ -70,7 +60,7 @@ export function getAssets(nodes, searchAssets) {
         nunjucks.nodes.CallExtensionAsync,
         getNodeValue
     ).filter(isUniqueAsset);
-    const possiblePaths = getPossiblePaths(assets, [].concat(searchAssets));
+    const possiblePaths = getPossiblePaths(assets, searchAssets);
     const resolvedAssets = possiblePaths.map(filterPaths);
 
     return Promise.all(resolvedAssets);
