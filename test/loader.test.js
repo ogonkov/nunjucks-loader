@@ -9,6 +9,10 @@ const loaderBaseOptions = {
     esModule: __USE_ES__
 };
 
+afterEach(() => {
+    jest.useRealTimers();
+});
+
 describe('Simple compilation', function() {
     test('should compile single files', async function() {
         const output = await compiler('fixtures/single.njk', loaderBaseOptions);
@@ -177,7 +181,6 @@ describe('Advanced compilation', function() {
 
             await expect(asyncRender).resolves.toMatchSnapshot();
 
-            jest.useRealTimers();
         });
     });
 
@@ -231,7 +234,6 @@ describe('Advanced compilation', function() {
 
             expect(result).toMatchSnapshot();
 
-            jest.useRealTimers();
         });
     });
 });
