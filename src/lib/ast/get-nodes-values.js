@@ -1,11 +1,19 @@
 /**
- * Find nodes of the requested type, map their values, and discard falsy results.
+ * Find nodes of the requested type and extract a value from each matching node.
  *
- * @template Node, Result
- * @param {nunjucks.nodes.Root} nodes Root of the template syntax tree.
- * @param {Function} nodeType Constructor of the nodes to collect.
- * @param {function(Node): Result} getValue Extract a value from each matching node.
- * @returns {Result[]} Truthy mapped values in traversal order.
+ * Mapping follows the order returned by findAll. All falsy mapped values are
+ * discarded, including false, zero, empty strings, null, undefined, and NaN.
+ *
+ * @template Node
+ * @template Result
+ * @param {nunjucks.nodes.Root} nodes
+ *     Root of the template syntax tree to search.
+ * @param {Function} nodeType
+ *     Constructor identifying the kind of syntax node to collect.
+ * @param {function(Node): Result} getValue
+ *     Extract a value from each matching syntax node.
+ * @returns {Result[]}
+ *     Truthy mapped values, preserving the order of their matching nodes.
  */
 export function getNodesValues(nodes, nodeType, getValue) {
     const nodesOfType = nodes.findAll(nodeType);
