@@ -1,4 +1,4 @@
-import type {ConfigureOptions, Extension} from 'nunjucks';
+import type {ConfigureOptions, Extension, TokenizerOptions} from 'nunjucks';
 import type {LoaderContext} from 'webpack';
 
 import type {AddonWrapper} from '../addons-wrapper/AddonWrapper';
@@ -39,3 +39,6 @@ export interface UsedDependenciesOptions {
     globals: AddonPaths;
     esModule: boolean;
 }
+
+export type ASTExtensions = AddonWrapper<Extension>[];
+export type ASTOptions = TokenizerOptions;

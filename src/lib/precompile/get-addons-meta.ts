@@ -3,7 +3,7 @@ import type {Extension} from 'nunjucks';
 import {AddonWrapper} from '../addons-wrapper/AddonWrapper';
 import {FilterWrapper} from '../addons-wrapper/FilterWrapper';
 
-import type {AddonMetaOptions, AddonPaths, ExtensionMetaOptions, FilterMetaOptions, GlobalMetaOptions} from './types';
+import type * as T from './types';
 
 
 /**
@@ -14,10 +14,10 @@ import type {AddonMetaOptions, AddonPaths, ExtensionMetaOptions, FilterMetaOptio
  * @param {boolean} options.es
  * @returns {AddonWrapper[]}
  */
-export function getAddonsMeta(addons: AddonPaths, options: FilterMetaOptions): FilterWrapper[];
-export function getAddonsMeta(addons: AddonPaths, options: ExtensionMetaOptions): AddonWrapper<Extension>[];
-export function getAddonsMeta(addons: AddonPaths, options: GlobalMetaOptions): AddonWrapper[];
-export function getAddonsMeta(addons: AddonPaths, options: AddonMetaOptions) {
+export function getAddonsMeta(addons: T.AddonPaths, options: T.FilterMetaOptions): FilterWrapper[];
+export function getAddonsMeta(addons: T.AddonPaths, options: T.ExtensionMetaOptions): AddonWrapper<Extension>[];
+export function getAddonsMeta(addons: T.AddonPaths, options: T.GlobalMetaOptions): AddonWrapper[];
+export function getAddonsMeta(addons: T.AddonPaths, options: T.AddonMetaOptions) {
     let Klass: typeof AddonWrapper | typeof FilterWrapper = AddonWrapper;
     if (options.type === 'filters') {
         Klass = FilterWrapper;
