@@ -3,6 +3,12 @@ import nunjucks from 'nunjucks';
 import {getUsagesOf} from './get-usages-of';
 import type {NamedAddon} from './types';
 
+/**
+ * @template T
+ * @param {nunjucks.nodes.Root}     nodes
+ * @param {T[]}                         globals
+ * @returns {T[]}
+ */
 export function getUsedGlobals<T extends NamedAddon>(nodes: nunjucks.nodes.Root, globals: T[]) {
     return getUsagesOf(nunjucks.nodes.FunCall, nodes)(
         globals, ({name: globalName}) => ({name}) => {

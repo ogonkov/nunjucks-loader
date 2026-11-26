@@ -6,6 +6,14 @@ import {FilterWrapper} from '../addons-wrapper/FilterWrapper';
 import type {AddonMetaOptions, AddonPaths, ExtensionMetaOptions, FilterMetaOptions, GlobalMetaOptions} from './types';
 
 
+/**
+ * @param {Object.<string, string>} addons
+ * @param {Object} options
+ * @param {string} options.type
+ * @param {Object} options.loaderContext
+ * @param {boolean} options.es
+ * @returns {AddonWrapper[]}
+ */
 export function getAddonsMeta(addons: AddonPaths, options: FilterMetaOptions): FilterWrapper[];
 export function getAddonsMeta(addons: AddonPaths, options: ExtensionMetaOptions): AddonWrapper<Extension>[];
 export function getAddonsMeta(addons: AddonPaths, options: GlobalMetaOptions): AddonWrapper[];

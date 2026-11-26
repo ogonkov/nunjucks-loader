@@ -3,7 +3,18 @@ import type {AddonPaths, DependencyOptions} from './types';
 
 
 /**
+ * @typedef {(AddonWrapper | FilterWrapper)[]} InstancesList
+ */
+
+/**
  * Load filters and extensions modules
+ *
+ * @param {Object.<string, string>} extensions
+ * @param {Object.<string, string>} filters
+ * @param {Object} options
+ * @param {Object} options.loaderContext
+ * @param {boolean} options.es
+ * @returns {{filters: FilterWrapper[], extensions: AddonWrapper<Extension>[]}}
  */
 export function loadDependencies(extensions: AddonPaths, filters: AddonPaths, options: DependencyOptions) {
     const _extensions = getAddonsMeta(extensions, {

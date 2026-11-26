@@ -1,6 +1,10 @@
 import type {ImportLiteralOrSymbol} from './ImportWrapper';
 import {isSymbolOrLiteral} from './is-symbol-or-literal';
 
+/**
+ * @param {string} methodName
+ * @param {unknown} value
+ */
 export function throwNotSymbolOrLiteral(
     methodName: string,
     value: unknown
