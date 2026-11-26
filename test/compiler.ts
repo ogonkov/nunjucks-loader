@@ -1,7 +1,6 @@
 import {statsCompiler} from './stats-compiler';
+import type {CompiledTemplate} from './types';
 
-
-type CompiledTemplate = (context?: Record<string, unknown>) => string | Promise<string>;
 
 export default async (fixture: string, options: Parameters<typeof statsCompiler>[1] = {}): Promise<CompiledTemplate> => {
     const {stats, bundleName} = await statsCompiler(fixture, options);

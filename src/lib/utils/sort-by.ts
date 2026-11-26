@@ -1,3 +1,5 @@
+import type {ComparisonFunction} from './types';
+
 /**
  * Compare numeric property values in ascending order.
  *
@@ -11,8 +13,6 @@
 function numericalComparison(a: number, b: number): number {
     return a - b;
 }
-
-type ComparisonFunction<T> = (a: T, b: T) => number;
 
 /**
  * Create a comparator that orders objects by the selected property.

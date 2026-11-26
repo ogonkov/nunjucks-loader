@@ -1,3 +1,7 @@
+import type {UsageMatcher} from '../ast/types';
+
+import type {ItemFinder} from './types';
+
 /**
  * @template T, U
  * @param {readonly T[]}                         list
@@ -6,8 +10,8 @@
  */
 export function toListItem<T, U>(
     list: readonly T[],
-    callback: (item: U) => (candidate: T) => boolean,
-): (item: U) => T | undefined {
+    callback: UsageMatcher<U, T>,
+): ItemFinder<T, U> {
     /**
      * @template T, U
      * @param {U} item

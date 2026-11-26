@@ -1,14 +1,15 @@
 import {ImportLiteral} from './ImportLiteral';
 import {isSymbol} from './is-symbol';
+import type {Predicate, UnknownFunction} from './types';
 
 
-function and(...fns: ((...args: unknown[])=>boolean)[]) {
+function and(...fns: Predicate[]) {
     return function(...args: unknown[]) {
         return fns.every(fn => fn(...args));
     }
 }
 
-function not(fn: (...args: unknown[]) => unknown) {
+function not(fn: UnknownFunction) {
     return function isNot(...args: unknown[]) {
         return !(fn(...args));
     }

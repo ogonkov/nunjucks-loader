@@ -36,3 +36,11 @@ export interface RuntimeDependencies {
 }
 
 export type RenderContext = Parameters<Environment['render']>[1];
+
+export type ModuleValue<T> = T extends {default: infer Value}
+    ? Value | (Extract<false | 0 | 0n | '' | null | undefined, Value> extends never ? never : T)
+    : T;
+
+export interface ModuleWithDefault {
+    default?: unknown;
+}
