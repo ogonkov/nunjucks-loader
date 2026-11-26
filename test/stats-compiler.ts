@@ -23,7 +23,7 @@ export function statsCompiler(fixture: string, options: Record<string, unknown> 
             rules: [{
                 test: /\.njk$/,
                 use: {
-                    loader: path.resolve(__dirname, '../src/index.js'),
+                    loader: path.resolve(__dirname, '../src/index.ts'),
                     options: options
                 }
             }, {

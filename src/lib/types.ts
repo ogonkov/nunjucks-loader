@@ -29,7 +29,8 @@ type DefaultedOptionKeys = {
 }[keyof SchemaProperties];
 
 /** Loader options after applying the defaults from schema. */
-export type ResolvedLoaderOptions = LoaderOptions & Required<Pick<LoaderOptions, DefaultedOptionKeys>>;
+export type ResolvedLoaderOptions = Omit<LoaderOptions, DefaultedOptionKeys> &
+    Required<Pick<LoaderOptions, DefaultedOptionKeys>>;
 
 export interface TransformOptions {
     resourcePathImport: string;
