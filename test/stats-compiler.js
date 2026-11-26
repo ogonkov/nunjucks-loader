@@ -1,14 +1,16 @@
-import {randomUUID} from 'crypto';
 import path from 'path';
 
+import {createFsFromVolume, Volume} from 'memfs';
 import webpack from 'webpack';
 
 
 export function statsCompiler(fixture, options = {}) {
-    const bundleName = randomUUID();
+    const outputFileSystem = createFsFromVolume(new Volume());
+    const bundlePath = path.join(__dirname, 'bundles/bundle.js');
 
     return new Promise(function(resolve, reject) {
         webpack({
+            plugins: [compiler => { compiler.outputFileSystem = outputFileSystem; }],
             mode: 'development',
             devtool: false,
             target: 'node',
@@ -17,7 +19,7 @@ export function statsCompiler(fixture, options = {}) {
             output: {
                 libraryTarget: 'commonjs2',
                 path: path.join(__dirname, 'bundles'),
-                filename: `${bundleName}.js`,
+                filename: path.basename(bundlePath),
                 assetModuleFilename: 'bundles/[path][name][ext]'
             },
             module: {
@@ -38,7 +40,8 @@ export function statsCompiler(fixture, options = {}) {
             }
 
             resolve({
-                bundleName,
+                outputFileSystem,
+                bundlePath,
                 stats
             });
         });

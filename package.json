@@ -12,7 +12,7 @@
     "build:clean": "node contrib/clean-build.mjs",
     "build": "npm run build:clean && npm run build:cjs",
     "lint": "eslint .",
-    "pretest": "node contrib/clean-build.mjs test/bundles && node contrib/clean-build.mjs test/.coverage && npm run lint",
+    "pretest": "node contrib/clean-build.mjs test/.coverage && npm run lint",
     "test": "jest",
     "test:package": "node contrib/test-package.mjs",
     "preversion": "./contrib/good-to-go.sh && npm test",
@@ -59,6 +59,7 @@
     "eslint-plugin-import": "^2.32.0",
     "globals": "^17.13.0",
     "jest": "^30.5.2",
+    "memfs": "^4.80.1",
     "nunjucks": "^3.2.4",
     "webpack": "^5.111.1"
   },

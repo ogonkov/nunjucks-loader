@@ -55,7 +55,7 @@ module.exports = {
   // globalSetup: null,
 
   // A path to a module which exports an async function that is triggered once after all test suites
-  globalTeardown: '<rootDir>/test/global-teardown.js',
+  // globalTeardown: null,
 
   // A set of global variables that need to be available in all test environments
   // globals: {},
