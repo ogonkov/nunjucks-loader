@@ -4,7 +4,7 @@ import globals from 'globals';
 
 export default [
     {
-        ignores: ['lib/**', 'public/**', 'index.js', 'test/.coverage/**', 'test/bundles/**']
+        ignores: ['lib/**', 'public/**', 'index.js', 'test/.coverage/**']
     },
     js.configs.recommended,
     importPlugin.flatConfigs.recommended,
