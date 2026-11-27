@@ -16,8 +16,7 @@
     ]
   },
   "include": [
-    "src/public/**/*.ts",
-    "src/public/**/*.js"
+    "src/public/**/*.ts"
   ],
   "exclude": [
     "src/public/**/*.spec.ts"

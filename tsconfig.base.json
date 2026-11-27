@@ -4,7 +4,6 @@
     "target": "ES2022",
     "module": "preserve",
     "moduleResolution": "bundler",
-    "allowJs": true,
     "typeRoots": [
       "./src/@types",
       "./node_modules/@types"
