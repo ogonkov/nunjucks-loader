@@ -2,8 +2,8 @@ import {ImportPart} from './ImportPart';
 
 
 export class ImportLiteral extends ImportPart {
-    get className(): 'ImportLiteral' {
-        return 'ImportLiteral';
+    get className() {
+        return 'ImportLiteral' as const;
     }
 
     toString() {

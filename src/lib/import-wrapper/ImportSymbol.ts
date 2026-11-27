@@ -2,8 +2,8 @@ import {ImportPart} from './ImportPart';
 
 
 export class ImportSymbol extends ImportPart {
-    get className(): 'ImportSymbol' {
-        return 'ImportSymbol';
+    get className() {
+        return 'ImportSymbol' as const;
     }
 
     toString() {
