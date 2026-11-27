@@ -51,6 +51,7 @@ export default [
         rules: {
             'no-unused-vars': 'off',
             '@typescript-eslint/no-unused-vars': 'error',
+            '@typescript-eslint/no-non-null-assertion': 'error',
             'no-undef': 'off',
             'no-dupe-class-members': 'off',
             'no-redeclare': 'off',
