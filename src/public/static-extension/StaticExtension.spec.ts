@@ -26,6 +26,27 @@ function render(template: string, assets: AssetMeta[]) {
 }
 
 describe('StaticExtension', function() {
+    test.each([
+        ['without an alias', '{% static "logo.js" %}'],
+        ['with an alias', '{% static "logo.js" as image %}{{ image }}']
+    ])('should render a static function export %s', async function(_description, template) {
+        const output = render(template, [
+            {path: 'logo.js', module: () => '/images/logo.png'}
+        ]);
+
+        await expect(output).resolves.toBe('/images/logo.png');
+    });
+
+    test('should render the Promise object tag for an unsupported loader configuration', async function() {
+        // A static asset loader exporting an async function is unsupported;
+        // its Promise is stringified rather than awaited.
+        const output = render('{% static "logo.js" %}', [
+            {path: 'logo.js', module: async () => '/images/logo.png'}
+        ]);
+
+        await expect(output).resolves.toBe('[object Promise]');
+    });
+
     test('should render a static asset URL', async function() {
         const output = render('<img src="{% static "logo.svg" %}">', [
             {path: 'logo.svg', module: '/assets/logo.svg'}
