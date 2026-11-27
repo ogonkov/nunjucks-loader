@@ -5,7 +5,8 @@
   "main": "index.js",
   "files": [
     "lib",
-    "public"
+    "public",
+    "types"
   ],
   "scripts": {
     "build:cjs": "babel src --env-name cjs --extensions .js,.ts --out-dir=. --copy-files --no-copy-ignored --ignore \"src/**/*.spec.ts,src/**/*.d.ts\"",
