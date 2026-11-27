@@ -1,5 +1,5 @@
-import type {ImportLiteralOrSymbol} from './ImportWrapper';
 import {isNotSymbolOrLiteral} from './is-not-symbol-or-literal';
+import type {ImportLiteralOrSymbol} from './types';
 
 
 /**

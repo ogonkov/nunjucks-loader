@@ -1,6 +1,6 @@
 import {ImportLiteral} from './ImportLiteral';
-import {ImportLiteralOrSymbol} from './ImportWrapper';
 import {getType} from './get-type';
+import type {ImportLiteralOrSymbol} from './types';
 
 /**
  * Squash literals and symbols

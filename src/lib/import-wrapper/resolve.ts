@@ -2,8 +2,9 @@ import path from 'path';
 
 import {ImportLiteral} from './ImportLiteral';
 import {ImportSymbol} from './ImportSymbol';
-import {ImportLiteralOrSymbol, ImportWrapper} from './ImportWrapper';
+import {ImportWrapper} from './ImportWrapper';
 import {normalizeTrailingSlash} from './normalize-trailing-slash';
+import type {ImportLiteralOrSymbol} from './types';
 
 /**
  * Joins template import with another path

@@ -1,33 +1,14 @@
-import {Context, Extension, parser, nodes as NunjucksNodes} from 'nunjucks';
+import {Extension, parser, nodes as NunjucksNodes} from 'nunjucks';
 
 import {getModule} from '../utils/get-module';
 import {getRegexMatches} from '../utils/get-regex-matches';
 
 import {ASSETS_KEY} from './contants';
-
-type AssetMeta =
-    | {
-        path: string;
-        module: unknown;
-    }
-    | {
-        path: RegExp;
-        module: (...matches: string[]) => unknown;
-    };
+import type {AssetMeta, StaticArguments} from './types';
 
 function isDynamicAsset(asset: AssetMeta): asset is Extract<AssetMeta, {path: RegExp}> {
     return typeof asset.path !== 'string';
 }
-
-interface StaticContext extends Context {
-    lookup(name: typeof ASSETS_KEY): Record<string, AssetMeta>;
-}
-
-type StaticCallback = (error: unknown, value?: unknown) => void;
-
-type StaticArguments =
-    | [context: StaticContext, url: string, callback: StaticCallback]
-    | [context: StaticContext, url: string, exportVar: string, callback: StaticCallback];
 
 export class StaticExtension implements Extension {
     tags: string[];

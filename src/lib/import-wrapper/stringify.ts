@@ -3,9 +3,10 @@ import type {LoaderContext} from 'webpack';
 import {stringifyRequest} from '../utils/stringify-request';
 
 import {ImportLiteral} from './ImportLiteral';
-import {ImportLiteralOrSymbol, ImportWrapper} from './ImportWrapper';
+import {ImportWrapper} from './ImportWrapper';
 import {isSymbol} from './is-symbol';
 import {normalizeTrailingSlash} from './normalize-trailing-slash';
+import type {ImportLiteralOrSymbol} from './types';
 
 
 export function stringify(loaderContext: LoaderContext<unknown>, templateImport: ImportWrapper) {

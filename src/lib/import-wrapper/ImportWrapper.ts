@@ -8,15 +8,12 @@ import {getType} from './get-type';
 import {isSymbol} from './is-symbol';
 import {optimizeImportLiterals} from './optimize-import-literals';
 import {throwNotSymbolOrLiteral} from './throw-not-symbol-or-literal';
+import type {ImportLiteralOrSymbol, MapCallback} from './types';
 
 function setImportValue(instance: ImportWrapper, importValue: ImportLiteralOrSymbol[]) {
     instance.importValue = importValue;
     instance._optimizedImportValue = optimizeImportLiterals(importValue);
 }
-
-export type ImportLiteralOrSymbol = ImportLiteral | ImportSymbol;
-
-type MapCallback = (value: ImportLiteralOrSymbol) => unknown;
 
 /**
  * Wrapper for manage import strings
