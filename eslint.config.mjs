@@ -17,11 +17,10 @@ export default [
         }
     },
     {
-        files: ['**/*.{js,mjs,cjs,ts}'],
+        files: ['**/*.{js,mjs,ts}'],
         languageOptions: {
             ecmaVersion: 'latest',
-            sourceType: 'module',
-            globals: globals.node
+            sourceType: 'module'
         },
         rules: {
             quotes: [
@@ -43,6 +42,17 @@ export default [
                 }
             ]
         }
+    },
+    {
+        files: ['**/*.{js,mjs,ts}'],
+        ignores: ['src/public/**', '!src/public/**/*.spec.ts'],
+        languageOptions: {globals: globals.node}
+    },
+    {
+        files: ['src/public/**/*.ts'],
+        ignores: ['src/public/**/*.spec.ts'],
+        languageOptions: {globals: globals.browser},
+        rules: {'import/no-nodejs-modules': 'error'}
     },
     {
         files: ['**/*.ts'],
