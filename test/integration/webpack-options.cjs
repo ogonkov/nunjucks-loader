@@ -1,10 +1,8 @@
 const path = require('node:path');
 
-const root = path.resolve(__dirname, '../..');
-const fixture = file => path.join(root, 'test/fixtures', file);
-
 module.exports = () => {
     const consumer = process.cwd();
+    const fixture = file => path.join(consumer, 'test/fixtures', file);
     const assetsPaths = [fixture('django_project/app_example/static')];
     const groups = [
         {
@@ -29,7 +27,7 @@ module.exports = () => {
         },
         {
             name: 'nonRelative',
-            options: {searchPaths: [fixture('django_project/app_example/templates'), root]},
+            options: {searchPaths: [fixture('django_project/app_example/templates'), consumer]},
             entry: {
                 nonRelative: fixture('django_project/app_example/templates/main/main.njk'),
             }
@@ -101,7 +99,7 @@ module.exports = () => {
         mode: 'development',
         devtool: false,
         target: 'node',
-        context: path.join(root, 'test'),
+        context: path.join(consumer, 'test'),
         entry: group.entry,
         output: {
             path: path.join(consumer, 'dist', esModule ? 'esm' : 'cjs'),
@@ -109,14 +107,12 @@ module.exports = () => {
             assetModuleFilename: 'bundles/[path][name][ext]',
             library: {type: 'commonjs2', export: esModule ? 'default' : undefined}
         },
-        resolve: {modules: [path.join(consumer, 'node_modules'), 'node_modules']},
-        resolveLoader: {modules: [path.join(consumer, 'node_modules')]},
         module: {
             rules: [{
                 test: /\.njk$/,
                 use: {
                     loader: 'simple-nunjucks-loader',
-                    options: {esModule, searchPaths: [root], ...group.options}
+                    options: {esModule, searchPaths: [consumer], ...group.options}
                 }
             }, {
                 test: /\.(css|txt|md)$/,

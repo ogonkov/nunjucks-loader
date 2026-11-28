@@ -4,7 +4,7 @@
   "type": "commonjs",
   "scripts": {
     "build": "webpack --config webpack.config.js --json dist/stats.json && tsc -p tsconfig.json",
-    "test": "node --test"
+    "test": "node --test tests/assets.test.js tests/loader.test.js"
   },
   "devDependencies": {
     "nunjucks": "^3.2.4",

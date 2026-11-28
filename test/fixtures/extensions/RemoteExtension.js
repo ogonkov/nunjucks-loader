@@ -1,7 +1,4 @@
-// Share the bundled runtime's SafeString class; precompilation uses consumer dependencies.
-const nunjucks = typeof __webpack_require__ === 'function'
-    ? require('nunjucks/browser/nunjucks-slim')
-    : require('node:module').createRequire(`${process.cwd()}/package.json`)('nunjucks/browser/nunjucks-slim');
+const nunjucks = require('nunjucks/browser/nunjucks-slim');
 
 function RemoteExtension() {
     this.tags = ['remote'];

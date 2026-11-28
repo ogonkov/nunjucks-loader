@@ -48,6 +48,12 @@ jobs:
         with:
           name: package
           path: package-artifact
+      - name: Copy fixtures into consumers
+        shell: bash
+        run: |
+          mkdir -p test/integration/consumers/cjs/test/fixtures test/integration/consumers/esm/test/fixtures
+          cp -R test/fixtures/. test/integration/consumers/cjs/test/fixtures/
+          cp -R test/fixtures/. test/integration/consumers/esm/test/fixtures/
       - name: Install package in CommonJS consumer
         working-directory: test/integration/consumers/cjs
         shell: bash
