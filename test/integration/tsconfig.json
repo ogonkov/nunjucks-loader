@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "noEmitOnError": true,
+    "types": ["node"],
+    "rootDir": "./assertions"
+  },
+  "include": ["assertions/**/*.ts"]
+}

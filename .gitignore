@@ -8,3 +8,5 @@ node_modules
 /test/bundles/
 
 .DS_Store
+
+/test/integration/consumers/*/dist/

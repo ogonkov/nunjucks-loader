@@ -94,6 +94,7 @@ module.exports = {
   projects: [
     {
       displayName: 'cjs',
+      testPathIgnorePatterns: ['<rootDir>/test/integration/'],
       roots: ['<rootDir>/src', '<rootDir>/test'],
       globals: {
         __USE_ES__: false
