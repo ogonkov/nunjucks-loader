@@ -9,7 +9,7 @@
     "types"
   ],
   "scripts": {
-    "build:cjs": "babel src --env-name cjs --extensions .js,.ts --out-dir=. --copy-files --no-copy-ignored --ignore \"src/**/*.spec.ts,src/**/*.d.ts\"",
+    "build:cjs": "babel src --env-name cjs --extensions .ts --out-dir=. --copy-files --no-copy-ignored --ignore \"src/**/*.spec.ts,src/**/*.d.ts\"",
     "build:clean": "node contrib/clean-build.mjs",
     "build": "npm run build:clean && npm run build:cjs",
     "lint": "eslint .",
