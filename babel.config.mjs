@@ -11,6 +11,7 @@ export default function(api) {
     return {
         targets: {node: nodeVersion.split(' || ')[0].replace(/^[^\d]*/, '')},
         presets: [
+            '@babel/preset-typescript',
             ['@babel/preset-env', {modules: isESM ? false : 'commonjs'}]
         ],
         plugins: [

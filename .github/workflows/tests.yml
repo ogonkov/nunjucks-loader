@@ -16,6 +16,8 @@ on:
       - '.github/workflows/**'
       - '*.js'
       - '*.mjs'
+      - '*.ts'
+      - 'tsconfig*.json'
       - 'contrib/**'
       - 'src/**'
       - 'test/**'
@@ -33,7 +35,7 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest]
-        node-version: [22.x, 24.x]
+        node-version: [24.x]
 
     steps:
     - uses: actions/checkout@v7
@@ -50,6 +52,7 @@ jobs:
           ${{ matrix.os }}-node-${{ matrix.node-version }}-
     - run: npm install
       if: steps.cache-node-modules.outputs.cache-hit != 'true'
+    - run: npm run typecheck
     - run: npm test -- --coverage
       env:
         CI: true

@@ -5,19 +5,21 @@
   "main": "index.js",
   "files": [
     "lib",
-    "public"
+    "public",
+    "types"
   ],
   "scripts": {
-    "build:cjs": "babel src --env-name cjs --out-dir=. --copy-files --no-copy-ignored --ignore \"src/**/*.spec.js\"",
+    "build:cjs": "babel src --env-name cjs --extensions .ts --out-dir=. --copy-files --no-copy-ignored --ignore \"src/**/*.spec.ts,src/**/*.d.ts\"",
     "build:clean": "node contrib/clean-build.mjs",
     "build": "npm run build:clean && npm run build:cjs",
     "lint": "eslint .",
     "pretest": "node contrib/clean-build.mjs test/.coverage && npm run lint",
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "posttest": "node contrib/clean-build.mjs test/bundles",
     "preversion": "./contrib/good-to-go.sh && npm test",
     "postversion": "git push && git push --tags",
-    "prepack": "npm run build"
+    "prepack": "npm run build",
+    "typecheck": "tsc --build"
   },
   "repository": {
     "type": "git",
@@ -51,15 +53,26 @@
     "@babel/core": "^8.0.7",
     "@babel/plugin-transform-dynamic-import": "^8.0.1",
     "@babel/preset-env": "^8.0.7",
+    "@babel/preset-typescript": "^8.0.7",
+    "@jest/globals": "^30.5.2",
     "@eslint/js": "^9.39.5",
+    "@tsconfig/recommended": "^1.0.14",
+    "@types/node": "^22.20.5",
+    "@types/nunjucks": "^3.2.6",
+    "@typescript-eslint/eslint-plugin": "^8.73.0",
+    "@typescript-eslint/parser": "^8.73.0",
+    "ajv": "^8.20.0",
     "babel-jest": "^30.5.2",
+    "babel-loader": "^10.1.1",
     "babel-plugin-polyfill-corejs3": "^1.0.0",
     "eslint": "^9.39.5",
     "eslint-import-resolver-node": "^0.3.10",
+    "eslint-import-resolver-typescript": "^4.4.5",
     "eslint-plugin-import": "^2.32.0",
     "globals": "^17.13.0",
     "jest": "^30.5.2",
     "nunjucks": "^3.2.4",
+    "typescript": "^6.0.3",
     "webpack": "^5.111.1"
   },
   "engines": {
@@ -68,7 +81,7 @@
   "devEngines": {
     "runtime": {
       "name": "node",
-      "version": "^22.18.0 || >=24.11.0"
+      "version": ">=24.11.0"
     }
   }
 }

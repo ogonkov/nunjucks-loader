@@ -72,6 +72,23 @@ the page.
 [More examples](https://ogonkov.github.io/nunjucks-loader/#examples) on loader
 site.
 
+### TypeScript
+
+For typed `.njk` imports, add `simple-nunjucks-loader/types` to
+`compilerOptions.types`, keeping any existing entries:
+
+**tsconfig.json**
+```json
+{
+  "compilerOptions": {
+    "types": ["simple-nunjucks-loader/types"]
+  }
+}
+```
+
+Imported templates accept an optional context object and return `string` for
+synchronous rendering or `Promise<string | null>` for asynchronous rendering.
+
 ## How it works
 By default Nunjunks bundle all precompiled templates to
 `window.nunjucksPrecompiled`, then loads them via custom loader from this

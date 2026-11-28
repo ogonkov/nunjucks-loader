@@ -1,0 +1,23 @@
+import type {LoaderContext} from 'webpack';
+
+import {stringifyRequest} from '../utils/stringify-request';
+
+import {ImportLiteral} from './ImportLiteral';
+import {ImportWrapper} from './ImportWrapper';
+import {isSymbol} from './is-symbol';
+import {normalizeTrailingSlash} from './normalize-trailing-slash';
+import type {ImportLiteralOrSymbol} from './types';
+
+
+export function stringify(loaderContext: LoaderContext<unknown>, templateImport: ImportWrapper) {
+    function toStringifiedValue(value: ImportLiteralOrSymbol) {
+        if (isSymbol(value)) {
+            return value;
+        }
+
+        let nextValue = stringifyRequest(loaderContext, value.valueOf());
+        return new ImportLiteral(normalizeTrailingSlash(nextValue, value));
+    }
+
+    return templateImport.map(toStringifiedValue);
+}

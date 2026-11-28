@@ -1,0 +1,26 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "rootDir": "src",
+    "outDir": "node_modules/.tmp/tsbuild/lib",
+    "tsBuildInfoFile": "node_modules/.tmp/tsbuild/lib.tsbuildinfo",
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.json"
+  ],
+  "exclude": [
+    "src/**/*.spec.ts",
+    "src/public"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.public.json"
+    }
+  ]
+}
