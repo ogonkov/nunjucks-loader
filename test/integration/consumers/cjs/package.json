@@ -4,7 +4,7 @@
   "type": "commonjs",
   "scripts": {
     "build": "webpack --config webpack.config.js && tsc -p tsconfig.json",
-    "test": "node --test dist/single.test.js"
+    "test": "node --test tests/single.test.js"
   },
   "devDependencies": {
     "nunjucks": "^3.2.4",
@@ -12,5 +12,8 @@
     "webpack-cli": "^6.0.1",
     "typescript": "^5.9.3",
     "@types/node": "^22.0.0"
+  },
+  "imports": {
+    "#dist/*": "./dist/*"
   }
 }

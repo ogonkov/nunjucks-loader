@@ -3,8 +3,8 @@ import {readFile} from 'node:fs/promises';
 import path from 'node:path';
 import {test} from 'node:test';
 
-import renderCjs from './cjs/single.cjs';
-import renderEsm from './esm/single.cjs';
+import renderCjs from '#dist/cjs/single.cjs';
+import renderEsm from '#dist/esm/single.cjs';
 
 for (const [mode, render] of [['cjs', renderCjs], ['esm', renderEsm]] as const) {
     test(`esModule=${mode === 'esm'}: renders a single template`, async () => {
