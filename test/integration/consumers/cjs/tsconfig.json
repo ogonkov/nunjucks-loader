@@ -2,9 +2,6 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "module": "CommonJS",
-    "outDir": "./tests",
-    "typeRoots": [
-      "./node_modules/@types"
-    ]
+    "outDir": "./tests"
   }
 }
