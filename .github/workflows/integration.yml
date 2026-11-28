@@ -1,0 +1,76 @@
+name: Package integration
+
+on:
+  push:
+    branches: [master, trunk-v*]
+  pull_request:
+    branches: [master, trunk-v*]
+    paths:
+      - '.github/workflows/**'
+      - '*.js'
+      - '*.mjs'
+      - 'contrib/**'
+      - 'src/**'
+      - 'test/**'
+      - 'package*.json'
+      - '.nvmrc'
+
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22.x
+      - run: npm install
+      - run: npm pack
+      - uses: actions/upload-artifact@v7
+        with:
+          name: package
+          path: simple-nunjucks-loader-*.tgz
+          if-no-files-found: error
+
+  integration:
+    needs: pack
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        node-version: [22.x, 24.x]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: actions/download-artifact@v8
+        with:
+          name: package
+          path: package-artifact
+      - name: Copy fixtures into consumers
+        shell: bash
+        run: |
+          mkdir -p test/integration/consumers/cjs/test/fixtures test/integration/consumers/esm/test/fixtures
+          cp -R test/fixtures/. test/integration/consumers/cjs/test/fixtures/
+          cp -R test/fixtures/. test/integration/consumers/esm/test/fixtures/
+      - name: Install package in CommonJS consumer
+        working-directory: test/integration/consumers/cjs
+        shell: bash
+        run: npm install --no-save --package-lock=false --no-audit --no-fund "$GITHUB_WORKSPACE"/package-artifact/*.tgz
+      - name: Build CommonJS consumer
+        working-directory: test/integration/consumers/cjs
+        run: npm run build
+      - name: Test CommonJS consumer
+        working-directory: test/integration/consumers/cjs
+        run: npm test
+      - name: Install package in ESM consumer
+        working-directory: test/integration/consumers/esm
+        shell: bash
+        run: npm install --no-save --package-lock=false --no-audit --no-fund "$GITHUB_WORKSPACE"/package-artifact/*.tgz
+      - name: Build ESM consumer
+        working-directory: test/integration/consumers/esm
+        run: npm run build
+      - name: Test ESM consumer
+        working-directory: test/integration/consumers/esm
+        run: npm test

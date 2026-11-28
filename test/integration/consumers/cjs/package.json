@@ -1,0 +1,19 @@
+{
+  "name": "nunjucks-loader-consumer-cjs",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "build": "webpack --config webpack.config.js --json dist/stats.json && tsc -p tsconfig.json",
+    "test": "node --test tests/assets.test.js tests/loader.test.js"
+  },
+  "devDependencies": {
+    "nunjucks": "^3.2.4",
+    "webpack": "^5.111.1",
+    "webpack-cli": "^6.0.1",
+    "typescript": "^5.9.3",
+    "@types/node": "^22.0.0"
+  },
+  "imports": {
+    "#dist/*": "./dist/*"
+  }
+}

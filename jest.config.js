@@ -90,28 +90,6 @@ module.exports = {
   // A preset that is used as a base for Jest's configuration
   // preset: null,
 
-  // Run tests from one or more projects
-  projects: [
-    {
-      displayName: 'cjs',
-      roots: ['<rootDir>/src', '<rootDir>/test'],
-      globals: {
-        __USE_ES__: false
-      }
-    },
-    {
-      displayName: 'es',
-      roots: ['<rootDir>/test'],
-      globals: {
-        __USE_ES__: true
-      },
-      testMatch: [
-        '**/assets.test.js',
-        '**/loader.test.js'
-      ]
-    }
-  ],
-
   // Use this configuration option to add custom reporters to Jest
   // reporters: undefined,
 
@@ -131,10 +109,7 @@ module.exports = {
   // rootDir: null,
 
   // A list of paths to directories that Jest should use to search for files in
-  roots: [
-    'src',
-    'test'
-  ],
+  roots: ['<rootDir>/src'],
 
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",
