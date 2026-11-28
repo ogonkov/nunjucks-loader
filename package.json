@@ -14,7 +14,7 @@
     "build": "npm run build:clean && npm run build:cjs",
     "lint": "eslint .",
     "pretest": "node contrib/clean-build.mjs test/.coverage && npm run lint",
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "posttest": "node contrib/clean-build.mjs test/bundles",
     "preversion": "./contrib/good-to-go.sh && npm test",
     "postversion": "git push && git push --tags",
